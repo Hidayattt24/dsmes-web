@@ -3,6 +3,7 @@
 import { useEducationForm } from "../hooks/useEducationForm";
 import type { FormFields } from "../hooks/useEducationForm";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { FormLoader } from "@/components/ui/loading";
 import { useState, useRef, useEffect } from "react";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { BackButton } from "@/components/common/BackButton";
@@ -319,11 +320,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
   }, [isLoading, fields.content]);
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
+    return <FormLoader />;
   }
 
   const triggerUpload = () => {
@@ -586,7 +583,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
   const characterCount = fields.content.replace(/<[^>]*>/g, "").length;
 
   return (
-    <div className="p-6 space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)] relative">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)] relative">
       
       {/* YouTube insertion modal */}
       {isYoutubeModalOpen && typeof window !== "undefined" && createPortal(
@@ -726,7 +723,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
       <div className="space-y-8">
         
         {/* Card 1: Informasi Dasar */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-8 shadow-sm space-y-6">
+        <div className="bg-white rounded-xl border border-[#E2E8F0] p-4 sm:p-8 shadow-sm space-y-6">
           
           {/* Title input */}
           <div className="space-y-2">
@@ -1009,7 +1006,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
             </button>
           </div>
 
-          <div className="p-8 space-y-6">
+          <div className="p-4 sm:p-8 space-y-6">
             
             {/* Editor Toolbar with Youtube integration */}
             <div className="flex flex-wrap gap-2 p-2 bg-[#F1F5F9]/50 rounded-xl">
@@ -1079,7 +1076,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                 onInput={handleEditorInput}
                 data-placeholder="Tulis atau gunakan template klinis untuk menyusun materi edukasi..."
                 className={[
-                  "w-full min-h-[500px] border border-[#E2E8F0] rounded-xl p-8 outline-none focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] transition-all text-sm leading-relaxed font-medium font-[family-name:var(--font-poppins)] text-[#1E293B] editor-container overflow-y-auto whitespace-pre-wrap",
+                  "w-full min-h-[500px] border border-[#E2E8F0] rounded-xl p-4 sm:p-8 outline-none focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] transition-all text-sm leading-relaxed font-medium font-[family-name:var(--font-poppins)] text-[#1E293B] editor-container overflow-y-auto whitespace-pre-wrap",
                   errors.content ? "border-red-500" : "",
                 ].join(" ")}
               />
@@ -1110,7 +1107,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
         </div>
 
         {/* Card 3: Publication Settings */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-8 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="bg-white rounded-xl border border-[#E2E8F0] p-4 sm:p-8 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h4 className="text-sm font-bold text-[#1E293B] font-[family-name:var(--font-poppins)]">
               Status Publikasi

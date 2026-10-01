@@ -30,11 +30,11 @@ export function StaffDashboardFeature() {
   } = useStaffDashboard();
 
   return (
-    <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
+    <div className="space-y-6 sm:space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
       {/* Welcome Title */}
       <div>
-        <h2 className="text-2xl font-bold text-[#1A202C] tracking-tight">Dashboard Pemantauan</h2>
-        <p className="text-sm text-[#718096] mt-1">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#1A202C] tracking-tight">Dashboard Pemantauan</h2>
+        <p className="text-xs sm:text-sm text-[#718096] mt-1">
           Pantau status kesehatan dan grafik tren populasi pasien diabetes secara menyeluruh
         </p>
       </div>

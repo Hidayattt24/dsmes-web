@@ -10,7 +10,7 @@ interface UsePatientsReturn {
   readonly isLoading: boolean;
   readonly error: string | null;
   readonly searchQuery: string;
-  readonly statusFilter: string;
+  readonly complianceFilter: string;
   readonly genderFilter: string;
   readonly currentPage: number;
   readonly itemsPerPage: number;
@@ -19,7 +19,7 @@ interface UsePatientsReturn {
   readonly startItem: number;
   readonly endItem: number;
   readonly setSearchQuery: (q: string) => void;
-  readonly setStatusFilter: (status: string) => void;
+  readonly setComplianceFilter: (compliance: string) => void;
   readonly setGenderFilter: (gender: string) => void;
   readonly setCurrentPage: (page: number) => void;
   readonly refetch: () => void;
@@ -32,7 +32,7 @@ export function usePatients(): UsePatientsReturn {
   const [error, setError] = useState<string | null>(null);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("Semua");
+  const [complianceFilter, setComplianceFilter] = useState("Semua");
   const [genderFilter, setGenderFilter] = useState("Semua");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
@@ -44,13 +44,24 @@ export function usePatients(): UsePatientsReturn {
     setError(null);
     try {
       const genderParam = genderFilter === "Laki-laki" ? "laki_laki" : genderFilter === "Perempuan" ? "perempuan" : genderFilter;
-      const statusParam = statusFilter === "Aktif" ? "aktif" : statusFilter === "Nonaktif" ? "nonaktif" : statusFilter;
+      
+      let complianceMin: number | undefined;
+      let complianceMax: number | undefined;
+      if (complianceFilter === "Patuh") {
+        complianceMin = 70;
+      } else if (complianceFilter === "Kurang Patuh") {
+        complianceMin = 40;
+        complianceMax = 69;
+      } else if (complianceFilter === "Tidak Patuh") {
+        complianceMax = 39;
+      }
 
       const [patientListRes, statsSummary] = await Promise.all([
         patientService.getPatients({
           search: searchQuery,
-          status: statusParam,
           gender: genderParam,
+          compliance_min: complianceMin,
+          compliance_max: complianceMax,
           page: currentPage,
           limit: itemsPerPage,
         }),
@@ -71,13 +82,13 @@ export function usePatients(): UsePatientsReturn {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void fetchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery, statusFilter, genderFilter, currentPage]);
+  }, [searchQuery, complianceFilter, genderFilter, currentPage]);
 
   // Handle page resets when filters change
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentPage(1);
-  }, [searchQuery, statusFilter, genderFilter]);
+  }, [searchQuery, complianceFilter, genderFilter]);
 
   // Pagination calculation
   const totalPages = Math.max(1, Math.ceil(totalCount / itemsPerPage));
@@ -90,7 +101,7 @@ export function usePatients(): UsePatientsReturn {
     isLoading,
     error,
     searchQuery,
-    statusFilter,
+    complianceFilter,
     genderFilter,
     currentPage,
     itemsPerPage,
@@ -99,7 +110,7 @@ export function usePatients(): UsePatientsReturn {
     startItem,
     endItem,
     setSearchQuery,
-    setStatusFilter,
+    setComplianceFilter,
     setGenderFilter,
     setCurrentPage,
     refetch: fetchData,

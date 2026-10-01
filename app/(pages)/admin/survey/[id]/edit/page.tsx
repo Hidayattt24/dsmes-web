@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { SurveyFormFeature } from "@/features/survey/components/SurveyFormFeature";
+import { FormSkeleton } from "@/components/ui/loading/FormSkeleton";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -11,5 +13,9 @@ export const metadata = {
 
 export default async function AdminSurveyEditPage({ params }: PageProps) {
   const resolvedParams = await params;
-  return <SurveyFormFeature surveyId={resolvedParams.id} />;
+  return (
+    <Suspense fallback={<FormSkeleton />}>
+      <SurveyFormFeature surveyId={resolvedParams.id} />
+    </Suspense>
+  );
 }

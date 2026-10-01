@@ -7,12 +7,10 @@ interface RecordMonitoringFiltersProps {
   readonly complianceFilter: string;
   readonly riskFilter: string;
   readonly genderFilter: string;
-  readonly bloodSugarStatusFilter: string;
   readonly onSearchChange: (val: string) => void;
   readonly onComplianceChange: (val: string) => void;
   readonly onRiskChange: (val: string) => void;
   readonly onGenderChange: (val: string) => void;
-  readonly onBloodSugarStatusChange: (val: string) => void;
 }
 
 const genderOptions = [
@@ -36,25 +34,15 @@ const riskOptions = [
   { value: "Sangat Tinggi", label: "Risiko Sangat Tinggi" },
 ] as const;
 
-const bloodSugarOptions = [
-  { value: "Semua", label: "Semua Status Gula" },
-  { value: "normal", label: "Normal" },
-  { value: "prediabetes", label: "Prediabetes" },
-  { value: "hyperglycemia", label: "Hiperglikemia" },
-  { value: "hypoglycemia", label: "Hipoglikemia" },
-] as const;
-
 export function RecordMonitoringFilters({
   searchQuery,
   complianceFilter,
   riskFilter,
   genderFilter,
-  bloodSugarStatusFilter,
   onSearchChange,
   onComplianceChange,
   onRiskChange,
   onGenderChange,
-  onBloodSugarStatusChange,
 }: RecordMonitoringFiltersProps) {
   return (
     <div className="premium-card p-5 flex flex-col md:flex-row gap-4 items-center w-full font-[family-name:var(--font-poppins)]">
@@ -80,16 +68,7 @@ export function RecordMonitoringFilters({
         />
       </div>
 
-      <div className="w-full md:w-48">
-        <Select
-          value={bloodSugarStatusFilter}
-          onChange={onBloodSugarStatusChange}
-          options={bloodSugarOptions}
-          placeholder="Status Gula Darah"
-        />
-      </div>
-
-      <div className="w-full md:w-48">
+      <div className="w-full md:w-52">
         <Select
           value={complianceFilter}
           onChange={onComplianceChange}

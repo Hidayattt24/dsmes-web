@@ -4,6 +4,7 @@ import { useParticipantQuizDetail } from "../hooks/useParticipantQuizDetail";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { DetailPageLoader } from "@/components/ui/loading/DetailPageLoader";
 import { ErrorState } from "@/components/common/ErrorState";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
@@ -23,11 +24,7 @@ export function ParticipantQuizDetailFeature({
   const { detail, isLoading, error, refetch } = useParticipantQuizDetail(quizId, participantId);
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
+    return <DetailPageLoader type="record" />;
   }
 
   if (error || !detail) {

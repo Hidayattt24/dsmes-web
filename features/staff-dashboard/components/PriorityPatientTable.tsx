@@ -84,12 +84,12 @@ export function PriorityPatientTable({ patients, loading }: PriorityPatientTable
 
   return (
     <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm overflow-hidden w-full flex flex-col font-[family-name:var(--font-poppins)]">
-      <div className="p-5 border-b border-[#E2E8F0] flex justify-between items-center bg-[#F8FAFC]">
+      <div className="p-4 sm:p-5 border-b border-[#E2E8F0] flex justify-between items-center gap-3 bg-[#F8FAFC]">
         <div>
           <h3 className="text-sm font-bold text-[#1A202C]">Pasien Prioritas Hari Ini</h3>
           <p className="text-[11px] text-[#718096] mt-0.5 font-medium">Daftar pasien yang memerlukan perhatian segera hari ini</p>
         </div>
-        <span className="text-xs font-bold text-[#E53E3E] bg-[#FFF5F5] px-2.5 py-1 rounded-full border border-red-100">
+        <span className="text-xs font-bold text-[#E53E3E] bg-[#FFF5F5] px-2.5 py-1 rounded-full border border-red-100 shrink-0">
           {patients.length} Pasien
         </span>
       </div>

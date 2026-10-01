@@ -113,10 +113,10 @@ export function MonitoringCharts({
   const totalFood = foodIntake.reduce((sum, item) => sum + item.count, 0);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
       {/* 1. Global Food Intake (Doughnut Chart of Meal Log Distribution) */}
-      <div className="bg-white p-6 md:p-8 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col font-[family-name:var(--font-poppins)] min-h-[320px]">
-        <div className="mb-6 flex items-start justify-between gap-4">
+      <div className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col font-[family-name:var(--font-poppins)] min-h-[320px]">
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
           <div>
             <h3 className="text-base font-bold text-[#1A202C]">Distribusi Asupan Makanan</h3>
             <p className="text-xs text-[#718096] mt-0.5">Distribusi pencatatan makanan harian (Sarapan, Siang, Malam, Cemilan)</p>
@@ -133,9 +133,9 @@ export function MonitoringCharts({
             />
           </div>
         ) : (
-          <div className="flex-1 flex flex-col sm:flex-row items-center justify-center gap-6">
+          <div className="flex-1 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
             {/* SVG Doughnut */}
-            <div className="relative w-36 h-36 shrink-0">
+            <div className="relative w-32 h-32 sm:w-36 sm:h-36 shrink-0">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 200 200">
                 <circle cx="100" cy="100" r="70" fill="transparent" stroke="#F8FAFC" strokeWidth="20" />
                 {foodIntake.length > 0 && (
@@ -192,8 +192,8 @@ export function MonitoringCharts({
       </div>
 
       {/* 2. Physical Activity Distribution (Vertical Bar Chart) */}
-      <div className="bg-white p-6 md:p-8 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col font-[family-name:var(--font-poppins)] min-h-[320px]">
-        <div className="mb-6 flex items-start justify-between gap-4">
+      <div className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col font-[family-name:var(--font-poppins)] min-h-[320px]">
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
           <div>
             <h3 className="text-base font-bold text-[#1A202C]">Distribusi Aktivitas Fisik</h3>
             <p className="text-xs text-[#718096] mt-0.5">Persentase tingkat intensitas aktivitas fisik populasi pasien</p>
@@ -210,7 +210,7 @@ export function MonitoringCharts({
             />
           </div>
         ) : (
-          <div className="flex-1 flex gap-4 items-end justify-around h-36 border-b border-[#E2E8F0] pb-2">
+          <div className="flex-1 flex gap-2 sm:gap-4 items-end justify-around h-36 border-b border-[#E2E8F0] pb-2">
             {(() => {
               const total = physicalActivity.reduce((s, a) => s + a.count, 0) || 1;
               const maxCount = Math.max(...physicalActivity.map((a) => a.count), 1);
@@ -218,8 +218,8 @@ export function MonitoringCharts({
                 const pct = Math.round((point.count / total) * 100);
                 const heightPct = (point.count / maxCount) * 100;
                 return (
-                  <div key={point.level} className="flex flex-col items-center w-12 group relative">
-                    <div className="absolute -top-10 bg-slate-900 text-white text-[10px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap shadow-md">
+                  <div key={point.level} className="flex flex-col items-center flex-1 max-w-[72px] min-w-0 group relative">
+                    <div className="absolute -top-10 bg-slate-900 text-white text-[10px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap shadow-md z-10">
                       {pct}% Pasien
                     </div>
 
@@ -230,7 +230,9 @@ export function MonitoringCharts({
                       />
                     </div>
 
-                    <span className="text-xs font-bold text-[#4A5568] mt-2">{point.level}</span>
+                    <span className="text-[10px] sm:text-xs font-bold text-[#4A5568] mt-2 text-center truncate w-full" title={point.level}>
+                      {point.level}
+                    </span>
                     <span className="text-[10px] font-extrabold text-[#00695C] mt-0.5">{pct}%</span>
                   </div>
                 );
@@ -242,8 +244,8 @@ export function MonitoringCharts({
       </div>
 
       {/* 3. Medication Adherence (Horizontal Progress bars) */}
-      <div className="bg-white p-6 md:p-8 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col font-[family-name:var(--font-poppins)] min-h-[320px]">
-        <div className="mb-6 flex items-start justify-between gap-4">
+      <div className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col font-[family-name:var(--font-poppins)] min-h-[320px] lg:col-span-2 xl:col-span-1">
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
           <div>
             <h3 className="text-base font-bold text-[#1A202C]">Kepatuhan Minum Obat</h3>
             <p className="text-xs text-[#718096] mt-0.5">Tingkat kepatuhan konsumsi obat/insulin pasien terdaftar</p>
@@ -260,7 +262,7 @@ export function MonitoringCharts({
             />
           </div>
         ) : (
-          <div className="flex-1 justify-center flex flex-col space-y-4">
+          <div className="flex-1 justify-center grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-1 gap-4">
             {medicationAdherence.map((item) => (
               <div key={item.label} className="space-y-1.5">
                 <div className="flex justify-between text-xs">

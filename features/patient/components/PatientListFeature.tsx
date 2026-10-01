@@ -5,10 +5,11 @@ import { PatientStatistics } from "./PatientStatistics";
 import { PatientTable } from "./PatientTable";
 import { Select } from "@/components/ui/Select";
 
-const statusOptions = [
-  { value: "Semua", label: "Semua Status" },
-  { value: "Aktif", label: "Aktif" },
-  { value: "Nonaktif", label: "Nonaktif" },
+const complianceOptions = [
+  { value: "Semua", label: "Semua Kepatuhan" },
+  { value: "Patuh", label: "Patuh (≥70%)" },
+  { value: "Kurang Patuh", label: "Kurang Patuh (40-69%)" },
+  { value: "Tidak Patuh", label: "Tidak Patuh (<40%)" },
 ] as const;
 
 const genderOptions = [
@@ -23,7 +24,7 @@ export function PatientListFeature() {
     stats,
     isLoading,
     searchQuery,
-    statusFilter,
+    complianceFilter,
     genderFilter,
     currentPage,
     totalCount,
@@ -31,7 +32,7 @@ export function PatientListFeature() {
     startItem,
     endItem,
     setSearchQuery,
-    setStatusFilter,
+    setComplianceFilter,
     setGenderFilter,
     setCurrentPage,
   } = usePatients();
@@ -51,33 +52,35 @@ export function PatientListFeature() {
       <PatientStatistics stats={stats} />
 
       {/* Filter and Search Action bar */}
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="premium-card p-5 flex flex-col md:flex-row gap-4 items-center w-full">
         {/* Search */}
-        <div className="bg-white border border-[#E2E8F0] shadow-sm rounded-xl px-4 py-3 flex items-center gap-3 w-full md:flex-1 max-w-md h-12">
-          <span className="material-symbols-outlined text-[#718096] select-none text-xl">search</span>
+        <div className="flex-1 w-full relative">
+          <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#718096] select-none text-xl">
+            search
+          </span>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari nama pasien, dokter, atau puskesmas..."
-            className="bg-transparent border-none text-sm font-medium w-full placeholder:text-[#718096] text-[#1A202C] outline-none font-[family-name:var(--font-poppins)]"
+            className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12 font-[family-name:var(--font-poppins)]"
           />
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-3 items-center w-full sm:w-auto justify-end">
-          {/* Status Filter */}
-          <div className="w-36">
+        <div className="flex flex-col sm:flex-row gap-3 items-center w-full md:w-auto">
+          {/* Compliance Filter */}
+          <div className="w-full sm:w-44 md:w-48">
             <Select
-              value={statusFilter}
-              onChange={setStatusFilter}
-              options={statusOptions}
-              placeholder="Status"
+              value={complianceFilter}
+              onChange={setComplianceFilter}
+              options={complianceOptions}
+              placeholder="Status Kepatuhan"
             />
           </div>
 
           {/* Gender Filter */}
-          <div className="w-48">
+          <div className="w-full sm:w-48 md:w-52">
             <Select
               value={genderFilter}
               onChange={setGenderFilter}

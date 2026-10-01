@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { surveyService } from "@/services/surveyService";
 import type { QuestionRequest, SurveyType } from "@/types/survey";
 import { BackButton } from "@/components/common/BackButton";
@@ -110,6 +110,11 @@ const instrumentTypeOptions = [
 
 export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const fromDetail = searchParams.get("from") === "detail";
+  const backHref = fromDetail && surveyId ? `/admin/survey/${surveyId}` : "/admin/survey";
+  const backLabel = fromDetail && surveyId ? "Kembali ke Detail Survei" : "Manajemen Survey";
+
   const isEdit = Boolean(surveyId);
   const { showToast } = useToast();
 
@@ -332,18 +337,18 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
 
   if (isLoading) {
     return (
-      <div className="max-w-5xl mx-auto py-6">
+      <div className="max-w-[1600px] w-full mx-auto py-6">
         <FormSkeleton />
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-5xl mx-auto pb-16 font-[family-name:var(--font-poppins)]">
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-[1600px] w-full mx-auto pb-16 font-[family-name:var(--font-poppins)]">
       {/* Top Header Navigation */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#E2E8F0] pb-6">
         <div>
-          <BackButton href="/admin/survey" label="Manajemen Survey" />
+          <BackButton href={backHref} label={backLabel} />
           <h1 className="text-2xl font-bold text-[#1A202C] tracking-tight mt-2">
             {isEdit ? "Edit Survey Penelitian" : "Buat Survey Penelitian Baru"}
           </h1>

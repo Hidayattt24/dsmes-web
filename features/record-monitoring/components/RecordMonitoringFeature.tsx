@@ -70,12 +70,10 @@ export function RecordMonitoringFeature() {
         complianceFilter={complianceFilter}
         riskFilter={riskFilter}
         genderFilter={genderFilter}
-        bloodSugarStatusFilter={bloodSugarStatusFilter}
         onSearchChange={setSearchQuery}
         onComplianceChange={setComplianceFilter}
         onRiskChange={setRiskFilter}
         onGenderChange={setGenderFilter}
-        onBloodSugarStatusChange={setBloodSugarStatusFilter}
       />
 
       {isStaff && (

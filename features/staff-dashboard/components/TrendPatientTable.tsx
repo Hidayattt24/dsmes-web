@@ -82,13 +82,13 @@ export function TrendPatientTable({ patients, loading, trendRange, onTrendRangeC
 
   return (
     <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm overflow-hidden w-full flex flex-col font-[family-name:var(--font-poppins)]">
-      <div className="p-5 border-b border-[#E2E8F0] flex justify-between items-center bg-[#F8FAFC]">
-        <div className="flex items-center gap-4">
+      <div className="p-4 sm:p-5 border-b border-[#E2E8F0] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 bg-[#F8FAFC]">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
           <div>
             <h3 className="text-sm font-bold text-[#1A202C]">Pasien dengan Tren Meningkat</h3>
             <p className="text-[11px] text-[#718096] mt-0.5 font-medium">Pasien dengan peningkatan rata-rata gula darah signifikan</p>
           </div>
-          <div className="flex items-center gap-1 bg-[#F1F5F9] rounded-lg p-0.5">
+          <div className="flex items-center gap-1 bg-[#F1F5F9] rounded-lg p-0.5 self-start sm:self-auto">
             {RANGE_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
@@ -105,7 +105,7 @@ export function TrendPatientTable({ patients, loading, trendRange, onTrendRangeC
             ))}
           </div>
         </div>
-        <span className="text-xs font-bold text-[#D69E2E] bg-[#FEFCBF] px-2.5 py-1 rounded-full text-[#975A16] border border-[#FEEBC8]">
+        <span className="text-xs font-bold text-[#D69E2E] bg-[#FEFCBF] px-2.5 py-1 rounded-full text-[#975A16] border border-[#FEEBC8] self-start sm:self-auto">
           {patients.length} Pasien
         </span>
       </div>

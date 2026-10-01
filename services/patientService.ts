@@ -120,6 +120,8 @@ export const patientService = {
     search?: string;
     gender?: string;
     status?: string;
+    compliance_min?: number;
+    compliance_max?: number;
     page?: number;
     limit?: number;
   }): Promise<{ patients: Patient[]; total: number }> {

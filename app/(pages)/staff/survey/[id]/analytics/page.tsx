@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { SurveyAnalyticsFeature } from "@/features/survey/components/SurveyAnalyticsFeature";
+import { DetailPageLoader } from "@/components/ui/loading/DetailPageLoader";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -11,5 +13,9 @@ export const metadata = {
 
 export default async function StaffSurveyAnalyticsPage({ params }: PageProps) {
   const resolvedParams = await params;
-  return <SurveyAnalyticsFeature surveyId={resolvedParams.id} isStaff={true} />;
+  return (
+    <Suspense fallback={<DetailPageLoader type="record" />}>
+      <SurveyAnalyticsFeature surveyId={resolvedParams.id} isStaff={true} />
+    </Suspense>
+  );
 }

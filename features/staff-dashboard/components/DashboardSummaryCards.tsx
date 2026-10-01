@@ -12,7 +12,7 @@ interface DashboardSummaryCardsProps {
 export function DashboardSummaryCards({ cards, loading, hasError }: DashboardSummaryCardsProps) {
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
         {Array.from({ length: 4 }).map((_, i) => (
           <StatisticCardSkeleton key={i} />
         ))}
@@ -22,7 +22,7 @@ export function DashboardSummaryCards({ cards, loading, hasError }: DashboardSum
 
   if (hasError) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
@@ -40,7 +40,7 @@ export function DashboardSummaryCards({ cards, loading, hasError }: DashboardSum
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
       {cards.map((card) => {
         const metricCard: MetricCard = {
           label: card.label,

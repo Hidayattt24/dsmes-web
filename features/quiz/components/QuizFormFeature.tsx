@@ -5,6 +5,7 @@ import { useQuizForm } from "../hooks/useQuizForm";
 import { BackButton } from "@/components/common/BackButton";
 import { ROUTES } from "@/constants/routes";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { FormLoader } from "@/components/ui/loading";
 import { Select } from "@/components/ui/Select";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useToast } from "@/components/ui/Toast";
@@ -165,11 +166,7 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
   } = useQuizForm(quizId);
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
+    return <FormLoader />;
   }
 
   const handleSaveDraft = (e: React.FormEvent) => {
