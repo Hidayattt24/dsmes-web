@@ -180,18 +180,19 @@ export function RecordMonitoringTable({
     },
     {
       key: "status",
-      header: "Status",
+      header: "Status Kepatuhan",
       render: (row) => {
-        const statusStr = (row.dailySummary.status || "").toLowerCase();
-        let badgeVariant: "primary" | "warning" | "error" | "muted" = "muted";
-        if (statusStr === "normal" || statusStr === "target") {
+        const comp = typeof row.compliance === "number" ? Math.round(row.compliance) : 0;
+        let badgeVariant: "primary" | "warning" | "error" = "error";
+        let label = `Tidak Patuh (${comp}%)`;
+        if (comp >= 70) {
           badgeVariant = "primary";
-        } else if (statusStr === "prediabetes" || statusStr === "elevated") {
+          label = `Patuh (${comp}%)`;
+        } else if (comp >= 40) {
           badgeVariant = "warning";
-        } else if (statusStr === "hyperglycemia" || statusStr === "hipoglikemia") {
-          badgeVariant = "error";
+          label = `Kurang Patuh (${comp}%)`;
         }
-        return <Badge variant={badgeVariant}>{row.dailySummary.status}</Badge>;
+        return <Badge variant={badgeVariant}>{label}</Badge>;
       },
     },
     {

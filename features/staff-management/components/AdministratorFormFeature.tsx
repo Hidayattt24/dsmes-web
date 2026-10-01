@@ -82,7 +82,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
   }
 
   return (
-    <div className="p-6 space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)] relative">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)] relative">
       {/* Back button */}
       <div className="mb-4">
         <BackButton href="/admin/administrator" label="Manajemen Staff" />
@@ -91,7 +91,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
       {/* Action Toolbar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-10">
         <div>
-          <h2 className="text-3xl font-bold text-[#1E293B] tracking-tight font-[family-name:var(--font-poppins)]">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#1E293B] tracking-tight font-[family-name:var(--font-poppins)]">
             {adminId ? "Edit Staff Monitoring" : "Tambah Staff Monitoring Baru"}
           </h2>
           <p className="text-[#64748B] text-sm mt-1 font-[family-name:var(--font-poppins)]">
@@ -116,9 +116,9 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
       </div>
 
       {/* Form Cards Stack */}
-      <div className="space-y-8 w-full">
+      <div className="space-y-6 sm:space-y-8 w-full">
         {/* Card 1: Informasi Akun */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-8 shadow-sm space-y-6">
+        <div className="bg-white rounded-xl border border-[#E2E8F0] p-4 sm:p-8 shadow-sm space-y-6">
           <div className="border-b border-[#E2E8F0]/60 pb-3">
             <h3 className="text-base font-bold text-[#1E293B]">Informasi Akun</h3>
           </div>
@@ -201,7 +201,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
         </div>
 
         {/* Card 2: Keamanan */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-8 shadow-sm space-y-6">
+        <div className="bg-white rounded-xl border border-[#E2E8F0] p-4 sm:p-8 shadow-sm space-y-6">
           <div className="border-b border-[#E2E8F0]/60 pb-3">
             <h3 className="text-base font-bold text-[#1E293B]">Keamanan</h3>
           </div>
@@ -272,7 +272,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
         </div>
 
         {/* Card 3: Status & Peran */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-8 shadow-sm space-y-6">
+        <div className="bg-white rounded-xl border border-[#E2E8F0] p-4 sm:p-8 shadow-sm space-y-6">
           <div className="border-b border-[#E2E8F0]/60 pb-3">
             <h3 className="text-base font-bold text-[#1E293B]">Status & Informasi Tambahan</h3>
           </div>

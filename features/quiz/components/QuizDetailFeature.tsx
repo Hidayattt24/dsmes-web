@@ -5,6 +5,7 @@ import { QuizSummaryStats } from "./QuizSummaryStats";
 import { ParticipantTable } from "./ParticipantTable";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { DetailPageLoader } from "@/components/ui/loading/DetailPageLoader";
 import { ErrorState } from "@/components/common/ErrorState";
 import { useState } from "react";
 import { useToast } from "@/components/ui/Toast";
@@ -64,11 +65,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
+    return <DetailPageLoader type="record" />;
   }
 
   if (error || !quiz) {

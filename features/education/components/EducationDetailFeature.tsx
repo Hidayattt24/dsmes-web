@@ -63,17 +63,17 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
   const isDefaultArticle = article.id === "1";
 
   return (
-    <section className="max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)] p-6 space-y-8">
+    <section className="max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)] p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Breadcrumbs & Actions Row */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <BackButton href={ROUTES.MANAJEMEN_EDUKASI} label="Manajemen Edukasi" />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
           {/* Edit */}
           <button
             onClick={goToEdit}
-            className="bg-white border border-[#E2E8F0] text-[#1A202C] px-6 py-2.5 rounded-xl flex items-center gap-2 hover:bg-[#F4F6F8] active:scale-95 transition-all text-sm font-semibold shadow-sm cursor-pointer"
+            className="flex-1 sm:flex-initial justify-center bg-white border border-[#E2E8F0] text-[#1A202C] px-5 sm:px-6 py-2.5 rounded-xl flex items-center gap-2 hover:bg-[#F4F6F8] active:scale-95 transition-all text-sm font-semibold shadow-sm cursor-pointer"
           >
             <span className="material-symbols-outlined text-[20px]">edit</span>
             <span>Edit Artikel</span>
@@ -82,7 +82,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
           <button
             onClick={() => setIsDeleteOpen(true)}
             disabled={isDeleting}
-            className="bg-[#FFF5F5] text-[#C53030] px-6 py-2.5 rounded-xl flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all text-sm font-semibold border border-red-100 shadow-sm cursor-pointer disabled:opacity-50"
+            className="flex-1 sm:flex-initial justify-center bg-[#FFF5F5] text-[#C53030] px-5 sm:px-6 py-2.5 rounded-xl flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all text-sm font-semibold border border-red-100 shadow-sm cursor-pointer disabled:opacity-50"
           >
             <span className="material-symbols-outlined text-[20px]">delete</span>
             <span>Hapus</span>
@@ -91,16 +91,16 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
       </div>
 
       {/* 12-Column Responsive Grid */}
-      <div className="grid grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-12 gap-6 sm:gap-8 items-start">
         
         {/* Main Content Area: 9 Columns (~72%) */}
-        <div className="col-span-12 lg:col-span-9 space-y-8">
+        <div className="col-span-12 lg:col-span-9 space-y-6 sm:space-y-8">
           
           {/* Article Card Container */}
-          <div className="premium-card p-8 lg:p-10 space-y-8">
+          <div className="premium-card p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-8">
             
             {/* Hero Image */}
-            <div className="relative h-[380px] w-full rounded-xl overflow-hidden group border border-[#E2E8F0]/60">
+            <div className="relative h-[200px] sm:h-[320px] md:h-[380px] w-full rounded-xl overflow-hidden group border border-[#E2E8F0]/60">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={article.thumbnail}
@@ -109,7 +109,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
               />
             </div>
 
-            <div className="space-y-4 mt-8">
+            <div className="space-y-4 mt-6 sm:mt-8">
               <div className="flex gap-2">
                 <span className="px-3 py-1 bg-[#F0F9F8] text-[#00695C] text-[10px] font-bold rounded-full uppercase tracking-widest font-[family-name:var(--font-poppins)]">
                   Diabetes Care
@@ -119,11 +119,11 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
                 </span>
               </div>
               
-              <h1 className="text-3xl lg:text-4xl font-bold text-[#1A202C] leading-tight font-[family-name:var(--font-poppins)]">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1A202C] leading-tight font-[family-name:var(--font-poppins)]">
                 {article.title}
               </h1>
 
-              <div className="flex items-center flex-wrap gap-8 py-4 border-b border-[#E2E8F0] text-[#718096] text-[13px] font-[family-name:var(--font-poppins)]">
+              <div className="flex items-center flex-wrap gap-4 sm:gap-8 py-4 border-b border-[#E2E8F0] text-[#718096] text-[12px] sm:text-[13px] font-[family-name:var(--font-poppins)]">
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-[#00695C] text-[18px]">calendar_today</span>
                   <span>{article.createdAt === "12 Jan 2023" ? "24 Oktober 2023" : article.createdAt}</span>
@@ -143,7 +143,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
             <article className="prose max-w-none text-[#1A202C] font-[family-name:var(--font-poppins)]">
               {isDefaultArticle ? (
                 <>
-                  <p className="text-lg font-medium italic border-l-4 border-[#00695C] pl-6 bg-[#F0F9F8]/30 py-4 rounded-r-lg leading-relaxed">
+                  <p className="text-base sm:text-lg font-medium italic border-l-4 border-[#00695C] pl-4 sm:pl-6 bg-[#F0F9F8]/30 py-3 sm:py-4 rounded-r-lg leading-relaxed">
                     Diabetes Melitus adalah kondisi kronis yang memerlukan perhatian berkelanjutan. Melalui edukasi manajemen mandiri (DSMES), pasien dapat secara signifikan meningkatkan kualitas hidup dan mengurangi risiko komplikasi jangka panjang.
                   </p>
                   
@@ -152,7 +152,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
                   </p>
 
                   {/* Inline Two-Column Images */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 my-10">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 my-6 sm:my-10">
                     <div className="rounded-xl overflow-hidden border border-[#E2E8F0] shadow-sm aspect-[4/3] bg-[#F4F6F8]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
@@ -171,18 +171,18 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#1A202C] mb-4">Pentingnya Pemantauan Rutin</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-[#1A202C] mb-4">Pentingnya Pemantauan Rutin</h3>
                   <p className="text-base text-[#4A5568] leading-relaxed mb-6">
                     Monitoring rutin bukan sekadar mencatat angka. Ini adalah proses belajar tentang bagaimana tubuh Anda merespons berbagai faktor seperti stres, makanan tertentu, dan olahraga. Data ini sangat krusial bagi tenaga medis untuk menyesuaikan rencana perawatan Anda secara personal.
                   </p>
 
-                  <div className="bg-[#F0F9F8]/50 p-8 rounded-2xl border-l-4 border-[#00695C] my-10">
-                    <p className="text-[#00695C] font-semibold italic text-lg leading-relaxed">
+                  <div className="bg-[#F0F9F8]/50 p-4 sm:p-8 rounded-2xl border-l-4 border-[#00695C] my-6 sm:my-10">
+                    <p className="text-[#00695C] font-semibold italic text-base sm:text-lg leading-relaxed">
                       &quot;Kunci keberhasilan manajemen diabetes bukan pada obat semata, melainkan pada pemahaman pasien terhadap kondisi mereka sendiri.&quot;
                     </p>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#1A202C] mb-4">Rekomendasi Aktivitas Fisik</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-[#1A202C] mb-4">Rekomendasi Aktivitas Fisik</h3>
                   <p className="text-base text-[#4A5568] leading-relaxed mb-0">
                     Aktivitas fisik membantu sel-sel tubuh menjadi lebih sensitif terhadap insulin. Kami merekomendasikan setidaknya 150 menit aktivitas aerobik intensitas sedang per minggu, yang dibagi menjadi minimal 3 hari dalam seminggu.
                   </p>
@@ -204,7 +204,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
           </div>
 
           {/* Footer Navigation Action */}
-          <div className="flex justify-between items-center py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 sm:py-6">
             <button
               onClick={goBack}
               className="flex items-center gap-2 text-[#718096] hover:text-[#00695C] transition-all font-semibold text-sm cursor-pointer"

@@ -38,19 +38,23 @@ export function PatientTable({ patients, loading }: PatientTableProps) {
     },
     {
       key: "status",
-      header: "Status",
+      header: "Status Kepatuhan",
       render: (row) => {
-        const isAktif = row.status === "Aktif";
+        const comp = typeof row.compliance === "number" ? Math.round(row.compliance) : 0;
+        let badgeStyle = "bg-[#FFF5F5] text-[#C53030] border-red-200";
+        let label = `Tidak Patuh (${comp}%)`;
+        if (comp >= 70) {
+          badgeStyle = "bg-[#F0FDF4] text-[#166534] border-emerald-200";
+          label = `Patuh (${comp}%)`;
+        } else if (comp >= 40) {
+          badgeStyle = "bg-[#FFFBEB] text-[#B45309] border-amber-200";
+          label = `Kurang Patuh (${comp}%)`;
+        }
         return (
           <span
-            className={[
-              "inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight",
-              isAktif
-                ? "bg-[#F0FDF4] text-[#166534]"
-                : "bg-[#F4F6F8] text-[#718096] border border-[#E2E8F0]",
-            ].join(" ")}
+            className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold border tracking-tight ${badgeStyle}`}
           >
-            {row.status}
+            {label}
           </span>
         );
       },

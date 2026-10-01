@@ -67,23 +67,25 @@ export function EducationListFeature() {
       <EducationStatistics stats={stats} />
 
       {/* Search and Filters bar */}
-      <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <div className="premium-card p-5 flex flex-col md:flex-row gap-4 items-center w-full">
         {/* Search */}
-        <div className="flex items-center gap-3 bg-white px-5 py-2.5 rounded-xl border border-[#E2E8F0] w-full sm:w-96 focus-within:border-[#0F766E] transition-all">
-          <span className="material-symbols-outlined text-[#718096] text-xl">search</span>
+        <div className="flex-1 w-full relative">
+          <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#718096] select-none text-xl">
+            search
+          </span>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari judul, ringkasan, atau pembuat..."
-            className="bg-transparent border-none text-sm font-medium w-full placeholder:text-[#718096] text-[#1A202C] outline-none font-[family-name:var(--font-poppins)]"
+            className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#0F766E] focus:ring-1 focus:ring-[#0F766E] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12 font-[family-name:var(--font-poppins)]"
           />
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-3 items-center w-full sm:w-auto justify-end">
+        <div className="flex flex-col sm:flex-row gap-3 items-center w-full md:w-auto">
           {/* Category Filter */}
-          <div className="w-44">
+          <div className="w-full sm:w-48">
             <Select
               value={categoryFilter}
               onChange={setCategoryFilter}
@@ -93,7 +95,7 @@ export function EducationListFeature() {
           </div>
 
           {/* Status Filter */}
-          <div className="w-36">
+          <div className="w-full sm:w-40">
             <Select
               value={statusFilter}
               onChange={setStatusFilter}

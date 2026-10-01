@@ -12,7 +12,7 @@ export default function StaffLayout({ children }: StaffLayoutProps) {
       <SidebarNavbar />
       <main className="flex-1 flex flex-col min-w-0">
         <HeaderNavbar />
-        <div className="flex-1 p-6 md:p-8 overflow-y-auto">{children}</div>
+        <div className="flex-1 p-4 sm:p-6 xl:p-8 overflow-y-auto">{children}</div>
       </main>
     </div>
   );

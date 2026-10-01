@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { SurveyFormFeature } from "@/features/survey/components/SurveyFormFeature";
+import { FormSkeleton } from "@/components/ui/loading/FormSkeleton";
 
 export const metadata = {
   title: "Buat Survey Baru | DSMES Admin",
@@ -6,5 +8,9 @@ export const metadata = {
 };
 
 export default function AdminSurveyCreatePage() {
-  return <SurveyFormFeature />;
+  return (
+    <Suspense fallback={<FormSkeleton />}>
+      <SurveyFormFeature />
+    </Suspense>
+  );
 }

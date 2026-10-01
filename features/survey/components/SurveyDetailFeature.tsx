@@ -34,7 +34,7 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
 
   if (isLoading) {
     return (
-      <div className="max-w-5xl mx-auto py-6">
+      <div className="max-w-[1600px] w-full mx-auto py-6">
         <DetailPageLoader type="education" />
       </div>
     );
@@ -42,7 +42,7 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
 
   if (!survey) {
     return (
-      <div className="p-12 text-center text-red-600 bg-white rounded-2xl border border-red-200">
+      <div className="p-12 text-center text-red-600 bg-white rounded-2xl border border-red-200 max-w-[1600px] w-full mx-auto">
         Survey tidak ditemukan
       </div>
     );
@@ -52,7 +52,7 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
   const basePath = isStaff ? "/staff/survey" : "/admin/survey";
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto pb-16 font-[family-name:var(--font-poppins)]">
+    <div className="space-y-8 max-w-[1600px] w-full mx-auto pb-16 font-[family-name:var(--font-poppins)]">
       {/* Back button */}
       <div>
         <BackButton href={basePath} label="Daftar Survey Penelitian" />
@@ -90,7 +90,7 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
 
         <div className="flex flex-wrap items-center gap-3">
           <Link
-            href={`${basePath}/${survey.id}/analytics`}
+            href={`${basePath}/${survey.id}/analytics?from=detail`}
             className="px-4 py-2.5 bg-[#00695C] hover:bg-[#004D40] text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shadow-sm"
           >
             <span className="material-symbols-outlined text-base">analytics</span>
@@ -99,7 +99,7 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
 
           {!isStaff && (
             <Link
-              href={`/admin/survey/${survey.id}/edit`}
+              href={`/admin/survey/${survey.id}/edit?from=detail`}
               className="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shadow-sm"
             >
               <span className="material-symbols-outlined text-base">edit</span>

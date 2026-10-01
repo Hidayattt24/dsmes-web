@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { surveyService } from "@/services/surveyService";
 import type { SurveyAnalytics, SurveyResponseItem } from "@/types/survey";
 import { BackButton } from "@/components/common/BackButton";
@@ -70,10 +71,14 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
   };
 
   const basePath = isStaff ? "/staff/survey" : "/admin/survey";
+  const searchParams = useSearchParams();
+  const fromDetail = searchParams.get("from") === "detail";
+  const backHref = fromDetail ? `${basePath}/${surveyId}` : basePath;
+  const backLabel = fromDetail ? "Kembali ke Detail Survei" : "Kembali ke Survei";
 
   if (isLoading) {
     return (
-      <div className="max-w-6xl mx-auto py-6 font-[family-name:var(--font-poppins)]">
+      <div className="max-w-[1600px] w-full mx-auto py-6 font-[family-name:var(--font-poppins)]">
         <DetailPageLoader type="record" />
       </div>
     );
@@ -81,7 +86,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
 
   if (!analytics) {
     return (
-      <div className="p-12 text-center text-red-600 bg-white rounded-2xl border border-red-200 font-[family-name:var(--font-poppins)]">
+      <div className="p-12 text-center text-red-600 bg-white rounded-2xl border border-red-200 font-[family-name:var(--font-poppins)] max-w-[1600px] w-full mx-auto">
         Laporan analitik survei tidak ditemukan.
       </div>
     );
@@ -90,11 +95,11 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
   const isSUS = analytics.type === "SUS";
 
   return (
-    <div className="space-y-8 max-w-6xl mx-auto pb-16 font-[family-name:var(--font-poppins)]">
+    <div className="space-y-8 max-w-[1600px] w-full mx-auto pb-16 font-[family-name:var(--font-poppins)]">
       {/* Navigation header with BackButton */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2E8F0] pb-4">
         <div>
-          <BackButton href={`${basePath}/${surveyId}`} label="Kembali ke Detail Survey" />
+          <BackButton href={backHref} label={backLabel} />
           <h1 className="text-2xl font-bold text-[#1A202C] mt-2">Analitik & Laporan Respons Survei</h1>
           <p className="text-xs font-medium text-[#718096] mt-0.5">
             Analisis lengkap hasil penilaian kepuasan dan usability pengguna

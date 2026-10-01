@@ -6,6 +6,7 @@ import { BackButton } from "@/components/common/BackButton";
 import { ROUTES } from "@/constants/routes";
 import { useToast } from "@/components/ui/Toast";
 import { Select } from "@/components/ui/Select";
+import { FormLoader } from "@/components/ui/loading";
 import { foodService } from "@/features/data-food/services/foodService";
 import type { CreateFoodDTO, FoodMaster } from "@/features/data-food/types/food";
 
@@ -240,16 +241,7 @@ export function FoodFormFeature({ foodId }: Props) {
   };
 
   if (loadingInitial) {
-    return (
-      <div className="max-w-[1600px] mx-auto w-full py-16 text-center">
-        <span className="material-symbols-outlined text-4xl text-[#00695C] animate-spin select-none">
-          progress_activity
-        </span>
-        <p className="mt-3 text-sm font-medium text-[#718096]">
-          Memuat formulir data makanan...
-        </p>
-      </div>
-    );
+    return <FormLoader />;
   }
 
   return (

@@ -51,8 +51,8 @@ export function StaffPriorityPatientTable({ patients, loading }: StaffPriorityPa
       header: "Level Risiko",
       render: (row) => {
         const statusStr = (row.dailySummary.status ?? "").toLowerCase();
-        const isHigh = statusStr === "hyperglycemia";
-        const isWarning = statusStr === "prediabetes" || statusStr === "elevated";
+        const isHigh = statusStr === "hyperglycemia" || statusStr === "hiperglikemia";
+        const isWarning = statusStr === "prediabetes" || statusStr === "elevated" || statusStr === "meningkat";
         const isHypo = statusStr === "hipoglikemia" || statusStr === "hypoglycemia";
         return (
           <Badge variant={isHigh || isHypo ? "error" : "warning"}>
