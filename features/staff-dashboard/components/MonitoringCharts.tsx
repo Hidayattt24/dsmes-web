@@ -1,6 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 import { EmptyState } from "@/components/common/EmptyState";
-import type { FoodIntakeItem, AdherenceItem, PatientContribution, TimeRange } from "../hooks/useStaffDashboard";
+import type {
+  FoodIntakeItem,
+  AdherenceItem,
+  PatientContribution,
+  TimeRange,
+} from "../hooks/useStaffDashboard";
 
 interface PhysicalActivityItem {
   readonly level: string;
@@ -61,7 +67,11 @@ function initialOf(name: string): string {
 
 // PatientList shows which patients contributed data (up to 5) and links to the
 // full record-monitoring page when there are more than 5.
-function PatientList({ patients }: { readonly patients: readonly PatientContribution[] }) {
+function PatientList({
+  patients,
+}: {
+  readonly patients: readonly PatientContribution[];
+}) {
   if (patients.length === 0) return null;
 
   const visible = patients.slice(0, 5);
@@ -73,12 +83,17 @@ function PatientList({ patients }: { readonly patients: readonly PatientContribu
       </p>
       <div className="space-y-2">
         {visible.map((p) => (
-          <div key={p.patientId} className="flex items-center justify-between gap-2">
+          <div
+            key={p.patientId}
+            className="flex items-center justify-between gap-2"
+          >
             <div className="flex items-center gap-2 min-w-0">
               {p.avatarUrl ? (
-                <img
+                <Image
                   src={p.avatarUrl}
                   alt={p.name}
+                  width={20}
+                  height={20}
                   className="w-5 h-5 rounded-full object-cover shrink-0"
                 />
               ) : (
@@ -86,9 +101,13 @@ function PatientList({ patients }: { readonly patients: readonly PatientContribu
                   {initialOf(p.name)}
                 </span>
               )}
-              <span className="text-xs text-[#4A5568] font-semibold truncate">{p.name}</span>
+              <span className="text-xs text-[#4A5568] font-semibold truncate">
+                {p.name}
+              </span>
             </div>
-            <span className="text-[10px] font-extrabold text-[#1A202C] shrink-0">{p.count} log</span>
+            <span className="text-[10px] font-extrabold text-[#1A202C] shrink-0">
+              {p.count} log
+            </span>
           </div>
         ))}
       </div>
@@ -126,8 +145,13 @@ export function MonitoringCharts({
       <div className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col font-[family-name:var(--font-poppins)] min-h-[320px]">
         <div className="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
           <div>
-            <h3 className="text-base font-bold text-[#1A202C]">Distribusi Asupan Makanan</h3>
-            <p className="text-xs text-[#718096] mt-0.5">Distribusi pencatatan makanan harian (Sarapan, Siang, Malam, Cemilan)</p>
+            <h3 className="text-base font-bold text-[#1A202C]">
+              Distribusi Asupan Makanan
+            </h3>
+            <p className="text-xs text-[#718096] mt-0.5">
+              Distribusi pencatatan makanan harian (Sarapan, Siang, Malam,
+              Cemilan)
+            </p>
           </div>
           <RangeSelector value={foodRange} onChange={onFoodRangeChange} />
         </div>
@@ -144,8 +168,18 @@ export function MonitoringCharts({
           <div className="flex-1 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
             {/* SVG Doughnut */}
             <div className="relative w-32 h-32 sm:w-36 sm:h-36 shrink-0">
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 200 200">
-                <circle cx="100" cy="100" r="70" fill="transparent" stroke="#F8FAFC" strokeWidth="20" />
+              <svg
+                className="w-full h-full transform -rotate-90"
+                viewBox="0 0 200 200"
+              >
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="70"
+                  fill="transparent"
+                  stroke="#F8FAFC"
+                  strokeWidth="20"
+                />
                 {foodIntake.length > 0 && (
                   <>
                     {(() => {
@@ -175,21 +209,36 @@ export function MonitoringCharts({
                 )}
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-lg font-extrabold text-[#1A202C]">{totalFood.toLocaleString("id-ID")}</span>
-                <span className="text-[9px] text-[#718096] uppercase tracking-wider font-bold">Total Log</span>
+                <span className="text-lg font-extrabold text-[#1A202C]">
+                  {totalFood.toLocaleString("id-ID")}
+                </span>
+                <span className="text-[9px] text-[#718096] uppercase tracking-wider font-bold">
+                  Total Log
+                </span>
               </div>
             </div>
 
             {/* Details list */}
             <div className="w-full space-y-2">
               {foodIntake.map((item) => (
-                <div key={item.category} className="flex items-center justify-between text-xs">
+                <div
+                  key={item.category}
+                  className="flex items-center justify-between text-xs"
+                >
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                    <span className="text-[#4A5568] font-semibold">{item.category}</span>
+                    <span
+                      className="w-2.5 h-2.5 rounded-full shrink-0"
+                      style={{ backgroundColor: item.color }}
+                    />
+                    <span className="text-[#4A5568] font-semibold">
+                      {item.category}
+                    </span>
                   </div>
                   <span className="font-bold text-[#1A202C]">
-                    {item.percentage}% <span className="text-[#718096] font-medium text-[10px]">({item.count})</span>
+                    {item.percentage}%{" "}
+                    <span className="text-[#718096] font-medium text-[10px]">
+                      ({item.count})
+                    </span>
                   </span>
                 </div>
               ))}
@@ -203,10 +252,17 @@ export function MonitoringCharts({
       <div className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col font-[family-name:var(--font-poppins)] min-h-[320px]">
         <div className="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
           <div>
-            <h3 className="text-base font-bold text-[#1A202C]">Distribusi Aktivitas Fisik</h3>
-            <p className="text-xs text-[#718096] mt-0.5">Persentase tingkat intensitas aktivitas fisik populasi pasien</p>
+            <h3 className="text-base font-bold text-[#1A202C]">
+              Distribusi Aktivitas Fisik
+            </h3>
+            <p className="text-xs text-[#718096] mt-0.5">
+              Persentase tingkat intensitas aktivitas fisik populasi pasien
+            </p>
           </div>
-          <RangeSelector value={activityRange} onChange={onActivityRangeChange} />
+          <RangeSelector
+            value={activityRange}
+            onChange={onActivityRangeChange}
+          />
         </div>
 
         {physicalActivity.length === 0 ? (
@@ -220,13 +276,20 @@ export function MonitoringCharts({
         ) : (
           <div className="flex-1 flex gap-2 sm:gap-4 items-end justify-around h-36 border-b border-[#E2E8F0] pb-2">
             {(() => {
-              const total = physicalActivity.reduce((s, a) => s + a.count, 0) || 1;
-              const maxCount = Math.max(...physicalActivity.map((a) => a.count), 1);
+              const total =
+                physicalActivity.reduce((s, a) => s + a.count, 0) || 1;
+              const maxCount = Math.max(
+                ...physicalActivity.map((a) => a.count),
+                1,
+              );
               return physicalActivity.map((point) => {
                 const pct = Math.round((point.count / total) * 100);
                 const heightPct = (point.count / maxCount) * 100;
                 return (
-                  <div key={point.level} className="flex flex-col items-center flex-1 max-w-[72px] min-w-0 group relative">
+                  <div
+                    key={point.level}
+                    className="flex flex-col items-center flex-1 max-w-[72px] min-w-0 group relative"
+                  >
                     <div className="absolute -top-10 bg-slate-900 text-white text-[10px] font-bold py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap shadow-md z-10">
                       {pct}% Pasien
                     </div>
@@ -238,10 +301,15 @@ export function MonitoringCharts({
                       />
                     </div>
 
-                    <span className="text-[10px] sm:text-xs font-bold text-[#4A5568] mt-2 text-center truncate w-full" title={point.level}>
+                    <span
+                      className="text-[10px] sm:text-xs font-bold text-[#4A5568] mt-2 text-center truncate w-full"
+                      title={point.level}
+                    >
                       {point.level}
                     </span>
-                    <span className="text-[10px] font-extrabold text-[#00695C] mt-0.5">{pct}%</span>
+                    <span className="text-[10px] font-extrabold text-[#00695C] mt-0.5">
+                      {pct}%
+                    </span>
                   </div>
                 );
               });
@@ -255,10 +323,17 @@ export function MonitoringCharts({
       <div className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col font-[family-name:var(--font-poppins)] min-h-[320px] lg:col-span-2 xl:col-span-1">
         <div className="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
           <div>
-            <h3 className="text-base font-bold text-[#1A202C]">Kepatuhan Minum Obat</h3>
-            <p className="text-xs text-[#718096] mt-0.5">Tingkat kepatuhan konsumsi obat/insulin pasien terdaftar</p>
+            <h3 className="text-base font-bold text-[#1A202C]">
+              Kepatuhan Minum Obat
+            </h3>
+            <p className="text-xs text-[#718096] mt-0.5">
+              Tingkat kepatuhan konsumsi obat/insulin pasien terdaftar
+            </p>
           </div>
-          <RangeSelector value={adherenceRange} onChange={onAdherenceRangeChange} />
+          <RangeSelector
+            value={adherenceRange}
+            onChange={onAdherenceRangeChange}
+          />
         </div>
 
         {medicationAdherence.length === 0 ? (
@@ -276,13 +351,19 @@ export function MonitoringCharts({
                 <div className="flex justify-between text-xs">
                   <span className="font-bold text-[#4A5568]">{item.label}</span>
                   <span className="font-extrabold text-[#1A202C]">
-                    {item.percentage}% <span className="text-[#718096] font-medium text-[10px]">({item.count})</span>
+                    {item.percentage}%{" "}
+                    <span className="text-[#718096] font-medium text-[10px]">
+                      ({item.count})
+                    </span>
                   </span>
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500"
-                    style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
+                    style={{
+                      width: `${item.percentage}%`,
+                      backgroundColor: item.color,
+                    }}
                   />
                 </div>
               </div>

@@ -26,7 +26,6 @@ export function RecordMonitoringFeature() {
     complianceFilter,
     riskFilter,
     genderFilter,
-    bloodSugarStatusFilter,
     sortBy,
     sortOrder,
     pagination,
@@ -34,7 +33,6 @@ export function RecordMonitoringFeature() {
     setComplianceFilter,
     setRiskFilter,
     setGenderFilter,
-    setBloodSugarStatusFilter,
     setSortBy,
     setPage,
   } = useRecordMonitoring();
