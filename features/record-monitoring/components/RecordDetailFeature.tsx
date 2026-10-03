@@ -23,7 +23,9 @@ interface RecordDetailFeatureProps {
 export function RecordDetailFeature({ patientId }: RecordDetailFeatureProps) {
   const pathname = usePathname();
   const isStaff = pathname.startsWith("/staff");
-  const listHref = isStaff ? "/staff/pemantauan-catatan-pasien" : "/admin/pemantauan-catatan-pasien";
+  const listHref = isStaff
+    ? "/staff/pemantauan-catatan-pasien"
+    : "/admin/pemantauan-catatan-pasien";
 
   const {
     patient,
@@ -54,7 +56,12 @@ export function RecordDetailFeature({ patientId }: RecordDetailFeatureProps) {
   }
 
   if (error || !patient) {
-    return <ErrorState message={error ?? "Data catatan pasien tidak ditemukan."} onRetry={refetch} />;
+    return (
+      <ErrorState
+        message={error ?? "Data catatan pasien tidak ditemukan."}
+        onRetry={refetch}
+      />
+    );
   }
 
   return (
@@ -66,18 +73,26 @@ export function RecordDetailFeature({ patientId }: RecordDetailFeatureProps) {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <h2 className="text-2xl font-bold text-[#1A202C]">{patient.name}</h2>
-            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
-              patient.compliance >= 75
-                ? "bg-[#F0FDF4] text-[#166534] border border-[#DCFCE7]"
-                : patient.compliance >= 60
-                ? "bg-[#EBF8FF] text-[#2B6CB0] border border-[#BEE3F8]"
-                : patient.compliance >= 40
-                ? "bg-[#FFFBEB] text-[#B45309] border border-[#FEF3C7]"
-                : "bg-[#FFF5F5] text-[#C53030] border border-[#FED7D7]"
-            }`}>
-              <span className="material-symbols-outlined text-[14px] mr-1">task_alt</span>
-              {patient.complianceLabel || (patient.compliance >= 75 ? "Patuh" : "Kurang")} ({patient.compliance}%)
+            <h2 className="text-2xl font-bold text-[#1A202C]">
+              {patient.name}
+            </h2>
+            <span
+              className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
+                patient.compliance >= 75
+                  ? "bg-[#F0FDF4] text-[#166534] border border-[#DCFCE7]"
+                  : patient.compliance >= 60
+                    ? "bg-[#EBF8FF] text-[#2B6CB0] border border-[#BEE3F8]"
+                    : patient.compliance >= 40
+                      ? "bg-[#FFFBEB] text-[#B45309] border border-[#FEF3C7]"
+                      : "bg-[#FFF5F5] text-[#C53030] border border-[#FED7D7]"
+              }`}
+            >
+              <span className="material-symbols-outlined text-[14px] mr-1">
+                task_alt
+              </span>
+              {patient.complianceLabel ||
+                (patient.compliance >= 75 ? "Patuh" : "Kurang")}{" "}
+              ({patient.compliance}%)
             </span>
           </div>
           {patient.puskesmas && patient.puskesmas !== "-" && (
@@ -98,10 +113,12 @@ export function RecordDetailFeature({ patientId }: RecordDetailFeatureProps) {
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <BloodSugarHistoryCard logs={bloodSugarLogs} diabetesType={patient.diabetesType} />
+        <BloodSugarHistoryCard logs={bloodSugarLogs} />
         <MealHistoryCard
           logs={mealLogs}
-          targetCalories={patient.dailyCalorieTarget || calculateDSMESCalorieTarget(patient)}
+          targetCalories={
+            patient.dailyCalorieTarget || calculateDSMESCalorieTarget(patient)
+          }
           selectedDate={mealDate}
           onDateChange={setMealDate}
           isLoading={isMealLoading}
