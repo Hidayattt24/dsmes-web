@@ -39,20 +39,21 @@ export function RecordMonitoringFeature() {
     setPage,
   } = useRecordMonitoring();
 
-  const priorityPatients = patients.filter(
-    (p) => {
-      const s = (p.dailySummary.status ?? "").toLowerCase();
-      return s === "prediabetes" || s === "elevated" || s === "hyperglycemia" || s === "hipoglikemia";
-    }
-  );
+  const priorityPatients = patients.filter((p) => {
+    const s = (p.dailySummary.status ?? "").toLowerCase();
+    return (
+      s === "prediabetes" ||
+      s === "elevated" ||
+      s === "hyperglycemia" ||
+      s === "hipoglikemia"
+    );
+  });
 
-  const trendPatients = patients.filter(
-    (p) => {
-      const bs = p.dailySummary.avgBloodSugar;
-      const latest = parseInt(p.dailySummary.bloodSugar) || 0;
-      return bs ? latest > bs * 1.1 : false;
-    }
-  );
+  const trendPatients = patients.filter((p) => {
+    const bs = p.dailySummary.avgBloodSugar;
+    const latest = parseInt(p.dailySummary.bloodSugar) || 0;
+    return bs ? latest > bs * 1.1 : false;
+  });
 
   return (
     <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
@@ -76,7 +77,10 @@ export function RecordMonitoringFeature() {
         </button>
       </div>
 
-      <MedicalGuideInfoModal isOpen={isGuideOpen} onClose={() => setIsGuideOpen(false)} />
+      <MedicalGuideInfoModal
+        isOpen={isGuideOpen}
+        onClose={() => setIsGuideOpen(false)}
+      />
 
       <RecordMonitoringStats stats={stats} />
 
@@ -95,21 +99,28 @@ export function RecordMonitoringFeature() {
         <MonitoringTabs
           activeTab={activeTab}
           onTabChange={setActiveTab}
-          tabs={[
-            { id: "semua", label: "Semua Pasien", icon: "group", badgeCount: pagination.total },
-            {
-              id: "prioritas",
-              label: "Pasien Prioritas Hari Ini",
-              icon: "emergency",
-              badgeCount: priorityPatients.length,
-            },
-            {
-              id: "tren",
-              label: "Pasien dengan Tren Meningkat",
-              icon: "trending_up",
-              badgeCount: trendPatients.length,
-            },
-          ] as const}
+          tabs={
+            [
+              {
+                id: "semua",
+                label: "Semua Pasien",
+                icon: "group",
+                badgeCount: pagination.total,
+              },
+              {
+                id: "prioritas",
+                label: "Pasien Prioritas Hari Ini",
+                icon: "emergency",
+                badgeCount: priorityPatients.length,
+              },
+              {
+                id: "tren",
+                label: "Pasien dengan Tren Meningkat",
+                icon: "trending_up",
+                badgeCount: trendPatients.length,
+              },
+            ] as const
+          }
         />
       )}
 
@@ -128,10 +139,16 @@ export function RecordMonitoringFeature() {
               />
             )}
             {activeTab === "prioritas" && (
-              <StaffPriorityPatientTable patients={priorityPatients} loading={isLoading} />
+              <StaffPriorityPatientTable
+                patients={priorityPatients}
+                loading={isLoading}
+              />
             )}
             {activeTab === "tren" && (
-              <IncreasingTrendTable patients={trendPatients} loading={isLoading} />
+              <IncreasingTrendTable
+                patients={trendPatients}
+                loading={isLoading}
+              />
             )}
           </>
         ) : (
