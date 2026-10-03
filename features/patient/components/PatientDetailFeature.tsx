@@ -171,7 +171,7 @@ export function PatientDetailFeature({ patientId }: PatientDetailFeatureProps) {
       {/* Metrics & Analytics section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-12">
-          <BloodSugarHistoryCard logs={bloodSugarLogs} />
+          <BloodSugarHistoryCard logs={bloodSugarLogs} diabetesType={patient.diabetesType} />
         </div>
         <div className="lg:col-span-7">
           <PatientCalorieChart data={meals} patient={patient} />

@@ -43,6 +43,7 @@ export interface PopulationMetricsResponse {
 export interface PatientContributionResponse {
   readonly patient_id: string;
   readonly full_name: string;
+  readonly profile_photo_url?: string;
   readonly count: number;
 }
 

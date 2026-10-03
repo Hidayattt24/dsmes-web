@@ -17,7 +17,7 @@ import { useResetPassword } from "@/features/auth/hooks/useResetPassword";
 import { ROUTES }           from "@/constants/routes";
 
 export function ResetPasswordForm() {
-  const { isLoading, error, submit } = useResetPassword();
+  const { isLoading, submit } = useResetPassword();
 
   const {
     register,
@@ -39,13 +39,6 @@ export function ResetPasswordForm() {
       />
 
       <form onSubmit={handleSubmit(submit)} noValidate className="flex flex-col gap-6">
-        {error && (
-          <div role="alert" className="flex items-center gap-2 p-3 bg-[#FFF5F5] rounded-xl border border-[#C53030]/20">
-            <span className="material-symbols-outlined text-[#C53030] text-[18px]">error</span>
-            <p className="text-sm font-medium text-[#C53030]">{error}</p>
-          </div>
-        )}
-
         <div>
           <PasswordField
             label="Kata Sandi Baru"

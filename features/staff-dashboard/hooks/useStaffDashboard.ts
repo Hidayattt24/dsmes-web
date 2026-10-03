@@ -42,12 +42,14 @@ export interface AdherenceItem {
 export interface PatientContribution {
   readonly patientId: string;
   readonly name: string;
+  readonly avatarUrl?: string;
   readonly count: number;
 }
 
 export interface PriorityPatient {
   readonly id: string;
   readonly name: string;
+  readonly diabetesType?: string;
   readonly bloodSugar: number | null;
   readonly glucoseStatus: string;
   readonly reason: string;
@@ -68,6 +70,7 @@ function mapPriorityPatient(p: PriorityPatientResponse): PriorityPatient {
   return {
     id: p.id,
     name: p.full_name,
+    diabetesType: p.diabetes_type,
     bloodSugar: p.latest_glucose,
     glucoseStatus: p.latest_glucose_status,
     reason: p.priority_reason,
@@ -91,6 +94,7 @@ function mapPatientContribution(p: PatientContributionResponse): PatientContribu
   return {
     patientId: p.patient_id,
     name: p.full_name,
+    avatarUrl: p.profile_photo_url || undefined,
     count: p.count,
   };
 }
@@ -110,7 +114,7 @@ function buildSummaryCards(stats: StaffDashboardStats | null): DashboardSummaryC
     {
       label: "Pasien Perlu Perhatian",
       value: highGlucose,
-      change: `${stats.glucose_distribution.hyperglycemia_count} diabetes, ${stats.glucose_distribution.hypoglycemia_count} hipoglikemia`,
+      change: `${stats.glucose_distribution.hyperglycemia_count} hiperglikemia, ${stats.glucose_distribution.hypoglycemia_count} hipoglikemia`,
       isPositive: false,
       icon: "warning",
       variant: "error",

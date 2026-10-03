@@ -9,12 +9,14 @@ import { RecordMonitoringTable } from "./RecordMonitoringTable";
 import { MonitoringTabs } from "./MonitoringTabs";
 import { StaffPriorityPatientTable } from "./StaffPriorityPatientTable";
 import { IncreasingTrendTable } from "./IncreasingTrendTable";
+import { MedicalGuideInfoModal } from "@/components/common/MedicalGuideInfoModal";
 
 export function RecordMonitoringFeature() {
   const pathname = usePathname();
   const isStaff = pathname.startsWith("/staff");
 
   const [activeTab, setActiveTab] = useState("semua");
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
 
   const {
     patients,
@@ -54,14 +56,27 @@ export function RecordMonitoringFeature() {
 
   return (
     <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
-      <div>
-        <h2 className="text-2xl font-bold text-[#1A202C] tracking-tight">
-          Monitoring Record Pasien
-        </h2>
-        <p className="text-sm text-[#718096] mt-1">
-          Pantau aktivitas harian dan catatan kesehatan seluruh pasien
-        </p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-[#1A202C] tracking-tight">
+            Monitoring Record Pasien
+          </h2>
+          <p className="text-sm text-[#718096] mt-1">
+            Pantau aktivitas harian dan catatan kesehatan seluruh pasien
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsGuideOpen(true)}
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#00695C] shadow-sm transition-all cursor-pointer"
+        >
+          <span className="material-symbols-outlined text-sm">menu_book</span>
+          <span>Panduan Standar</span>
+        </button>
       </div>
+
+      <MedicalGuideInfoModal isOpen={isGuideOpen} onClose={() => setIsGuideOpen(false)} />
 
       <RecordMonitoringStats stats={stats} />
 

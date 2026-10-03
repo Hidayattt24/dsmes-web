@@ -30,6 +30,7 @@ const mapSettingsFromBackend = (data: any): SystemSettings => {
     username: data.username || "",
     email: data.email || "",
     whatsapp: data.whatsapp_number || "",
+    puskesmas: data.health_facility_name || data.health_facility || "",
     jabatan: data.position_title || "",
     bio: data.short_bio || "",
     profilePhoto: data.profile_photo_url || "",

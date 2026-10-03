@@ -20,13 +20,13 @@ const RANGE_OPTIONS: readonly { label: string; value: TimeRange }[] = [
 
 function RangeSelector({ value, onChange }: RangeSelectorProps) {
   return (
-    <div className="flex items-center gap-1 bg-[#F1F5F9] rounded-lg p-0.5 shrink-0">
+    <div className="flex items-center gap-1 bg-[#F1F5F9] rounded-lg p-0.5 w-full sm:w-auto shrink-0 justify-between sm:justify-start">
       {RANGE_OPTIONS.map((opt) => (
         <button
           key={opt.value}
           type="button"
           onClick={() => onChange(opt.value)}
-          className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-all ${
+          className={`flex-1 sm:flex-initial text-center px-2.5 py-1.5 sm:py-1 text-[11px] sm:text-[10px] font-bold rounded-md transition-all cursor-pointer ${
             value === opt.value
               ? "bg-white text-[#00695C] shadow-sm"
               : "text-[#718096] hover:text-[#4A5568]"
@@ -59,12 +59,12 @@ function initialOf(name: string): string {
   return trimmed.length > 0 ? trimmed.charAt(0).toUpperCase() : "?";
 }
 
-// PatientList shows which patients contributed data (up to 3) and links to the
-// full record-monitoring page when there are more than 3.
+// PatientList shows which patients contributed data (up to 5) and links to the
+// full record-monitoring page when there are more than 5.
 function PatientList({ patients }: { readonly patients: readonly PatientContribution[] }) {
   if (patients.length === 0) return null;
 
-  const visible = patients.slice(0, 3);
+  const visible = patients.slice(0, 5);
 
   return (
     <div className="mt-4 pt-3 border-t border-[#E2E8F0]">
@@ -75,19 +75,27 @@ function PatientList({ patients }: { readonly patients: readonly PatientContribu
         {visible.map((p) => (
           <div key={p.patientId} className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0">
-              <span className="w-5 h-5 rounded-full bg-[#00695C] text-white text-[9px] font-bold flex items-center justify-center shrink-0">
-                {initialOf(p.name)}
-              </span>
+              {p.avatarUrl ? (
+                <img
+                  src={p.avatarUrl}
+                  alt={p.name}
+                  className="w-5 h-5 rounded-full object-cover shrink-0"
+                />
+              ) : (
+                <span className="w-5 h-5 rounded-full bg-[#00695C] text-white text-[9px] font-bold flex items-center justify-center shrink-0">
+                  {initialOf(p.name)}
+                </span>
+              )}
               <span className="text-xs text-[#4A5568] font-semibold truncate">{p.name}</span>
             </div>
             <span className="text-[10px] font-extrabold text-[#1A202C] shrink-0">{p.count} log</span>
           </div>
         ))}
       </div>
-      {patients.length > 3 && (
+      {patients.length > 5 && (
         <Link
           href="/staff/pemantauan-catatan-pasien"
-          className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#00695C] hover:text-[#004d40] transition-colors"
+          className="mt-2.5 inline-flex items-center gap-1 text-[11px] font-bold text-[#00695C] hover:text-[#004d40] transition-colors"
         >
           Lihat Semua ({patients.length}) <span aria-hidden>→</span>
         </Link>

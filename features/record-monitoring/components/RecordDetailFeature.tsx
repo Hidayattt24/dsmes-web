@@ -98,7 +98,7 @@ export function RecordDetailFeature({ patientId }: RecordDetailFeatureProps) {
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <BloodSugarHistoryCard logs={bloodSugarLogs} />
+        <BloodSugarHistoryCard logs={bloodSugarLogs} diabetesType={patient.diabetesType} />
         <MealHistoryCard
           logs={mealLogs}
           targetCalories={patient.dailyCalorieTarget || calculateDSMESCalorieTarget(patient)}

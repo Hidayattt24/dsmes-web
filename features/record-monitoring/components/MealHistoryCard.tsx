@@ -13,8 +13,30 @@ interface MealHistoryCardProps {
 export function MealHistoryCard({ logs = [], targetCalories, selectedDate, onDateChange, isLoading }: MealHistoryCardProps) {
   const target = targetCalories ?? 1800;
   const current = logs.reduce((sum, log) => sum + log.calories, 0);
-  const percentage = Math.min(100, Math.round((current / target) * 100));
-  const strokeDashoffset = 251.2 - (251.2 * percentage) / 100;
+  const rawPercentage = target > 0 ? (current / target) * 100 : 0;
+  const chartPercentage = Math.min(100, Math.round(rawPercentage));
+  const strokeDashoffset = 251.2 - (251.2 * chartPercentage) / 100;
+  const hasData = logs.length > 0;
+
+  let badgeText = "Belum Ada Catatan";
+  let badgeStyle = "text-[#718096] bg-[#F4F6F8] border border-slate-200";
+  let arcColor = "#B45309";
+
+  if (hasData) {
+    if (rawPercentage > 110) {
+      badgeText = "Melebihi Batas";
+      badgeStyle = "text-[#C53030] bg-[#FFF5F5] border border-red-200";
+      arcColor = "#DC2626";
+    } else if (rawPercentage >= 90) {
+      badgeText = "Target Tercapai";
+      badgeStyle = "text-[#00695C] bg-[#F0F9F8] border border-emerald-200";
+      arcColor = "#00695C";
+    } else {
+      badgeText = "Batas Aman";
+      badgeStyle = "text-[#B45309] bg-[#FFFBEB] border border-amber-200";
+      arcColor = "#D97706";
+    }
+  }
 
   // Map icons for food categories
   const getIcon = (type: string) => {
@@ -29,8 +51,6 @@ export function MealHistoryCard({ logs = [], targetCalories, selectedDate, onDat
         return "nights_stay";
     }
   };
-
-  const hasData = logs.length > 0;
 
   return (
     <div className="bg-white rounded-2xl p-6 border border-[#E2E8F0] shadow-sm flex flex-col h-[520px] font-[family-name:var(--font-poppins)]">
@@ -72,7 +92,7 @@ export function MealHistoryCard({ logs = [], targetCalories, selectedDate, onDat
               cy="50"
               r="40"
               fill="transparent"
-              stroke="#B45309"
+              stroke={arcColor}
               strokeWidth="8"
               strokeDasharray="251.2"
               strokeDashoffset={hasData ? strokeDashoffset : 251.2}
@@ -90,8 +110,8 @@ export function MealHistoryCard({ logs = [], targetCalories, selectedDate, onDat
 
         <div>
           <p className="text-sm font-semibold text-[#1A202C] mb-1.5">Total Asupan Kalori</p>
-          <span className="text-[11px] font-bold text-[#B45309] bg-[#FFFBEB] px-3 py-1 rounded-full uppercase tracking-wider">
-            {percentage > 110 ? "Melebihi Batas" : percentage > 90 ? "Target Tercapai" : "Batas Aman"}
+          <span className={`text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block ${badgeStyle}`}>
+            {badgeText}
           </span>
         </div>
       </div>

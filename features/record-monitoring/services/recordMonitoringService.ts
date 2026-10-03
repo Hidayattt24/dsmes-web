@@ -95,15 +95,32 @@ const mapPatientRecord = (data: any): PatientRecord => {
     }
   }
 
+  const rawBsType = (data.latest_blood_sugar_type || "").toLowerCase();
+  let bloodSugarMeasurementLabel = "";
+  if (rawBsType === "fasting" || rawBsType === "puasa") {
+    bloodSugarMeasurementLabel = "Puasa";
+  } else if (rawBsType === "before_meal" || rawBsType === "sebelum_makan") {
+    bloodSugarMeasurementLabel = "Sebelum Makan";
+  } else if (rawBsType === "after_meal" || rawBsType === "sesudah_makan") {
+    bloodSugarMeasurementLabel = "2 Jam Sesudah Makan";
+  } else if (rawBsType === "before_bed" || rawBsType === "sebelum_tidur") {
+    bloodSugarMeasurementLabel = "Sebelum Tidur";
+  } else if (rawBsType === "random" || rawBsType === "sewaktu") {
+    bloodSugarMeasurementLabel = "Sewaktu";
+  } else if (data.latest_blood_sugar) {
+    bloodSugarMeasurementLabel = "Sewaktu";
+  }
+
   // Classification comes from the backend ClassifyBloodGlucose() — single source of truth.
   const backendCategory = (data.latest_blood_sugar_status ?? "").toLowerCase();
   // Map the backend category to an Indonesian display label.
   const statusLabels: Record<string, string> = {
     hypoglycemia: "Hipoglikemia",
+    low_warning: "Waspada Rendah",
     normal: "Normal",
-    target: "Target",
-    prediabetes: "Prediabetes",
-    elevated: "Elevated",
+    target: "Normal",
+    prediabetes: "Waspada",
+    elevated: "Waspada",
     hyperglycemia: "Hiperglikemia",
   };
   let status: string = statusLabels[backendCategory] ?? "";
@@ -196,6 +213,8 @@ const mapPatientRecord = (data: any): PatientRecord => {
     dailySummary: {
       bloodSugar,
       bloodSugarTime,
+      bloodSugarMeasurementType: rawBsType,
+      bloodSugarMeasurementLabel,
       meal,
       mealType,
       activity,

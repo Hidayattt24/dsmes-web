@@ -4,10 +4,27 @@ import { DataTable, type TableColumn } from "@/components/common/DataTable";
 import type { Patient } from "@/types/patient";
 import Link from "next/link";
 import { Avatar } from "@/components/ui/Avatar";
+import { Badge } from "@/components/ui/Badge";
 
 interface PatientTableProps {
   readonly patients: Patient[];
   readonly loading: boolean;
+}
+
+function GlucoseStatusBadge({ bloodSugar }: { readonly bloodSugar?: number }) {
+  if (bloodSugar === undefined || bloodSugar === null || bloodSugar === 0) {
+    return <Badge variant="muted">Belum Ada</Badge>;
+  }
+  if (bloodSugar < 70) {
+    return <Badge variant="error">Hipoglikemia</Badge>;
+  }
+  if (bloodSugar <= 130) {
+    return <Badge variant="primary">Normal</Badge>;
+  }
+  if (bloodSugar <= 180) {
+    return <Badge variant="warning">Waspada</Badge>;
+  }
+  return <Badge variant="error">Hiperglikemia</Badge>;
 }
 
 export function PatientTable({ patients, loading }: PatientTableProps) {
@@ -35,6 +52,11 @@ export function PatientTable({ patients, loading }: PatientTableProps) {
       render: (row) => (
         <span className="text-sm text-[#718096]">{row.gender}</span>
       ),
+    },
+    {
+      key: "medicalStatus",
+      header: "Status Klasifikasi Medis Glukosa Darah",
+      render: (row) => <GlucoseStatusBadge bloodSugar={row.latestBloodSugar} />,
     },
     {
       key: "status",

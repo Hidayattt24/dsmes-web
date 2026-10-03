@@ -6,8 +6,8 @@ import type { MetricCard } from "@/types/dashboard";
 
 const METRIC_CARDS_CONFIG: Omit<MetricCard, "value">[] = [
   { label: "Total Pasien", icon: "groups", badgeVariant: "primary" },
-  { label: "Pasien Aktif", icon: "person_check", badgeLabel: "Stabil", badgeVariant: "muted" },
-  { label: "Artikel Edukasi", icon: "article", badgeLabel: "+5 Baru", badgeVariant: "primary" },
+  { label: "Pasien Aktif", icon: "person_check", badgeVariant: "primary" },
+  { label: "Artikel Edukasi", icon: "article", badgeVariant: "primary" },
 ] as const;
 
 interface UseDashboardStatsReturn {
