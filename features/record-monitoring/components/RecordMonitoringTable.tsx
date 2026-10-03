@@ -143,17 +143,62 @@ export function RecordMonitoringTable({
       render: (row) => {
         const value = row.dailySummary.bloodSugar;
         const time = row.dailySummary.bloodSugarTime;
-        const s = row.dailySummary.status.toLowerCase();
-        const isWarning = s === "prediabetes" || s === "elevated" || s === "hyperglycemia" || s === "hipoglikemia";
+        const typeLabel = row.dailySummary.bloodSugarMeasurementLabel;
+        const s = (row.dailySummary.status || "").toLowerCase();
+        const isWarning =
+          s === "prediabetes" ||
+          s === "elevated" ||
+          s === "waspada" ||
+          s === "low_warning" ||
+          s === "waspada rendah" ||
+          s === "hyperglycemia" ||
+          s === "hiperglikemia" ||
+          s === "hypoglycemia" ||
+          s === "hipoglikemia";
+
         return (
           <div>
-            <span className={`font-semibold text-sm ${isWarning ? "text-[#C53030]" : "text-[#1A202C]"}`}>
-              {value}
-            </span>
-            <br />
-            <span className="text-xs text-[#718096]">{time}</span>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className={`font-bold text-sm ${isWarning ? "text-[#C53030]" : "text-[#1A202C]"}`}>
+                {value}
+              </span>
+              {typeLabel && value !== "-" && (
+                <span className="text-[11px] font-semibold text-[#00695C] bg-[#E6F2F1] px-2 py-0.5 rounded-md">
+                  {typeLabel}
+                </span>
+              )}
+            </div>
+            <span className="text-xs text-[#718096] font-medium">{time}</span>
           </div>
         );
+      },
+    },
+    {
+      key: "medicalStatus",
+      header: "Status Klasifikasi Medis Glukosa Darah",
+      render: (row) => {
+        const s = (row.dailySummary.status || "").toLowerCase();
+        let variant: "primary" | "warning" | "error" | "muted" = "primary";
+        let label = "Normal";
+
+        if (s === "hyperglycemia" || s === "hiperglikemia" || s === "severe_hyperglycemia") {
+          variant = "error";
+          label = "Hiperglikemia";
+        } else if (s === "hypoglycemia" || s === "hipoglikemia" || s === "severe_hypoglycemia") {
+          variant = "error";
+          label = "Hipoglikemia";
+        } else if (s === "low_warning" || s === "waspada rendah" || s === "waspada_rendah") {
+          variant = "warning";
+          label = "Waspada Rendah";
+        } else if (s === "elevated" || s === "prediabetes" || s === "waspada") {
+          variant = "warning";
+          label = "Waspada";
+        } else if (!row.dailySummary.bloodSugar || row.dailySummary.bloodSugar === "-") {
+          variant = "muted";
+          label = "Belum Ada";
+        }
+
+        return <Badge variant={variant}>{label}</Badge>;
       },
     },
     {

@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { usePatients } from "../hooks/usePatients";
 import { PatientStatistics } from "./PatientStatistics";
 import { PatientTable } from "./PatientTable";
 import { Select } from "@/components/ui/Select";
+import { MedicalGuideInfoModal } from "@/components/common/MedicalGuideInfoModal";
 
 const complianceOptions = [
   { value: "Semua", label: "Semua Kepatuhan" },
@@ -19,6 +21,7 @@ const genderOptions = [
 ] as const;
 
 export function PatientListFeature() {
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   const {
     patients,
     stats,
@@ -43,10 +46,30 @@ export function PatientListFeature() {
   return (
     <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
       {/* Title Header */}
-      <div>
-        <h2 className="text-2xl font-bold text-[#1A202C] tracking-tight">Data Pasien</h2>
-        <p className="text-sm text-[#718096] mt-1">Kelola data pasien terdaftar dan pantau status kesehatannya</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-[#1A202C] tracking-tight">
+            Data Pasien
+          </h2>
+          <p className="text-sm text-[#718096] mt-1">
+            Kelola data pasien terdaftar dan pantau status kesehatannya
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsGuideOpen(true)}
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#00695C] shadow-sm transition-all cursor-pointer"
+        >
+          <span className="material-symbols-outlined text-sm">menu_book</span>
+          <span>Panduan Standar</span>
+        </button>
       </div>
+
+      <MedicalGuideInfoModal
+        isOpen={isGuideOpen}
+        onClose={() => setIsGuideOpen(false)}
+      />
 
       {/* Patient Statistics Bento Grid */}
       <PatientStatistics stats={stats} />
@@ -100,7 +123,10 @@ export function PatientListFeature() {
           <div className="px-8 py-6 border-t border-[#E2E8F0]/50 bg-white flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-[#718096] font-medium font-[family-name:var(--font-poppins)]">
               Menampilkan{" "}
-              <span className="text-[#1A202C] font-bold">{startItem}-{endItem}</span> dari{" "}
+              <span className="text-[#1A202C] font-bold">
+                {startItem}-{endItem}
+              </span>{" "}
+              dari{" "}
               <span className="text-[#1A202C] font-bold">
                 {totalCount.toLocaleString("id-ID")}
               </span>{" "}
@@ -114,7 +140,9 @@ export function PatientListFeature() {
                 disabled={currentPage === 1}
                 className="w-9 h-9 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed"
               >
-                <span className="material-symbols-outlined text-lg">chevron_left</span>
+                <span className="material-symbols-outlined text-lg">
+                  chevron_left
+                </span>
               </button>
 
               {/* Page numbers */}
@@ -139,7 +167,9 @@ export function PatientListFeature() {
                 disabled={currentPage === totalPages}
                 className="w-9 h-9 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed"
               >
-                <span className="material-symbols-outlined text-lg">chevron_right</span>
+                <span className="material-symbols-outlined text-lg">
+                  chevron_right
+                </span>
               </button>
             </div>
           </div>

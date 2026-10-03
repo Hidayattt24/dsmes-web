@@ -3,6 +3,8 @@ import type { CalorieStatusInfo, PatientMeasurement } from "@/types/patient";
 export interface DailySummary {
   readonly bloodSugar: string;
   readonly bloodSugarTime: string;
+  readonly bloodSugarMeasurementType?: string;
+  readonly bloodSugarMeasurementLabel?: string;
   readonly meal: string;
   readonly mealType: string;
   readonly activity: string;

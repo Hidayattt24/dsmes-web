@@ -5,9 +5,10 @@ import { useState } from "react";
 
 interface BloodSugarHistoryCardProps {
   readonly logs: BloodSugarLog[];
+  readonly diabetesType?: string;
 }
 
-export function BloodSugarHistoryCard({ logs = [] }: BloodSugarHistoryCardProps) {
+export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHistoryCardProps) {
   const [period, setPeriod] = useState<"7" | "30">("7");
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
@@ -92,21 +93,25 @@ export function BloodSugarHistoryCard({ logs = [] }: BloodSugarHistoryCardProps)
   };
 
   const getGlucoseStatus = (log: BloodSugarLog) => {
-    const status = log.status || "";
-    const label = log.classificationLabel || (
-      status === "severe_hypoglycemia" ? "Hipoglikemia Berat" :
-      status === "hypoglycemia" ? "Hipoglikemia" :
-      status === "severe_hyperglycemia" ? "Hiperglikemia Berat" :
-      status === "hyperglycemia" ? "Hiperglikemia" :
-      log.glucoseValue < 70 ? "Hipoglikemia" :
-      log.glucoseValue > 200 ? "Hiperglikemia" : "Normal"
-    );
+    const status = (log.status || "").toLowerCase();
+    const label =
+      log.classificationLabel ||
+      (status === "severe_hypoglycemia" || status === "hypoglycemia" || status === "hipoglikemia"
+        ? "Hipoglikemia"
+        : status === "low_warning" || status === "waspada rendah"
+        ? "Waspada Rendah"
+        : status === "severe_hyperglycemia" || status === "hyperglycemia" || status === "hiperglikemia"
+        ? "Hiperglikemia"
+        : status === "elevated" || status === "prediabetes" || status === "waspada"
+        ? "Waspada"
+        : "Normal");
 
-    const cls = log.colorIndicator === "#DC2626" || status === "severe_hypoglycemia" || status === "severe_hyperglycemia"
-      ? "bg-rose-50 text-rose-700 border-rose-200"
-      : log.colorIndicator === "#F97316" || log.colorIndicator === "#F59E0B" || status === "hypoglycemia" || status === "hyperglycemia"
-      ? "bg-amber-50 text-amber-700 border-amber-200"
-      : "bg-emerald-50 text-emerald-700 border-emerald-200";
+    const cls =
+      label === "Hiperglikemia" || label === "Hipoglikemia" || status === "severe_hypoglycemia" || status === "severe_hyperglycemia"
+        ? "bg-rose-50 text-rose-700 border-rose-200"
+        : label === "Waspada" || label === "Waspada Rendah" || label === "Elevated" || label === "Prediabetes"
+        ? "bg-amber-50 text-amber-700 border-amber-200"
+        : "bg-emerald-50 text-emerald-700 border-emerald-200";
 
     return { label, cls };
   };
@@ -397,15 +402,14 @@ export function BloodSugarHistoryCard({ logs = [] }: BloodSugarHistoryCardProps)
               <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Tanggal & Jam</th>
               <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Jenis Pengukuran</th>
               <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Nilai</th>
-              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Klasifikasi</th>
+              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Status Klasifikasi Medis Glukosa Darah</th>
               <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Rentang Acuan</th>
-              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Rekomendasi Medis</th>
             </tr>
           </thead>
           <tbody className="text-xs font-medium divide-y divide-[#E2E8F0]/40 bg-white">
             {!hasData ? (
               <tr>
-                <td colSpan={6} className="py-6 text-center text-xs text-[#718096]">
+                <td colSpan={5} className="py-6 text-center text-xs text-[#718096]">
                   Tidak ada catatan riwayat gula darah.
                 </td>
               </tr>
@@ -448,9 +452,6 @@ export function BloodSugarHistoryCard({ logs = [] }: BloodSugarHistoryCardProps)
                       </td>
                       <td className="py-2.5 px-3 text-[#4A5568] text-[11px]">
                         {log.referenceRangeText || "< 140 mg/dL"}
-                      </td>
-                      <td className="py-2.5 px-3 text-[#4A5568] text-[11px] max-w-[280px]">
-                        {log.recommendation || "-"}
                       </td>
                     </tr>
                   );

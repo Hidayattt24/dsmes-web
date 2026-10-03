@@ -55,6 +55,13 @@
 /* ─── Global Base ─────────────────────────────────────────────────────────── */
 :root {
   color-scheme: light;
+  --primary: #00695C;
+  --primary-foreground: #FFFFFF;
+  --muted: #F4F6F8;
+  --muted-foreground: #718096;
+  --border: #E2E8F0;
+  --background: #FFFFFF;
+  --foreground: #1A202C;
 }
 
 body {

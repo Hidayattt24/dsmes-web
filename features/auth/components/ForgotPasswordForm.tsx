@@ -15,7 +15,7 @@ import {
 import { useForgotPassword } from "@/features/auth/hooks/useForgotPassword";
 
 export function ForgotPasswordForm() {
-  const { isLoading, error, submit } = useForgotPassword();
+  const { isLoading, submit } = useForgotPassword();
 
   const {
     register,
@@ -34,13 +34,6 @@ export function ForgotPasswordForm() {
       />
 
       <form onSubmit={handleSubmit(submit)} noValidate className="flex flex-col gap-6">
-        {error && (
-          <div role="alert" className="flex items-center gap-2 p-3 bg-[#FFF5F5] rounded-xl border border-[#C53030]/20">
-            <span className="material-symbols-outlined text-[#C53030] text-[18px]">error</span>
-            <p className="text-sm font-medium text-[#C53030]">{error}</p>
-          </div>
-        )}
-
         <InputField
           label="Email"
           type="email"

@@ -14,18 +14,28 @@ import { useLogin }                          from "@/features/auth/hooks/useLogi
 import { ROUTES }                            from "@/constants/routes";
 
 export function LoginForm() {
-  const { isLoading, error, submit } = useLogin();
+  const { isLoading, fieldError, submit } = useLogin();
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "", rememberMe: false },
   });
 
-  const onSubmit = handleSubmit((values) => submit(values));
+  const onSubmit = handleSubmit(async (values) => {
+    const success = await submit(values);
+    if (!success && fieldError) {
+      if (fieldError.field === "email") {
+        setError("email", { message: fieldError.message });
+      } else if (fieldError.field === "password") {
+        setError("password", { message: fieldError.message });
+      }
+    }
+  });
 
   return (
     <div className="font-[family-name:var(--font-jakarta)]">
@@ -37,14 +47,6 @@ export function LoginForm() {
 
       {/* Form */}
       <form onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
-        {/* API-level error */}
-        {error && (
-          <div role="alert" className="flex items-center gap-2 p-3 bg-[#FFF5F5] rounded-xl border border-[#C53030]/20">
-            <span className="material-symbols-outlined text-[#C53030] text-[18px]">error</span>
-            <p className="text-sm font-medium text-[#C53030]">{error}</p>
-          </div>
-        )}
-
         <InputField
           label="Email"
           type="email"

@@ -55,7 +55,9 @@ export function HeaderNavbar() {
               {user?.name ?? "Pengguna"}
             </p>
             <p className="text-[11px] text-[#718096] font-medium font-[family-name:var(--font-poppins)] mt-1.5 leading-none">
-              {user?.positionTitle ?? (user?.role === "admin" ? "Administrator" : "Staff")}
+              {user?.role === "staff" || pathname.startsWith("/staff")
+                ? (user?.puskesmas ? (user.puskesmas.toLowerCase().startsWith("puskesmas") ? user.puskesmas : `Puskesmas ${user.puskesmas}`) : "Staff Puskesmas")
+                : (user?.positionTitle ?? "Administrator")}
             </p>
           </div>
           

@@ -14,6 +14,7 @@ export function useSettingsForm() {
     username: "",
     email: "",
     whatsapp: "",
+    puskesmas: "",
     jabatan: "",
     bio: "",
     profilePhoto: "",

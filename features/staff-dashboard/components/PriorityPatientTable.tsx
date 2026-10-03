@@ -11,14 +11,17 @@ interface PriorityPatientTableProps {
 function GlucoseBadge({ status, value }: { readonly status: string; readonly value: number | null }) {
   // All classification labels come from the backend (ClassifyBloodGlucose).
   const c = status.toLowerCase();
-  if (c === "hyperglycemia" || (value !== null && value >= 200)) {
+  if (c === "hyperglycemia" || c === "hiperglikemia" || (value !== null && value >= 200)) {
     return <Badge variant="error">Hiperglikemia</Badge>;
   }
-  if (c === "elevated" || c === "prediabetes") {
-    return <Badge variant="warning">{status}</Badge>;
-  }
-  if (c === "hypoglycemia") {
+  if (c === "hypoglycemia" || c === "hipoglikemia") {
     return <Badge variant="error">Hipoglikemia</Badge>;
+  }
+  if (c === "low_warning" || c === "waspada rendah" || c === "waspada_rendah") {
+    return <Badge variant="warning">Waspada Rendah</Badge>;
+  }
+  if (c === "elevated" || c === "prediabetes" || c === "waspada") {
+    return <Badge variant="warning">Waspada</Badge>;
   }
   return <Badge variant="primary">Normal</Badge>;
 }
@@ -50,21 +53,16 @@ export function PriorityPatientTable({ patients, loading }: PriorityPatientTable
       ),
     },
     {
-      key: "risk",
-      header: "Kategori",
+      key: "medicalStatus",
+      header: "Status Klasifikasi Medis Glukosa Darah",
       render: (row) => <GlucoseBadge status={row.glucoseStatus} value={row.bloodSugar} />,
     },
     {
       key: "reason",
       header: "Catatan Terakhir",
       render: (row) => (
-        <span className="text-xs text-[#718096] font-medium line-clamp-2 max-w-[200px]">{row.reason}</span>
+        <span className="text-xs text-[#718096] font-medium line-clamp-2 max-w-[240px]">{row.reason}</span>
       ),
-    },
-    {
-      key: "status",
-      header: "Kategori Klinis",
-      render: (row) => <GlucoseBadge status={row.glucoseStatus} value={row.bloodSugar} />,
     },
     {
       key: "action",

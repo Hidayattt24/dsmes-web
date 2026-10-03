@@ -68,15 +68,32 @@ export function AccountInfoForm({ fields, onChange }: AccountInfoFormProps) {
         </div>
 
         {/* Position / Jabatan */}
-        <div className="md:col-span-2 space-y-1.5">
+        <div className="space-y-1.5">
           <label className="block text-[11px] font-bold text-[#718096] uppercase tracking-widest px-1 select-none">
             Jabatan
           </label>
           <input
-            className="w-full md:w-1/2 bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
+            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
             type="text"
             value={fields.jabatan}
             onChange={(e) => onChange("jabatan", e.target.value)}
+          />
+        </div>
+
+        {/* Puskesmas */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between px-1">
+            <label className="block text-[11px] font-bold text-[#718096] uppercase tracking-widest select-none">
+              Fasilitas Kesehatan / Puskesmas
+            </label>
+            <span className="text-[10px] font-medium text-[#718096] italic">Ditetapkan Admin</span>
+          </div>
+          <input
+            className="w-full bg-[#EDF2F7] border border-transparent rounded-xl px-5 py-3.5 text-sm font-semibold text-[#4A5568] outline-none cursor-not-allowed select-none"
+            type="text"
+            value={fields.puskesmas || "Puskesmas"}
+            readOnly
+            disabled
           />
         </div>
 
