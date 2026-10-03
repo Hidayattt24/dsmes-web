@@ -246,7 +246,13 @@ export const recordMonitoringService = {
       },
     });
     const list = res.data?.data ?? [];
-    const meta = res.data?.meta ?? { page: 1, per_page: 10, total: 0, total_pages: 0 };
+    const rawMeta = res.data?.meta ?? {};
+    const meta: PaginationMeta = {
+      page: rawMeta.page ?? 1,
+      per_page: rawMeta.per_page ?? params.limit ?? 10,
+      total: rawMeta.total ?? 0,
+      total_pages: rawMeta.total_pages ?? 0,
+    };
     return {
       items: list.map(mapPatientRecord),
       pagination: meta,

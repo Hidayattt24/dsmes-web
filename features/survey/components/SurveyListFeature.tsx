@@ -8,6 +8,7 @@ import type { SurveyListItem } from "@/types/survey";
 import { SurveyFilters, type SurveySortBy } from "./SurveyFilters";
 import { SurveyTable } from "./SurveyTable";
 import { TableLoader } from "@/components/ui/loading/TableLoader";
+import { TableSkeleton } from "@/components/ui/loading/TableSkeleton";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useToast } from "@/components/ui/Toast";
 
@@ -23,6 +24,7 @@ export function SurveyListFeature({ isStaff: propIsStaff }: SurveyListFeaturePro
   const [items, setItems] = useState<SurveyListItem[]>([]);
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState("");
@@ -71,6 +73,7 @@ export function SurveyListFeature({ isStaff: propIsStaff }: SurveyListFeaturePro
       });
     } finally {
       setIsLoading(false);
+      setHasLoaded(true);
     }
   }, [filterType, filterStatus, isStaff, searchQuery, sortBy, showToast]);
 
@@ -135,7 +138,7 @@ export function SurveyListFeature({ isStaff: propIsStaff }: SurveyListFeaturePro
     }
   };
 
-  if (isLoading) {
+  if (isLoading && !hasLoaded) {
     return (
       <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -187,13 +190,17 @@ export function SurveyListFeature({ isStaff: propIsStaff }: SurveyListFeaturePro
       />
 
       {/* Table */}
-      <SurveyTable
-        items={items}
-        total={total}
-        isStaff={isStaff}
-        onDeleteClick={(id) => setDeleteId(id)}
-        onToggleActiveClick={(survey) => setActiveToggleItem(survey)}
-      />
+      {isLoading ? (
+        <TableSkeleton />
+      ) : (
+        <SurveyTable
+          items={items}
+          total={total}
+          isStaff={isStaff}
+          onDeleteClick={(id) => setDeleteId(id)}
+          onToggleActiveClick={(survey) => setActiveToggleItem(survey)}
+        />
+      )}
 
       {/* Delete Confirmation Modal */}
       <ConfirmationModal

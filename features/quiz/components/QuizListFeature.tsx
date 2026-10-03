@@ -5,6 +5,7 @@ import { useQuizList } from "../hooks/useQuizList";
 import { QuizStatsCards } from "./QuizStatsCards";
 import { QuizFilters } from "./QuizFilters";
 import { QuizTable } from "./QuizTable";
+import { TableSkeleton } from "@/components/ui/loading/TableSkeleton";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useToast } from "@/components/ui/Toast";
 import { quizService } from "../services/quizService";
@@ -98,7 +99,8 @@ export function QuizListFeature() {
     }
   }, [toggleTarget, showToast, refetch]);
 
-  if (isLoading) {
+  // Full-page skeleton only on first load; later refetches skeleton the table only
+  if (isLoading && !stats) {
     return (
       <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -149,13 +151,17 @@ export function QuizListFeature() {
       />
 
       {/* Data Table */}
-      <QuizTable
-        quizzes={quizzes}
-        pagination={pagination}
-        onDeleteClick={setDeleteId}
-        onPageChange={setPage}
-        onToggleStatusClick={(quiz) => setToggleTarget(quiz)}
-      />
+      {isLoading ? (
+        <TableSkeleton />
+      ) : (
+        <QuizTable
+          quizzes={quizzes}
+          pagination={pagination}
+          onDeleteClick={setDeleteId}
+          onPageChange={setPage}
+          onToggleStatusClick={(quiz) => setToggleTarget(quiz)}
+        />
+      )}
 
       {/* Toggle Status Confirmation Modal */}
       {!isStaff && (
