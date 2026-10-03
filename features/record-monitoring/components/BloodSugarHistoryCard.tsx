@@ -5,16 +5,21 @@ import { useState } from "react";
 
 interface BloodSugarHistoryCardProps {
   readonly logs: BloodSugarLog[];
-  readonly diabetesType?: string;
 }
 
-export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHistoryCardProps) {
+export function BloodSugarHistoryCard({
+  logs = [],
+}: BloodSugarHistoryCardProps) {
   const [period, setPeriod] = useState<"7" | "30">("7");
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   const getParsedDate = (log: BloodSugarLog): Date => {
-    if (log.rawDate instanceof Date && !isNaN(log.rawDate.getTime())) return log.rawDate;
-    if (log.rawDate && (typeof log.rawDate === "string" || typeof log.rawDate === "number")) {
+    if (log.rawDate instanceof Date && !isNaN(log.rawDate.getTime()))
+      return log.rawDate;
+    if (
+      log.rawDate &&
+      (typeof log.rawDate === "string" || typeof log.rawDate === "number")
+    ) {
       const d = new Date(log.rawDate);
       if (!isNaN(d.getTime())) return d;
     }
@@ -49,7 +54,8 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
   const rawMin = values.length > 0 ? Math.min(...values) : 70;
   const rawMax = values.length > 0 ? Math.max(...values) : 200;
   const rawRange = Math.max(rawMax - rawMin, 60);
-  const tickStep = rawRange <= 60 ? 15 : rawRange <= 100 ? 20 : rawRange <= 160 ? 30 : 50;
+  const tickStep =
+    rawRange <= 60 ? 15 : rawRange <= 100 ? 20 : rawRange <= 160 ? 30 : 50;
   const minVal = Math.floor(rawMin / tickStep) * tickStep - tickStep;
   const maxVal = Math.ceil(rawMax / tickStep) * tickStep + tickStep;
   const range = maxVal - minVal;
@@ -96,22 +102,34 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
     const status = (log.status || "").toLowerCase();
     const label =
       log.classificationLabel ||
-      (status === "severe_hypoglycemia" || status === "hypoglycemia" || status === "hipoglikemia"
+      (status === "severe_hypoglycemia" ||
+      status === "hypoglycemia" ||
+      status === "hipoglikemia"
         ? "Hipoglikemia"
         : status === "low_warning" || status === "waspada rendah"
-        ? "Waspada Rendah"
-        : status === "severe_hyperglycemia" || status === "hyperglycemia" || status === "hiperglikemia"
-        ? "Hiperglikemia"
-        : status === "elevated" || status === "prediabetes" || status === "waspada"
-        ? "Waspada"
-        : "Normal");
+          ? "Waspada Rendah"
+          : status === "severe_hyperglycemia" ||
+              status === "hyperglycemia" ||
+              status === "hiperglikemia"
+            ? "Hiperglikemia"
+            : status === "elevated" ||
+                status === "prediabetes" ||
+                status === "waspada"
+              ? "Waspada"
+              : "Normal");
 
     const cls =
-      label === "Hiperglikemia" || label === "Hipoglikemia" || status === "severe_hypoglycemia" || status === "severe_hyperglycemia"
+      label === "Hiperglikemia" ||
+      label === "Hipoglikemia" ||
+      status === "severe_hypoglycemia" ||
+      status === "severe_hyperglycemia"
         ? "bg-rose-50 text-rose-700 border-rose-200"
-        : label === "Waspada" || label === "Waspada Rendah" || label === "Elevated" || label === "Prediabetes"
-        ? "bg-amber-50 text-amber-700 border-amber-200"
-        : "bg-emerald-50 text-emerald-700 border-emerald-200";
+        : label === "Waspada" ||
+            label === "Waspada Rendah" ||
+            label === "Elevated" ||
+            label === "Prediabetes"
+          ? "bg-amber-50 text-amber-700 border-amber-200"
+          : "bg-emerald-50 text-emerald-700 border-emerald-200";
 
     return { label, cls };
   };
@@ -132,8 +150,8 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
     N > 1
       ? `M ${points.map((p) => `${p.x},${p.y}`).join(" L ")}`
       : N === 1
-      ? `M ${CHART_L},${points[0].y} L ${CHART_R},${points[0].y}`
-      : "";
+        ? `M ${CHART_L},${points[0].y} L ${CHART_R},${points[0].y}`
+        : "";
 
   const areaPath =
     N > 1
@@ -146,8 +164,12 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
     yLabels.push(v);
   }
 
-  const avgVal = values.length > 0 ? Math.round(values.reduce((a, b) => a + b, 0) / values.length) : null;
-  const latestVal = chartLogs.length > 0 ? chartLogs[chartLogs.length - 1].glucoseValue : null;
+  const avgVal =
+    values.length > 0
+      ? Math.round(values.reduce((a, b) => a + b, 0) / values.length)
+      : null;
+  const latestVal =
+    chartLogs.length > 0 ? chartLogs[chartLogs.length - 1].glucoseValue : null;
 
   return (
     <div className="premium-card p-6 flex flex-col font-[family-name:var(--font-poppins)]">
@@ -155,11 +177,17 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-[#E6F2F1] flex items-center justify-center">
-            <span className="material-symbols-outlined text-[#00695C] text-[20px]">water_drop</span>
+            <span className="material-symbols-outlined text-[#00695C] text-[20px]">
+              water_drop
+            </span>
           </div>
           <div>
-            <h3 className="text-base font-bold text-[#1A202C]">Riwayat Gula Darah Pasien</h3>
-            <p className="text-xs text-[#718096]">Monitoring & Klasifikasi Medis Glukosa Darah</p>
+            <h3 className="text-base font-bold text-[#1A202C]">
+              Riwayat Gula Darah Pasien
+            </h3>
+            <p className="text-xs text-[#718096]">
+              Monitoring & Klasifikasi Medis Glukosa Darah
+            </p>
           </div>
         </div>
 
@@ -169,15 +197,27 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
           {avgVal !== null && (
             <div className="hidden md:flex items-center gap-3">
               <div className="flex flex-col items-center min-w-[80px] px-4 py-2.5 bg-[#F0F9F8] rounded-xl border border-[#00695C]/20">
-                <span className="text-[9px] font-bold text-[#00695C] uppercase tracking-widest mb-0.5">Rata-rata</span>
-                <span className="text-base font-black text-[#00695C] leading-none">{avgVal}</span>
-                <span className="text-[9px] font-semibold text-[#00695C]/60 mt-0.5">mg/dL</span>
+                <span className="text-[9px] font-bold text-[#00695C] uppercase tracking-widest mb-0.5">
+                  Rata-rata
+                </span>
+                <span className="text-base font-black text-[#00695C] leading-none">
+                  {avgVal}
+                </span>
+                <span className="text-[9px] font-semibold text-[#00695C]/60 mt-0.5">
+                  mg/dL
+                </span>
               </div>
               {latestVal !== null && (
                 <div className="flex flex-col items-center min-w-[80px] px-4 py-2.5 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0]">
-                  <span className="text-[9px] font-bold text-[#718096] uppercase tracking-widest mb-0.5">Terakhir</span>
-                  <span className="text-base font-black text-[#1A202C] leading-none">{latestVal}</span>
-                  <span className="text-[9px] font-semibold text-[#718096] mt-0.5">mg/dL</span>
+                  <span className="text-[9px] font-bold text-[#718096] uppercase tracking-widest mb-0.5">
+                    Terakhir
+                  </span>
+                  <span className="text-base font-black text-[#1A202C] leading-none">
+                    {latestVal}
+                  </span>
+                  <span className="text-[9px] font-semibold text-[#718096] mt-0.5">
+                    mg/dL
+                  </span>
                 </div>
               )}
             </div>
@@ -208,10 +248,16 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
         {!hasData ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <div className="w-14 h-14 rounded-full bg-[#F4F6F8] flex items-center justify-center mb-3">
-              <span className="material-symbols-outlined text-[#A0AEC0] text-3xl">water_drop</span>
+              <span className="material-symbols-outlined text-[#A0AEC0] text-3xl">
+                water_drop
+              </span>
             </div>
-            <p className="font-semibold text-sm text-[#4A5568]">Belum Ada Catatan Gula Darah</p>
-            <p className="text-xs text-[#718096] mt-1">Data grafik riwayat gula darah pasien akan muncul di sini.</p>
+            <p className="font-semibold text-sm text-[#4A5568]">
+              Belum Ada Catatan Gula Darah
+            </p>
+            <p className="text-xs text-[#718096] mt-1">
+              Data grafik riwayat gula darah pasien akan muncul di sini.
+            </p>
           </div>
         ) : (
           <svg
@@ -273,7 +319,10 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
             {points.map((pt, idx) => {
               const isHovered = hoveredIdx === idx;
               const color = getPointColor(pt.type);
-              const tooltipX = Math.max(CHART_L, Math.min(CHART_R - 140, pt.x - 70));
+              const tooltipX = Math.max(
+                CHART_L,
+                Math.min(CHART_R - 140, pt.x - 70),
+              );
 
               return (
                 <g key={`pt-${idx}`}>
@@ -383,7 +432,10 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
             { color: "#8B5CF6", label: "Sebelum Tidur" },
             { color: "#3182CE", label: "Sewaktu" },
           ].map((item) => (
-            <span key={item.label} className="flex items-center gap-1.5 text-[#4A5568]">
+            <span
+              key={item.label}
+              className="flex items-center gap-1.5 text-[#4A5568]"
+            >
               <span
                 className="w-2.5 h-2.5 rounded-full inline-block"
                 style={{ backgroundColor: item.color }}
@@ -399,23 +451,37 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
         <table className="w-full text-left border-collapse">
           <thead className="sticky top-0 bg-[#F8FAFC] z-10">
             <tr className="text-[#718096] text-[10px] font-bold uppercase tracking-wider">
-              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Tanggal & Jam</th>
-              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Jenis Pengukuran</th>
+              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">
+                Tanggal & Jam
+              </th>
+              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">
+                Jenis Pengukuran
+              </th>
               <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Nilai</th>
-              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Status Klasifikasi Medis Glukosa Darah</th>
-              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">Rentang Acuan</th>
+              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">
+                Status Klasifikasi Medis Glukosa Darah
+              </th>
+              <th className="py-2.5 px-3 border-b border-[#E2E8F0]">
+                Rentang Acuan
+              </th>
             </tr>
           </thead>
           <tbody className="text-xs font-medium divide-y divide-[#E2E8F0]/40 bg-white">
             {!hasData ? (
               <tr>
-                <td colSpan={5} className="py-6 text-center text-xs text-[#718096]">
+                <td
+                  colSpan={5}
+                  className="py-6 text-center text-xs text-[#718096]"
+                >
                   Tidak ada catatan riwayat gula darah.
                 </td>
               </tr>
             ) : (
               [...logs]
-                .sort((a, b) => getParsedDate(b).getTime() - getParsedDate(a).getTime())
+                .sort(
+                  (a, b) =>
+                    getParsedDate(b).getTime() - getParsedDate(a).getTime(),
+                )
                 .map((log, idx) => {
                   const status = getGlucoseStatus(log);
                   const ptColor = getPointColor(log.measurementTimeType);
@@ -425,7 +491,10 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
                       className="hover:bg-[#F8FAFC] transition-colors"
                     >
                       <td className="py-2.5 px-3 font-semibold text-[#1A202C]">
-                        {log.date} <span className="text-[#718096] font-normal">({log.time})</span>
+                        {log.date}{" "}
+                        <span className="text-[#718096] font-normal">
+                          ({log.time})
+                        </span>
                       </td>
                       <td className="py-2.5 px-3">
                         <span
@@ -440,8 +509,12 @@ export function BloodSugarHistoryCard({ logs = [], diabetesType }: BloodSugarHis
                         </span>
                       </td>
                       <td className="py-2.5 px-3">
-                        <span className="font-black text-[#1A202C]">{log.glucoseValue}</span>
-                        <span className="text-[#718096] text-[10px] ml-0.5">mg/dL</span>
+                        <span className="font-black text-[#1A202C]">
+                          {log.glucoseValue}
+                        </span>
+                        <span className="text-[#718096] text-[10px] ml-0.5">
+                          mg/dL
+                        </span>
                       </td>
                       <td className="py-2.5 px-3">
                         <span

@@ -23,13 +23,19 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const BarWithBorderTop = (props: any) => {
+interface BarCustomProps {
+  width?: number;
+  height?: number;
+  [key: string]: unknown;
+}
+
+const BarWithBorderTop = (props: BarCustomProps) => {
   const { width, height } = props;
   if (!width || !height) return null;
   const radius = Math.min(14, width / 2);
   return (
     <Rectangle
-      {...props}
+      {...(props as React.ComponentProps<typeof Rectangle>)}
       fill="#00695C"
       radius={[radius, radius, 0, 0]}
     />

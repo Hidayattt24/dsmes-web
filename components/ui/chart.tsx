@@ -99,6 +99,25 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
+type TooltipPayloadItem = {
+  dataKey?: string | number;
+  name?: string | number;
+  value?: string | number;
+  color?: string;
+  fill?: string;
+  payload?: Record<string, unknown>;
+  [key: string]: unknown;
+};
+
+type LegendPayloadItem = {
+  dataKey?: string | number;
+  name?: string | number;
+  value?: string | number;
+  color?: string;
+  payload?: Record<string, unknown>;
+  [key: string]: unknown;
+};
+
 function ChartTooltipContent({
   active,
   payload,
@@ -115,20 +134,20 @@ function ChartTooltipContent({
   labelKey,
 }: {
   active?: boolean;
-  payload?: any[];
+  payload?: TooltipPayloadItem[];
   className?: string;
   indicator?: "dot" | "line" | "dashed";
   hideLabel?: boolean;
   hideIndicator?: boolean;
   label?: string;
-  labelFormatter?: (label: any, payload: any[]) => React.ReactNode;
+  labelFormatter?: (label: React.ReactNode, payload: TooltipPayloadItem[]) => React.ReactNode;
   labelClassName?: string;
   formatter?: (
-    value: any,
-    name: any,
-    item: any,
+    value: unknown,
+    name: unknown,
+    item: TooltipPayloadItem,
     index: number,
-    payload: any
+    payload: unknown
   ) => React.ReactNode;
   color?: string;
   nameKey?: string;
@@ -243,7 +262,7 @@ function ChartTooltipContent({
                       <span className="font-mono font-bold text-[#1A202C] tabular-nums">
                         {typeof item.value === "number"
                           ? item.value.toLocaleString("id-ID")
-                          : item.value}
+                          : (item.value as React.ReactNode)}
                       </span>
                     )}
                   </div>
@@ -268,7 +287,7 @@ function ChartLegendContent({
 }: {
   className?: string;
   hideIcon?: boolean;
-  payload?: any[];
+  payload?: LegendPayloadItem[];
   verticalAlign?: "top" | "bottom";
   nameKey?: string;
 }) {
@@ -294,7 +313,7 @@ function ChartLegendContent({
 
         return (
           <div
-            key={item.value}
+            key={`${item.value}`}
             className="flex items-center gap-1.5 text-xs text-[#718096] [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-[#718096]"
           >
             {itemConfig?.icon && !hideIcon ? (
@@ -335,15 +354,15 @@ function getPayloadConfigFromPayload(
 
   if (
     key in payload &&
-    typeof (payload as any)[key] === "string"
+    typeof (payload as Record<string, unknown>)[key] === "string"
   ) {
-    configLabelKey = (payload as any)[key] as string;
+    configLabelKey = (payload as Record<string, unknown>)[key] as string;
   } else if (
     payloadPayload &&
     key in payloadPayload &&
-    typeof (payloadPayload as any)[key] === "string"
+    typeof (payloadPayload as Record<string, unknown>)[key] === "string"
   ) {
-    configLabelKey = (payloadPayload as any)[key] as string;
+    configLabelKey = (payloadPayload as Record<string, unknown>)[key] as string;
   }
 
   return configLabelKey in config
