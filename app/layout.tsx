@@ -22,6 +22,13 @@ export const metadata: Metadata = {
   title: "Digital DSMES Admin",
   description:
     "Platform Digital DSMES untuk mendukung pengelolaan Diabetes Melitus di Aceh.",
+  icons: {
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+    ],
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -34,6 +41,8 @@ export default function RootLayout({
       className={`${poppins.variable} ${plusJakartaSans.variable} h-full`}
     >
       <head>
+        <link rel="icon" href="/logo.png" type="image/png" sizes="any" />
+        <link rel="apple-touch-icon" href="/logo.png" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           rel="stylesheet"
