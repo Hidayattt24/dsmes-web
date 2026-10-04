@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/ui/Button";
 
@@ -9,6 +10,18 @@ import { Button } from "@/components/ui/Button";
 export function ResetSuccessView() {
   return (
     <div className="flex flex-col items-center text-center font-[family-name:var(--font-jakarta)]">
+      {/* Logo */}
+      <div className="mb-8">
+        <Image
+          src="/logo.png"
+          alt="Digital DSMES Logo"
+          width={240}
+          height={80}
+          className="h-16 w-auto max-w-[220px] object-contain mx-auto"
+          priority
+        />
+      </div>
+
       {/* Success icon */}
       <div className="w-20 h-20 rounded-full bg-[#F0F9F8] flex items-center justify-center mb-6 shadow-sm">
         <div className="w-14 h-14 rounded-full bg-[#004f45] flex items-center justify-center">

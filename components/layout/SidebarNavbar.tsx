@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { SidebarNavLink } from "@/components/layout/SidebarNavLink";
 import { MAIN_NAV_ITEMS, STAFF_NAV_ITEMS } from "@/constants/navigation";
 import { useSidebarStore } from "@/lib/stores/sidebarStore";
@@ -46,25 +47,20 @@ export function SidebarNavbar() {
 
   const renderSidebarContent = (isMobile = false) => (
     <>
-      {/* Official branding logo: green shield icon + Deep Teal typography stack */}
-      <div className="px-8 mb-10 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-[32px] text-[#10B981] select-none">
-            health_and_safety
-          </span>
-          <div>
-            <h1 className="font-[family-name:var(--font-poppins)] text-lg font-bold text-[#0F766E] tracking-tight leading-none">
-              DSMES Aceh
-            </h1>
-            <p className="font-[family-name:var(--font-poppins)] text-[9px] text-[#718096] mt-1.5 uppercase tracking-widest font-bold leading-none">
-              HEALTHCARE ADMIN
-            </p>
-          </div>
-        </div>
+      {/* Official branding logo: full logo image */}
+      <div className="px-6 mb-8 flex items-center justify-center relative">
+        <Image
+          src="/logo.png"
+          alt="Logo DSMES Aceh"
+          width={240}
+          height={80}
+          className="h-16 w-auto max-w-[210px] object-contain mx-auto"
+          priority
+        />
         {isMobile && (
           <button
             onClick={closeMobile}
-            className="md:hidden w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors cursor-pointer text-[#718096]"
+            className="absolute right-4 md:hidden w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors cursor-pointer text-[#718096]"
             aria-label="Tutup menu"
           >
             <span className="material-symbols-outlined text-xl">close</span>
