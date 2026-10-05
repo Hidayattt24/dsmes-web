@@ -4,8 +4,8 @@ import { AuthHeroPanel }     from "@/components/auth/AuthHeroPanel";
 import { ForgotPasswordForm } from "@/features/auth/components/ForgotPasswordForm";
 
 export const metadata: Metadata = {
-  title: "Lupa Kata Sandi | Digital DSMES",
-  description: "Masukkan alamat email yang terdaftar untuk mengatur ulang kata sandi.",
+  title: "Lupa Kata Sandi | DIBA",
+  description: "Masukkan alamat email yang terdaftar untuk mengatur ulang kata sandi akun DIBA Anda.",
 };
 
 export default function LupaPasswordPage() {

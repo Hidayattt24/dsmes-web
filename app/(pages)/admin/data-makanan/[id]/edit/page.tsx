@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { FoodFormFeature } from "@/features/data-food/components/FoodFormFeature";
 
 export const metadata: Metadata = {
-  title: "Edit Data Makanan | DSMES Admin",
-  description: "Ubah rincian dan nilai gizi data makanan DSMES",
+  title: "Edit Data Makanan | DIBA Admin",
+  description: "Ubah rincian dan nilai gizi data makanan DIBA",
 };
 
 interface EditFoodPageProps {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { educationService } from "../services/educationService";
 import type { EducationProgressItem, EducationProgressAnalytics, AdminArticleReviewsData } from "../types/education";
 
@@ -14,6 +15,10 @@ interface UseEducationProgressReturn {
 }
 
 export function useEducationProgress(articleId: string): UseEducationProgressReturn {
+  const pathname = usePathname();
+  const isStaff = pathname.startsWith("/staff");
+  const rolePrefix = isStaff ? "staff" : "admin";
+
   const [progress, setProgress] = useState<readonly EducationProgressItem[]>([]);
   const [analytics, setAnalytics] = useState<EducationProgressAnalytics | null>(null);
   const [reviewsData, setReviewsData] = useState<AdminArticleReviewsData | null>(null);
@@ -26,9 +31,9 @@ export function useEducationProgress(articleId: string): UseEducationProgressRet
     setError(null);
     try {
       const [prog, an, rev] = await Promise.all([
-        educationService.getProgress(articleId),
-        educationService.getProgressAnalytics(articleId),
-        educationService.getArticleReviews(articleId),
+        educationService.getProgress(articleId, rolePrefix),
+        educationService.getProgressAnalytics(articleId, rolePrefix),
+        educationService.getArticleReviews(articleId, rolePrefix),
       ]);
       setProgress(prog);
       setAnalytics(an);
@@ -38,7 +43,7 @@ export function useEducationProgress(articleId: string): UseEducationProgressRet
     } finally {
       setIsLoading(false);
     }
-  }, [articleId]);
+  }, [articleId, rolePrefix]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect

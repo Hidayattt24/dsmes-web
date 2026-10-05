@@ -394,7 +394,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
             <input
               type="text"
               required
-              placeholder="Contoh: Evaluasi Kepuasan & Kebisaan Penggunaan Aplikasi DSMES Aceh"
+              placeholder="Contoh: Evaluasi Kepuasan & Kebisaan Penggunaan Aplikasi DIBA Aceh"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-medium text-[#1A202C] focus:outline-none focus:border-[#00695C] transition-all"

@@ -42,11 +42,11 @@ export function LoginForm() {
       {/* Heading */}
       <AuthFormHeader
         title="Selamat Datang"
-        description="Silakan masuk untuk mengakses sistem Digital DSMES."
+        description="Silakan masuk untuk mengakses sistem DIBA (Diabetes Behaviour & Adherence Application)."
       />
 
       {/* Form */}
-      <form onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
+      <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5 sm:gap-6">
         <InputField
           label="Email"
           type="email"
@@ -56,7 +56,7 @@ export function LoginForm() {
           autoComplete="email"
           error={errors.email?.message}
           leftIcon={
-            <span className="material-symbols-outlined text-[22px]">mail</span>
+            <span className="material-symbols-outlined text-[20px] sm:text-[22px]">mail</span>
           }
           {...register("email")}
         />
@@ -72,20 +72,20 @@ export function LoginForm() {
         />
 
         {/* Remember me + Forgot password */}
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-2 cursor-pointer group">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-2">
+          <label className="flex items-center gap-2 cursor-pointer group select-none">
             <input
               type="checkbox"
-              className="w-5 h-5 rounded border-[#bec9c5] text-[#004f45] focus:ring-[#004f45]"
+              className="w-4 h-4 sm:w-5 sm:h-5 rounded border-[#bec9c5] text-[#004f45] focus:ring-[#004f45]"
               {...register("rememberMe")}
             />
-            <span className="text-sm text-[#3e4946] group-hover:text-[#1b1c1c] transition-colors">
+            <span className="text-xs sm:text-sm text-[#4A5568] group-hover:text-[#1b1c1c] transition-colors">
               Ingat saya
             </span>
           </label>
           <Link
             href={ROUTES.LUPA_PASSWORD}
-            className="text-sm font-bold text-[#004f45] hover:underline decoration-2 underline-offset-4 transition-all"
+            className="text-xs sm:text-sm font-bold text-[#004f45] hover:underline decoration-2 underline-offset-4 transition-all self-start sm:self-auto"
           >
             Lupa Kata Sandi?
           </Link>

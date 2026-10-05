@@ -33,7 +33,7 @@ export function useLogin(): UseLoginReturn {
       showToast({
         type: "success",
         title: "Login Berhasil",
-        description: "Selamat datang kembali di Digital DSMES Aceh.",
+        description: "Selamat datang kembali di DIBA (Diabetes Behaviour & Adherence Application).",
       });
       return true;
     } catch (err) {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { RecordDetailFeature } from "@/features/record-monitoring/components/RecordDetailFeature";
 
 export const metadata: Metadata = {
-  title: "Detail Catatan Pasien | Digital DSMES Staff",
+  title: "Detail Catatan Pasien | DIBA Staff",
   description: "Detail catatan kesehatan harian pasien.",
 };
 

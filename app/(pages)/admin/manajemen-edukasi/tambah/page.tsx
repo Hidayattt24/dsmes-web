@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { EducationFormFeature } from "@/features/education/components/EducationFormFeature";
 
 export const metadata: Metadata = {
-  title: "Tambah Edukasi | Digital DSMES Admin",
+  title: "Tambah Edukasi | DIBA Admin",
   description: "Buat artikel edukasi pasien baru.",
 };
 

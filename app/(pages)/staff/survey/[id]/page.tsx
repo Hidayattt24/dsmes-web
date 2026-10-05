@@ -5,7 +5,7 @@ interface PageProps {
 }
 
 export const metadata = {
-  title: "Detail Survey | DSMES Staff",
+  title: "Detail Survey | DIBA Staff",
   description: "Lihat detail instrumen survei",
 };
 

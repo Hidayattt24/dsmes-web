@@ -24,7 +24,7 @@ export function useEducationForm(articleId?: string) {
   const [fields, setFields] = useState<FormFields>({
     title: "",
     category: "Nutrisi & Makanan",
-    createdBy: "Tim Medis DSMES",
+    createdBy: "Tim Medis DIBA",
     shortDescription: "",
     content: "",
     youtubeLink: "",
@@ -48,7 +48,7 @@ export function useEducationForm(articleId?: string) {
           setFields({
             title: art.title,
             category: art.category,
-            createdBy: art.createdBy || "Tim Medis DSMES",
+            createdBy: art.createdBy || "Tim Medis DIBA",
             shortDescription: art.shortDescription,
             content: art.content,
             youtubeLink: art.youtubeLink ?? "",

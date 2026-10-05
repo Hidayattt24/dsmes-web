@@ -32,16 +32,16 @@ export const educationService = {
   },
 
   /** Get all articles */
-  async getArticles(): Promise<EducationArticle[]> {
-    const res = await axiosInstance.get("/admin/education/articles", { params: { limit: 100 } });
+  async getArticles(rolePrefix: "admin" | "staff" = "admin"): Promise<EducationArticle[]> {
+    const res = await axiosInstance.get(`/${rolePrefix}/education/articles`, { params: { limit: 100 } });
     const list = res.data?.data ?? [];
     return list.map(mapArticleFromBackend);
   },
 
   /** Get single article by ID */
-  async getArticleById(id: string): Promise<EducationArticle | null> {
+  async getArticleById(id: string, rolePrefix: "admin" | "staff" = "admin"): Promise<EducationArticle | null> {
     try {
-      const res = await axiosInstance.get(`/education/articles/${id}`);
+      const res = await axiosInstance.get(`/${rolePrefix}/education/articles/${id}`);
       if (res.data?.data) {
         return mapArticleFromBackend(res.data.data);
       }
@@ -89,8 +89,8 @@ export const educationService = {
   },
 
   /** Get statistics counts */
-  async getStats(): Promise<EducationStats> {
-    const res = await axiosInstance.get("/admin/education/stats");
+  async getStats(rolePrefix: "admin" | "staff" = "admin"): Promise<EducationStats> {
+    const res = await axiosInstance.get(`/${rolePrefix}/education/stats`);
     const data = res.data?.data ?? {};
     return {
       totalEducation: data.total_education || 0,
@@ -101,8 +101,8 @@ export const educationService = {
   },
 
   /** Get all patients' progress for an education article */
-  async getProgress(articleId: string): Promise<EducationProgressItem[]> {
-    const res = await axiosInstance.get(`/admin/education/${articleId}/progress`);
+  async getProgress(articleId: string, rolePrefix: "admin" | "staff" = "admin"): Promise<EducationProgressItem[]> {
+    const res = await axiosInstance.get(`/${rolePrefix}/education/${articleId}/progress`);
     const raw: Array<Record<string, unknown>> = res.data?.data ?? [];
     return raw.map((r) => ({
       patient_id: r.patient_id ?? "",
@@ -128,8 +128,8 @@ export const educationService = {
   },
 
   /** Get progress analytics summary for an education article */
-  async getProgressAnalytics(articleId: string): Promise<EducationProgressAnalytics> {
-    const res = await axiosInstance.get(`/admin/education/${articleId}/progress/analytics`);
+  async getProgressAnalytics(articleId: string, rolePrefix: "admin" | "staff" = "admin"): Promise<EducationProgressAnalytics> {
+    const res = await axiosInstance.get(`/${rolePrefix}/education/${articleId}/progress/analytics`);
     const data = res.data?.data ?? {};
     return {
       total_patients: data.total_patients || 0,
@@ -142,9 +142,9 @@ export const educationService = {
   },
 
   /** Get article review summary, rating distribution, and reviews list */
-  async getArticleReviews(articleId: string): Promise<AdminArticleReviewsData> {
+  async getArticleReviews(articleId: string, rolePrefix: "admin" | "staff" = "admin"): Promise<AdminArticleReviewsData> {
     try {
-      const res = await axiosInstance.get(`/admin/education/${articleId}/reviews`);
+      const res = await axiosInstance.get(`/${rolePrefix}/education/${articleId}/reviews`);
       const data = res.data?.data ?? {};
       return {
         average_rating: data.average_rating || 0,

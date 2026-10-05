@@ -7,7 +7,7 @@ interface PageProps {
 }
 
 export const metadata = {
-  title: "Edit Survey | DSMES Admin",
+  title: "Edit Survey | DIBA Admin",
   description: "Edit detail dan pertanyaan survei",
 };
 

@@ -19,9 +19,9 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Digital DSMES Admin",
+  title: "DIBA (Diabetes Behaviour & Adherence Application)",
   description:
-    "Platform Digital DSMES untuk mendukung pengelolaan Diabetes Melitus di Aceh.",
+    "Platform DIBA (Diabetes Behaviour & Adherence Application) untuk mendukung pengelolaan dan kepatuhan Diabetes Melitus di Aceh.",
   icons: {
     icon: [
       { url: "/logo.png", type: "image/png" },

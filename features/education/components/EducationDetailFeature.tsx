@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useEducationDetail } from "../hooks/useEducationDetail";
 import { educationService } from "../services/educationService";
 import type { EducationArticle } from "../types/education";
@@ -18,6 +19,10 @@ interface EducationDetailFeatureProps {
 }
 
 export function EducationDetailFeature({ articleId }: EducationDetailFeatureProps) {
+  const pathname = usePathname();
+  const isStaff = pathname.startsWith("/staff");
+  const rolePrefix = isStaff ? "staff" : "admin";
+
   const {
     article,
     isLoading,
@@ -34,15 +39,15 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
 
   const [relatedArticles, setRelatedArticles] = useState<EducationArticle[]>([]);
 
-
   useEffect(() => {
-    educationService.getArticles().then((list) => {
+    educationService.getArticles(rolePrefix).then((list) => {
       const filtered = list.filter((art) => art.id !== articleId).slice(0, 3);
       setRelatedArticles(filtered);
     }).catch(() => {});
-  }, [articleId]);
+  }, [articleId, rolePrefix]);
 
   const handleConfirmDelete = async () => {
+    if (isStaff) return;
     showToast({
       type: "success",
       title: "Berhasil",
@@ -67,27 +72,32 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
       {/* Breadcrumbs & Actions Row */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <BackButton href={ROUTES.MANAJEMEN_EDUKASI} label="Manajemen Edukasi" />
+          <BackButton
+            href={isStaff ? ROUTES.STAFF_MANAJEMEN_EDUKASI : ROUTES.MANAJEMEN_EDUKASI}
+            label="Manajemen Edukasi"
+          />
         </div>
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          {/* Edit */}
-          <button
-            onClick={goToEdit}
-            className="flex-1 sm:flex-initial justify-center bg-white border border-[#E2E8F0] text-[#1A202C] px-5 sm:px-6 py-2.5 rounded-xl flex items-center gap-2 hover:bg-[#F4F6F8] active:scale-95 transition-all text-sm font-semibold shadow-sm cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-[20px]">edit</span>
-            <span>Edit Artikel</span>
-          </button>
-          {/* Delete */}
-          <button
-            onClick={() => setIsDeleteOpen(true)}
-            disabled={isDeleting}
-            className="flex-1 sm:flex-initial justify-center bg-[#FFF5F5] text-[#C53030] px-5 sm:px-6 py-2.5 rounded-xl flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all text-sm font-semibold border border-red-100 shadow-sm cursor-pointer disabled:opacity-50"
-          >
-            <span className="material-symbols-outlined text-[20px]">delete</span>
-            <span>Hapus</span>
-          </button>
-        </div>
+        {!isStaff && (
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            {/* Edit */}
+            <button
+              onClick={goToEdit}
+              className="flex-1 sm:flex-initial justify-center bg-white border border-[#E2E8F0] text-[#1A202C] px-5 sm:px-6 py-2.5 rounded-xl flex items-center gap-2 hover:bg-[#F4F6F8] active:scale-95 transition-all text-sm font-semibold shadow-sm cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-[20px]">edit</span>
+              <span>Edit Artikel</span>
+            </button>
+            {/* Delete */}
+            <button
+              onClick={() => setIsDeleteOpen(true)}
+              disabled={isDeleting}
+              className="flex-1 sm:flex-initial justify-center bg-[#FFF5F5] text-[#C53030] px-5 sm:px-6 py-2.5 rounded-xl flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all text-sm font-semibold border border-red-100 shadow-sm cursor-pointer disabled:opacity-50"
+            >
+              <span className="material-symbols-outlined text-[20px]">delete</span>
+              <span>Hapus</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* 12-Column Responsive Grid */}
@@ -264,7 +274,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
               {relatedArticles.map((rel) => (
                 <Link
                   key={rel.id}
-                  href={`${ROUTES.MANAJEMEN_EDUKASI}/${rel.id}`}
+                  href={isStaff ? `/staff/manajemen-edukasi/${rel.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${rel.id}`}
                   className="flex gap-4 p-2 rounded-xl hover:bg-[#F4F6F8] transition-all group"
                 >
                   <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-[#E2E8F0] bg-[#F4F6F8]">
@@ -292,17 +302,19 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
 
       </div>
 
-      <ConfirmationModal
-        open={isDeleteOpen}
-        title="Hapus Materi Edukasi?"
-        description="Materi yang dihapus tidak dapat dikembalikan."
-        variant="danger"
-        confirmText="Ya, Hapus"
-        cancelText="Batal"
-        loading={isDeleting}
-        onConfirm={handleConfirmDelete}
-        onCancel={() => setIsDeleteOpen(false)}
-      />
+      {!isStaff && (
+        <ConfirmationModal
+          open={isDeleteOpen}
+          title="Hapus Materi Edukasi?"
+          description="Materi yang dihapus tidak dapat dikembalikan."
+          variant="danger"
+          confirmText="Ya, Hapus"
+          cancelText="Batal"
+          loading={isDeleting}
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setIsDeleteOpen(false)}
+        />
+      )}
     </section>
   );
 }

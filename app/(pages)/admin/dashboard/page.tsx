@@ -4,7 +4,7 @@ import { DashboardCharts }     from "@/features/dashboard/components/DashboardCh
 import { DashboardArticleTable } from "@/features/dashboard/components/DashboardArticleTable";
 
 export const metadata: Metadata = {
-  title: "Dashboard | Digital DSMES Admin",
+  title: "Dashboard | DIBA Admin",
   description: "Ringkasan statistik, aktivitas pengguna, dan artikel edukasi terpopuler.",
 };
 
@@ -16,7 +16,7 @@ export default function DashboardPage() {
           Dashboard Ringkasan
         </h2>
         <p className="text-sm text-[#718096] mt-1 font-[family-name:var(--font-poppins)]">
-          Selamat datang kembali — berikut data statistik terkini untuk DSMES Aceh.
+          Selamat datang kembali — berikut data statistik terkini untuk DIBA.
         </p>
       </div>
       <DashboardStatistics />

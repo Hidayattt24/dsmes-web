@@ -1,23 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { educationService } from "../services/educationService";
 import type { EducationArticle } from "../types/education";
 import { ROUTES } from "@/constants/routes";
 
 export function useEducationDetail(articleId: string) {
   const router = useRouter();
+  const pathname = usePathname();
+  const isStaff = pathname.startsWith("/staff");
+  const rolePrefix = isStaff ? "staff" : "admin";
+
   const [article, setArticle] = useState<EducationArticle | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const fetchDetail = async () => {
+  const fetchDetail = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const art = await educationService.getArticleById(articleId);
+      const art = await educationService.getArticleById(articleId, rolePrefix);
       if (art) {
         setArticle(art);
       } else {
@@ -28,18 +32,17 @@ export function useEducationDetail(articleId: string) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [articleId, rolePrefix]);
 
   useEffect(() => {
     if (articleId) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       fetchDetail();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [articleId]);
+  }, [articleId, fetchDetail]);
 
   const deleteArticle = async () => {
-    if (!article) return;
+    if (!article || isStaff) return;
     setIsDeleting(true);
     try {
       const success = await educationService.deleteArticle(article.id);
@@ -61,7 +64,7 @@ export function useEducationDetail(articleId: string) {
     error,
     deleteArticle,
     refetch: fetchDetail,
-    goBack: () => router.push(ROUTES.MANAJEMEN_EDUKASI),
+    goBack: () => router.push(isStaff ? ROUTES.STAFF_MANAJEMEN_EDUKASI : ROUTES.MANAJEMEN_EDUKASI),
     goToEdit: () => router.push(`${ROUTES.MANAJEMEN_EDUKASI}/${articleId}/edit`),
   };
 }

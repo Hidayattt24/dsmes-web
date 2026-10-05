@@ -26,6 +26,7 @@ export const MAIN_NAV_ITEMS: readonly NavItem[] = [
 export const STAFF_NAV_ITEMS: readonly NavItem[] = [
   { label: "Dashboard",           href: ROUTES.STAFF_DASHBOARD,                 icon: "grid_view"           },
   { label: "Catatan Pasien",      href: ROUTES.STAFF_PEMANTAUAN_CATATAN_PASIEN, icon: "monitor_heart"       },
+  { label: "Manajemen Edukasi",   href: ROUTES.STAFF_MANAJEMEN_EDUKASI,         icon: "school"              },
   { label: "Manajemen Kuesioner", href: ROUTES.STAFF_MANAJEMEN_KUISIONER,       icon: "quiz"                },
   { label: "Survey",              href: ROUTES.STAFF_SURVEY,              icon: "assignment"          },
   { label: "Pengaturan",          href: ROUTES.STAFF_PENGATURAN,                icon: "settings"            },

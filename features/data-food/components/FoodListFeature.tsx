@@ -204,7 +204,7 @@ export function FoodListFeature() {
         <div>
           <h2 className="text-2xl font-bold text-[#1A202C]">Data Makanan</h2>
           <p className="text-xs font-medium text-[#718096] mt-1">
-            Kelola master data makanan, nilai gizi, serta takaran nutrisi terintegrasi DSMES
+            Kelola master data makanan, nilai gizi, serta takaran nutrisi terintegrasi DIBA
           </p>
         </div>
 

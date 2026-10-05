@@ -47,7 +47,7 @@ export function useForgotPassword(): UseForgotPasswordReturn {
         lowerMsg.includes("belum terdaftar")
       ) {
         toastTitle = "Email Tidak Ditemukan";
-        toastDesc = "Alamat email ini belum terdaftar dalam sistem Digital DSMES.";
+        toastDesc = "Alamat email ini belum terdaftar dalam sistem DIBA.";
       } else if (
         lowerMsg.includes("nonaktif") ||
         lowerMsg.includes("deactivated")

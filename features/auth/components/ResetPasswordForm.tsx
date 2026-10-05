@@ -38,7 +38,7 @@ export function ResetPasswordForm() {
         description="Masukkan kata sandi baru untuk akun Anda."
       />
 
-      <form onSubmit={handleSubmit(submit)} noValidate className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit(submit)} noValidate className="flex flex-col gap-5 sm:gap-6">
         <div>
           <PasswordField
             label="Kata Sandi Baru"

@@ -10,15 +10,15 @@ const EducationDetailFeature = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Detail Edukasi | DIBA Admin",
-  description: "Detail konten artikel edukasi dan statistik pembaca.",
+  title: "Detail Edukasi | DIBA Staff",
+  description: "Detail konten materi edukasi dan statistik pembaca.",
 };
 
-interface EducationDetailPageProps {
+interface StaffEducationDetailPageProps {
   readonly params: Promise<{ readonly id: string }>;
 }
 
-export default async function EducationDetailPage({ params }: EducationDetailPageProps) {
+export default async function StaffEducationDetailPage({ params }: StaffEducationDetailPageProps) {
   const { id } = await params;
   return <EducationDetailFeature articleId={id} />;
 }

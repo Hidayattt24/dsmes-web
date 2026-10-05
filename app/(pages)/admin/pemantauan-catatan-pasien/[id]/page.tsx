@@ -10,7 +10,7 @@ const RecordDetailFeature = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Detail Monitoring Record Pasien | Digital DSMES Admin",
+  title: "Detail Monitoring Record Pasien | DIBA Admin",
   description: "Detail riwayat aktivitas harian dan catatan kesehatan pasien.",
 };
 

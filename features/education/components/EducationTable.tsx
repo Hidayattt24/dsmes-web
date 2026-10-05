@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { DataTable, type TableColumn } from "@/components/common/DataTable";
 import { Badge } from "@/components/ui/Badge";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -18,12 +19,15 @@ interface EducationTableProps {
 }
 
 export function EducationTable({ articles, loading, onDelete }: EducationTableProps) {
+  const pathname = usePathname();
+  const isStaff = pathname.startsWith("/staff");
+
   const [deleteArticleInfo, setDeleteArticleInfo] = useState<{ id: string; title: string } | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const { showToast } = useToast();
 
   const handleConfirmDelete = async () => {
-    if (!deleteArticleInfo) return;
+    if (!deleteArticleInfo || isStaff) return;
     setIsDeleting(true);
     try {
       await onDelete(deleteArticleInfo.id);
@@ -59,7 +63,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-[#F0F9F8] text-[#00695C] text-xs font-bold font-[family-name:var(--font-poppins)]">
-              DSMES
+              DIBA
             </div>
           )}
         </div>
@@ -72,7 +76,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
       render: (row) => (
         <div className="max-w-md">
           <Link
-            href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
+            href={isStaff ? `/staff/manajemen-edukasi/${row.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
             className="font-bold text-[#1A202C] hover:text-[#0F766E] transition-all text-sm block truncate font-[family-name:var(--font-poppins)]"
           >
             {row.title}
@@ -130,7 +134,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
         <div className="flex items-center gap-2">
           {/* Progress Link */}
           <Link
-            href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/progress`}
+            href={isStaff ? `/staff/manajemen-edukasi/${row.id}/progress` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/progress`}
             className="inline-flex items-center gap-1 px-3 py-1.5 border border-[#E2E8F0] rounded-lg hover:bg-[#F0F9F8] hover:border-[#00695C]/30 transition-all text-[#718096] hover:text-[#00695C] text-xs font-bold"
             title="Lihat Progress Peserta"
           >
@@ -139,31 +143,35 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
           </Link>
           {/* Detail Link */}
           <Link
-            href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
+            href={isStaff ? `/staff/manajemen-edukasi/${row.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
             className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#0F766E]"
             title="Lihat Detail"
           >
             <span className="material-symbols-outlined text-[18px]">visibility</span>
           </Link>
-          {/* Edit Link */}
-          <Link
-            href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/edit`}
-            className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#0F766E]"
-            title="Edit"
-          >
-            <span className="material-symbols-outlined text-[18px]">edit</span>
-          </Link>
-          {/* Delete Button */}
-          <button
-            onClick={() => setDeleteArticleInfo({ id: row.id, title: row.title })}
-            className="w-8 h-8 flex items-center justify-center border border-red-100 rounded-lg hover:bg-red-50 transition-all text-red-500 hover:text-red-700 cursor-pointer"
-            title="Hapus"
-          >
-            <span className="material-symbols-outlined text-[18px]">delete</span>
-          </button>
+          {!isStaff && (
+            <>
+              {/* Edit Link */}
+              <Link
+                href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/edit`}
+                className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#0F766E]"
+                title="Edit"
+              >
+                <span className="material-symbols-outlined text-[18px]">edit</span>
+              </Link>
+              {/* Delete Button */}
+              <button
+                onClick={() => setDeleteArticleInfo({ id: row.id, title: row.title })}
+                className="w-8 h-8 flex items-center justify-center border border-red-100 rounded-lg hover:bg-red-50 transition-all text-red-500 hover:text-red-700 cursor-pointer"
+                title="Hapus"
+              >
+                <span className="material-symbols-outlined text-[18px]">delete</span>
+              </button>
+            </>
+          )}
         </div>
       ),
-      className: "w-36 text-center",
+      className: isStaff ? "w-28 text-center" : "w-36 text-center",
     },
   ];
 
@@ -206,7 +214,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-[#F0F9F8] text-[#00695C] text-xs font-bold">
-                      DSMES
+                      DIBA
                     </div>
                   )}
                 </div>
@@ -221,7 +229,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
                     </Badge>
                   </div>
                   <Link
-                    href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
+                    href={isStaff ? `/staff/manajemen-edukasi/${row.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
                     className="font-bold text-[#1A202C] text-sm hover:text-[#0F766E] transition-all line-clamp-2 leading-snug"
                   >
                     {row.title}
@@ -245,7 +253,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
 
               <div className="flex items-center justify-between gap-2 border-t border-[#E2E8F0]/60 pt-2.5">
                 <Link
-                  href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/progress`}
+                  href={isStaff ? `/staff/manajemen-edukasi/${row.id}/progress` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/progress`}
                   className="flex-1 inline-flex items-center justify-center gap-1 py-2 px-3 border border-[#E2E8F0] rounded-xl hover:bg-[#F0F9F8] text-[#00695C] text-xs font-bold transition-all"
                   title="Lihat Progress Peserta"
                 >
@@ -253,26 +261,30 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
                   <span>Progress</span>
                 </Link>
                 <Link
-                  href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
+                  href={isStaff ? `/staff/manajemen-edukasi/${row.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
                   className="w-9 h-9 flex items-center justify-center border border-[#E2E8F0] rounded-xl text-[#718096] hover:text-[#0F766E] hover:bg-[#F4F6F8] transition-all"
                   title="Lihat Detail"
                 >
                   <span className="material-symbols-outlined text-[18px]">visibility</span>
                 </Link>
-                <Link
-                  href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/edit`}
-                  className="w-9 h-9 flex items-center justify-center border border-[#E2E8F0] rounded-xl text-[#718096] hover:text-[#0F766E] hover:bg-[#F4F6F8] transition-all"
-                  title="Edit"
-                >
-                  <span className="material-symbols-outlined text-[18px]">edit</span>
-                </Link>
-                <button
-                  onClick={() => setDeleteArticleInfo({ id: row.id, title: row.title })}
-                  className="w-9 h-9 flex items-center justify-center border border-red-100 rounded-xl text-red-500 hover:bg-red-50 transition-all cursor-pointer"
-                  title="Hapus"
-                >
-                  <span className="material-symbols-outlined text-[18px]">delete</span>
-                </button>
+                {!isStaff && (
+                  <>
+                    <Link
+                      href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/edit`}
+                      className="w-9 h-9 flex items-center justify-center border border-[#E2E8F0] rounded-xl text-[#718096] hover:text-[#0F766E] hover:bg-[#F4F6F8] transition-all"
+                      title="Edit"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">edit</span>
+                    </Link>
+                    <button
+                      onClick={() => setDeleteArticleInfo({ id: row.id, title: row.title })}
+                      className="w-9 h-9 flex items-center justify-center border border-red-100 rounded-xl text-red-500 hover:bg-red-50 transition-all cursor-pointer"
+                      title="Hapus"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">delete</span>
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           ))
@@ -291,17 +303,19 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
         />
       </div>
 
-      <ConfirmationModal
-        open={deleteArticleInfo !== null}
-        title="Hapus Materi Edukasi?"
-        description="Materi yang dihapus tidak dapat dikembalikan."
-        variant="danger"
-        confirmText="Ya, Hapus"
-        cancelText="Batal"
-        loading={isDeleting}
-        onConfirm={handleConfirmDelete}
-        onCancel={() => setDeleteArticleInfo(null)}
-      />
+      {!isStaff && (
+        <ConfirmationModal
+          open={deleteArticleInfo !== null}
+          title="Hapus Materi Edukasi?"
+          description="Materi yang dihapus tidak dapat dikembalikan."
+          variant="danger"
+          confirmText="Ya, Hapus"
+          cancelText="Batal"
+          loading={isDeleting}
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setDeleteArticleInfo(null)}
+        />
+      )}
     </>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEducationList } from "../hooks/useEducationList";
 import { EducationStatistics } from "./EducationStatistics";
 import { EducationTable } from "./EducationTable";
@@ -14,6 +15,9 @@ const statusOptions = [
 ] as const;
 
 export function EducationListFeature() {
+  const pathname = usePathname();
+  const isStaff = pathname.startsWith("/staff");
+
   const {
     articles,
     stats,
@@ -50,17 +54,21 @@ export function EducationListFeature() {
             Manajemen Edukasi
           </h2>
           <p className="text-sm text-[#718096] mt-1 font-[family-name:var(--font-poppins)]">
-            Kelola artikel, modul, dan materi edukasi digital bagi pasien.
+            {isStaff
+              ? "Pantau modul, materi edukasi digital, dan progres belajar pasien."
+              : "Kelola artikel, modul, dan materi edukasi digital bagi pasien."}
           </p>
         </div>
 
-        <Link
-          href={`${ROUTES.MANAJEMEN_EDUKASI}/tambah`}
-          className="flex items-center gap-2 bg-[#0F766E] hover:bg-[#0D6E66] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-md shadow-[#0F766E]/10"
-        >
-          <span className="material-symbols-outlined text-[18px]">add</span>
-          <span>Tambah Edukasi</span>
-        </Link>
+        {!isStaff && (
+          <Link
+            href={`${ROUTES.MANAJEMEN_EDUKASI}/tambah`}
+            className="flex items-center gap-2 bg-[#0F766E] hover:bg-[#0D6E66] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-md shadow-[#0F766E]/10"
+          >
+            <span className="material-symbols-outlined text-[18px]">add</span>
+            <span>Tambah Edukasi</span>
+          </Link>
+        )}
       </div>
 
       {/* Summary Statistics */}

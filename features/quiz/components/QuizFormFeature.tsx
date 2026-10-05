@@ -409,7 +409,7 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
                 className="w-full h-12 rounded-xl border border-[#E2E8F0] bg-white px-4 focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C] text-sm text-[#1A202C] outline-none"
                 placeholder={
                   isPreTest
-                    ? "misal: Pre-Test Evaluasi Pengetahuan Awal DSMES"
+                    ? "misal: Pre-Test Evaluasi Pengetahuan Awal DIBA"
                     : "misal: Quiz Evaluasi Nutrisi Sehat Diabetes"
                 }
                 required

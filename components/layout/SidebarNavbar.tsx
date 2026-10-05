@@ -51,7 +51,7 @@ export function SidebarNavbar() {
       <div className="px-6 mb-8 flex items-center justify-center relative">
         <Image
           src="/logo.png"
-          alt="Logo DSMES Aceh"
+          alt="Logo DIBA"
           width={240}
           height={80}
           className="h-16 w-auto max-w-[210px] object-contain mx-auto"

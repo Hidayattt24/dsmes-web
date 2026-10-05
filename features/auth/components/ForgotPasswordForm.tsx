@@ -33,7 +33,7 @@ export function ForgotPasswordForm() {
         description="Masukkan alamat email yang terdaftar untuk mengatur ulang kata sandi Anda."
       />
 
-      <form onSubmit={handleSubmit(submit)} noValidate className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit(submit)} noValidate className="flex flex-col gap-5 sm:gap-6">
         <InputField
           label="Email"
           type="email"
@@ -42,7 +42,7 @@ export function ForgotPasswordForm() {
           required
           autoComplete="email"
           error={errors.email?.message}
-          leftIcon={<span className="material-symbols-outlined text-[22px]">mail</span>}
+          leftIcon={<span className="material-symbols-outlined text-[20px] sm:text-[22px]">mail</span>}
           {...register("email")}
         />
 

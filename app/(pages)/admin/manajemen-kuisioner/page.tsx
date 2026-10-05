@@ -10,8 +10,8 @@ const QuizListFeature = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Manajemen Kuesioner | Digital DSMES Admin",
-  description: "Kelola kuesioner edukasi dan pantau progres belajar pasien DSMES.",
+  title: "Manajemen Kuesioner | DIBA Admin",
+  description: "Kelola kuesioner edukasi dan pantau progres belajar pasien DIBA.",
 };
 
 export default function ManajemenKuisionerPage() {

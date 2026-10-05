@@ -10,8 +10,8 @@ const PatientDetailFeature = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Detail Pasien | Digital DSMES Admin",
-  description: "Detail profil dan data keanggotaan pasien DSMES.",
+  title: "Detail Pasien | DIBA Admin",
+  description: "Detail profil dan data keanggotaan pasien DIBA.",
 };
 
 interface PatientDetailPageProps {

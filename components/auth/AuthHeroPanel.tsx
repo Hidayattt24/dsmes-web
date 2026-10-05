@@ -102,12 +102,11 @@ export function AuthHeroPanel() {
       {/* Hero text */}
       <div className="relative z-30 px-6 max-w-xl">
         <h2 className="text-white font-extrabold text-2xl md:text-3xl mb-4 leading-tight font-[family-name:var(--font-jakarta)]">
-          Platform Digital DSMES untuk Mendukung Pengelolaan Diabetes Melitus
+          Platform DIBA untuk Mendukung Pengelolaan Diabetes Melitus
         </h2>
         <p className="text-[#94e5d5]/80 leading-relaxed text-sm font-[family-name:var(--font-jakarta)]">
           Membantu Admin dan Tenaga Kesehatan Puskesmas memantau data pasien,
-          edukasi, monitoring, serta mendukung penelitian berbasis Digital
-          Diabetes Self-Management Education and Support.
+          edukasi, monitoring, serta mendukung kepatuhan pengelolaan mandiri berbasis DIBA (Diabetes Behaviour &amp; Adherence Application).
         </p>
       </div>
 

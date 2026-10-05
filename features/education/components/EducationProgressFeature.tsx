@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEducationProgress } from "../hooks/useEducationProgress";
 import { BackButton } from "@/components/common/BackButton";
 import { ROUTES } from "@/constants/routes";
@@ -75,6 +76,9 @@ function renderStars(rating: number) {
 }
 
 export function EducationProgressFeature({ articleId }: EducationProgressFeatureProps) {
+  const pathname = usePathname();
+  const isStaff = pathname.startsWith("/staff");
+
   const { progress, analytics, reviewsData, isLoading, error, refetch } = useEducationProgress(articleId);
 
   if (isLoading) {
@@ -122,7 +126,10 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
     <div className="space-y-6 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
       {/* Header */}
       <div className="mb-2">
-        <BackButton href={ROUTES.MANAJEMEN_EDUKASI} label="Manajemen Edukasi" />
+        <BackButton
+          href={isStaff ? ROUTES.STAFF_MANAJEMEN_EDUKASI : ROUTES.MANAJEMEN_EDUKASI}
+          label="Manajemen Edukasi"
+        />
       </div>
       <div>
         <h2 className="text-2xl font-bold text-[#1A202C] tracking-tight">Progress Peserta</h2>

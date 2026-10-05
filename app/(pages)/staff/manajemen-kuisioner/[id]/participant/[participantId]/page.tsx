@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ParticipantQuizDetailFeature } from "@/features/quiz/components/ParticipantQuizDetailFeature";
 
 export const metadata: Metadata = {
-  title: "Hasil Kuesioner Pasien | Digital DSMES Staff",
+  title: "Hasil Kuesioner Pasien | DIBA Staff",
   description: "Pantau rincian hasil jawaban kuesioner pasien.",
 };
 

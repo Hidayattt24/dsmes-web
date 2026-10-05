@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { AdministratorFeature } from "@/features/staff-management/components/AdministratorFeature";
 
 export const metadata: Metadata = {
-  title: "Staff | Digital DSMES Admin",
+  title: "Staff | DIBA Admin",
   description: "Kelola hak akses dan akun monitoring staff.",
 };
 

@@ -7,7 +7,7 @@ interface PageProps {
 }
 
 export const metadata = {
-  title: "Analitik & Respons Survey | DSMES Staff",
+  title: "Analitik & Respons Survey | DIBA Staff",
   description: "Lihat analitik dan respons peserta survei",
 };
 

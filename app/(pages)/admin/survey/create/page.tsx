@@ -3,7 +3,7 @@ import { SurveyFormFeature } from "@/features/survey/components/SurveyFormFeatur
 import { FormSkeleton } from "@/components/ui/loading/FormSkeleton";
 
 export const metadata = {
-  title: "Buat Survey Baru | DSMES Admin",
+  title: "Buat Survey Baru | DIBA Admin",
   description: "Buat instrumen survey penelitian baru",
 };
 

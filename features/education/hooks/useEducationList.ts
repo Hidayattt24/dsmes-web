@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, useEffect, useMemo, startTransition } from "react";
+import { useState, useEffect, useMemo, startTransition, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { educationService } from "../services/educationService";
 import type { EducationArticle, EducationStats } from "../types/education";
 
 export function useEducationList() {
+  const pathname = usePathname();
+  const isStaff = pathname.startsWith("/staff");
+  const rolePrefix = isStaff ? "staff" : "admin";
+
   const [articles, setArticles] = useState<readonly EducationArticle[]>([]);
   const [stats, setStats] = useState<EducationStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,13 +24,13 @@ export function useEducationList() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const fetchEducationData = async () => {
+  const fetchEducationData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
       const [artList, statsData] = await Promise.all([
-        educationService.getArticles(),
-        educationService.getStats(),
+        educationService.getArticles(rolePrefix),
+        educationService.getStats(rolePrefix),
       ]);
       setArticles(artList);
       setStats(statsData);
@@ -34,12 +39,12 @@ export function useEducationList() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [rolePrefix]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchEducationData();
-  }, []);
+  }, [fetchEducationData]);
 
   // Filtered Articles Memo
   const filteredArticles = useMemo(() => {

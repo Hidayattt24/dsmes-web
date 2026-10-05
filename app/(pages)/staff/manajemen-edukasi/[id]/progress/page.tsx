@@ -10,15 +10,15 @@ const EducationProgressFeature = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Progress Edukasi | DIBA Admin",
-  description: "Pantau progress belajar peserta pada materi edukasi.",
+  title: "Progress Edukasi | DIBA Staff",
+  description: "Pantau perkembangan belajar dan ulasan peserta untuk materi edukasi.",
 };
 
-interface EducationProgressPageProps {
+interface StaffEducationProgressPageProps {
   readonly params: Promise<{ readonly id: string }>;
 }
 
-export default async function EducationProgressPage({ params }: EducationProgressPageProps) {
+export default async function StaffEducationProgressPage({ params }: StaffEducationProgressPageProps) {
   const { id } = await params;
   return <EducationProgressFeature articleId={id} />;
 }

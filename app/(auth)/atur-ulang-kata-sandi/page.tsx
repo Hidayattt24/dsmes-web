@@ -4,8 +4,8 @@ import { AuthHeroPanel }    from "@/components/auth/AuthHeroPanel";
 import { ResetPasswordForm } from "@/features/auth/components/ResetPasswordForm";
 
 export const metadata: Metadata = {
-  title: "Atur Ulang Kata Sandi | Digital DSMES",
-  description: "Buat kata sandi baru yang aman untuk akun Digital DSMES Anda.",
+  title: "Atur Ulang Kata Sandi | DIBA",
+  description: "Buat kata sandi baru yang aman untuk akun DIBA Anda.",
 };
 
 export default function AturUlangKataSandiPage() {

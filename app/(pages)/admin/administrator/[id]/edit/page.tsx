@@ -10,7 +10,7 @@ const AdministratorFormFeature = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Edit Staff Monitoring | Digital DSMES Admin",
+  title: "Edit Staff Monitoring | DIBA Admin",
   description: "Edit data akun staff monitoring.",
 };
 

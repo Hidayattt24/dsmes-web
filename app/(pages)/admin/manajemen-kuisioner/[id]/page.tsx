@@ -10,7 +10,7 @@ const QuizDetailFeature = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Detail Kuesioner | Digital DSMES Admin",
+  title: "Detail Kuesioner | DIBA Admin",
   description: "Lihat rincian pertanyaan dan konfigurasi kuesioner.",
 };
 
