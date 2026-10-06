@@ -1,20 +1,39 @@
 import type { EducationArticle, EducationStats, EducationProgressItem, EducationProgressAnalytics, AdminArticleReviewsData } from "../types/education";
 import { axiosInstance } from "@/lib/axios";
 
+const formatDateSafe = (dateStr: unknown, includeTime = false): string => {
+  if (!dateStr || typeof dateStr !== "string") return "Hari ini";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return "Hari ini";
+    if (includeTime) {
+      const datePart = d.toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" });
+      const timePart = d.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+      return `${datePart}, ${timePart} WIB`;
+    }
+    return d.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
+  } catch {
+    return "Hari ini";
+  }
+};
+
 const mapArticleFromBackend = (data: Record<string, unknown>): EducationArticle => {
+  const createdAtFormatted = formatDateSafe(data.created_at);
+  const updatedAtFormatted = formatDateSafe(data.updated_at || data.created_at, true);
+
   return {
     id: data.id as string,
     title: data.title as string,
-    category: (data.category_name as string) || "Lainnya",
+    category: (data.category_name as string) || "Umum & DSMES",
     shortDescription: (data.summary as string) || "",
     content: (data.content as string) || "",
     duration: (data.estimated_read_minutes as number) || 5,
     youtubeLink: (data.youtube_link as string) || "",
     thumbnail: (data.banner_image_url as string) || "",
     status: (data.status as string) === "publikasi" ? "Diterbitkan" : "Draf",
-    createdBy: (data.author_name as string) || "-",
-    createdAt: new Date(data.created_at as string).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }),
-    updatedAt: new Date(data.updated_at as string).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }),
+    createdBy: (data.author_name as string) || "Admin DSMES",
+    createdAt: createdAtFormatted,
+    updatedAt: updatedAtFormatted,
     readCount: (data.read_count as number) || 0,
   };
 };

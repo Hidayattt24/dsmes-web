@@ -32,15 +32,18 @@ export function PatientStatistics({ stats }: PatientStatisticsProps) {
         </p>
       </div>
 
-      {/* Pasien Aktif */}
+      {/* Pasien Aktif Hari Ini */}
       <div className="premium-card p-7 hover:-translate-y-1 transition-transform duration-300">
         <div className="flex items-center justify-between mb-6">
           <span className="w-10 h-10 rounded-full bg-[#F0F9F8] text-[#00695C] flex items-center justify-center">
-            <span className="material-symbols-outlined text-[20px]">verified_user</span>
+            <span className="material-symbols-outlined text-[20px]">person_check</span>
+          </span>
+          <span className="text-[10px] font-bold text-[#00695C] bg-[#F0F9F8] px-2 py-0.5 rounded-full uppercase border border-[#B2DFDB]">
+            Hari Ini
           </span>
         </div>
         <h4 className="text-[11px] font-bold text-[#718096] uppercase tracking-widest mb-1 font-[family-name:var(--font-poppins)]">
-          Pasien Aktif
+          Pasien Aktif Hari Ini
         </h4>
         <p className="text-3xl font-bold text-[#1A202C] font-[family-name:var(--font-poppins)]">
           {active.toLocaleString("id-ID")}

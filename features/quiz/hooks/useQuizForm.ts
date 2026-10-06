@@ -84,8 +84,28 @@ export function useQuizForm(quizId?: string) {
   });
 
   const [articleOptions, setArticleOptions] = useState<readonly ArticleOption[]>([]);
+  const [existingPreTest, setExistingPreTest] = useState<{ id: string; title: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Check if Pre-Test already exists in the system when creating new
+  useEffect(() => {
+    if (quizId) return;
+    const checkPreTest = async () => {
+      try {
+        const res = await quizService.getQuizzes({ type: "PRE_TEST", limit: 5 });
+        if (res.items && res.items.length > 0) {
+          const pre = res.items[0];
+          setExistingPreTest({ id: pre.id, title: pre.title });
+          setFields((prev) => ({
+            ...prev,
+            type: "POST_TEST",
+          }));
+        }
+      } catch {}
+    };
+    checkPreTest();
+  }, [quizId]);
 
   // Load published articles for dropdown
   useEffect(() => {
@@ -501,6 +521,7 @@ export function useQuizForm(quizId?: string) {
   return {
     fields,
     articleOptions,
+    existingPreTest,
     isLoading,
     isSaving,
     handleChange,

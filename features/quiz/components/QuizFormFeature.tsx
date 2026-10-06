@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Link from "next/link";
 import { useQuizForm } from "../hooks/useQuizForm";
 import { BackButton } from "@/components/common/BackButton";
 import { ROUTES } from "@/constants/routes";
@@ -18,6 +19,45 @@ interface QuestionImageUploaderProps {
   readonly onChange: (url: string) => void;
 }
 
+function compressImage(file: File, maxWidth = 1000, maxHeight = 1000, quality = 0.8): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          resolve((e.target?.result as string) ?? "");
+          return;
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+        const compressedDataUrl = canvas.toDataURL("image/jpeg", quality);
+        resolve(compressedDataUrl);
+      };
+      img.onerror = (err) => reject(err);
+      img.src = (e.target?.result as string) ?? "";
+    };
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
+  });
+}
+
 function QuestionImageUploader({
   imageUrl,
   onChange,
@@ -26,7 +66,7 @@ function QuestionImageUploader({
   const { showToast } = useToast();
   const [showUrlInput, setShowUrlInput] = useState(false);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -38,25 +78,33 @@ function QuestionImageUploader({
         description:
           "Hanya file gambar (JPG, JPEG, PNG, WEBP) yang diperbolehkan.",
       });
+      if (fileInputRef.current) fileInputRef.current.value = "";
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
+    const MAX_SIZE = 1 * 1024 * 1024; // 1 MB
+    if (file.size > MAX_SIZE) {
       showToast({
         type: "error",
         title: "Ukuran Terlalu Besar",
-        description: "Ukuran gambar maksimal adalah 5MB.",
+        description: "Maksimal ukuran gambar adalah 1 MB untuk pengiriman yang cepat & stabil.",
       });
+      if (fileInputRef.current) fileInputRef.current.value = "";
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (typeof event.target?.result === "string") {
-        onChange(event.target.result);
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      const compressedUrl = await compressImage(file);
+      onChange(compressedUrl);
+    } catch {
+      showToast({
+        type: "error",
+        title: "Gagal Mengolah Gambar",
+        description: "Terjadi kesalahan saat memproses file gambar.",
+      });
+    } finally {
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -165,6 +213,7 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
   const {
     fields,
     articleOptions,
+    existingPreTest,
     isLoading,
     isSaving,
     handleChange,
@@ -262,22 +311,40 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
               Pilih Tipe Kuesioner <span className="text-red-500">*</span>
             </label>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
               {/* PRE-TEST Card */}
               <div
-                onClick={() => handleChange("type", "PRE_TEST")}
+                onClick={() => {
+                  if (!quizId && existingPreTest) {
+                    showToast({
+                      type: "warning",
+                      title: "Pre-Test Sudah Ada",
+                      description: `Pre-Test DMSES ('${existingPreTest.title}') sudah terdaftar. Sistem hanya mengizinkan 1 Pre-Test.`,
+                    });
+                    return;
+                  }
+                  handleChange("type", "PRE_TEST");
+                }}
                 className={[
-                  "relative p-5 sm:p-6 rounded-2xl border-2 cursor-pointer transition-all duration-200 flex flex-col justify-between select-none group",
-                  isPreTest
-                    ? "border-[#00695C] bg-gradient-to-br from-[#F0F9F8] via-white to-[#E6F2F1]/30 shadow-md shadow-[#00695C]/10 ring-2 ring-[#00695C]/20"
-                    : "border-[#E2E8F0] bg-white hover:border-[#00695C]/40 hover:bg-[#F0F9F8]/40 shadow-xs",
+                  "relative p-5 sm:p-6 rounded-2xl border-2 transition-all duration-200 flex flex-col justify-between select-none group min-h-[220px]",
+                  !quizId && existingPreTest
+                    ? "border-slate-200 bg-slate-50/80 opacity-90 cursor-not-allowed"
+                    : isPreTest
+                    ? "border-[#00695C] bg-gradient-to-br from-[#F0F9F8] via-white to-[#E6F2F1]/30 shadow-md shadow-[#00695C]/10 ring-2 ring-[#00695C]/20 cursor-pointer"
+                    : "border-[#E2E8F0] bg-white hover:border-[#00695C]/40 hover:bg-[#F0F9F8]/40 shadow-xs cursor-pointer",
                 ].join(" ")}
               >
-                {isPreTest && (
+                {isPreTest && (!existingPreTest || quizId) && (
                   <div className="absolute top-4 right-4 bg-[#00695C] text-white p-1 rounded-full flex items-center justify-center shadow-xs">
                     <span className="material-symbols-outlined text-base">
                       check
                     </span>
+                  </div>
+                )}
+                {!quizId && existingPreTest && (
+                  <div className="absolute top-4 right-4 bg-amber-600 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 shadow-xs">
+                    <span className="material-symbols-outlined text-xs">lock</span>
+                    <span>Sudah Ada (1/1)</span>
                   </div>
                 )}
                 <div>
@@ -285,7 +352,7 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
                     <div
                       className={[
                         "w-12 h-12 rounded-2xl flex items-center justify-center transition-all",
-                        isPreTest
+                        isPreTest && (!existingPreTest || quizId)
                           ? "bg-[#00695C] text-white shadow-md shadow-[#00695C]/30"
                           : "bg-teal-100 text-[#00695C] group-hover:bg-[#00695C] group-hover:text-white",
                       ].join(" ")}
@@ -308,10 +375,30 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
                       </span>
                     </div>
                   </div>
-                  <p className="text-xs text-[#4A5568] leading-relaxed mb-4">
+                  <p className="text-xs text-[#4A5568] leading-relaxed mb-3">
                     Mengukur tingkat efikasi diri (keyakinan diri) pasien dalam
                     mengelola diabetes menggunakan skala DMSES.
                   </p>
+
+                  {!quizId && existingPreTest && (
+                    <div className="my-3 p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900">
+                      <p className="font-bold flex items-center gap-1.5 mb-1 text-amber-900">
+                        <span className="material-symbols-outlined text-sm text-amber-700">lock</span>
+                        <span>Pre-Test DMSES Terdaftar</span>
+                      </p>
+                      <p className="text-[11.5px] leading-relaxed text-amber-800 mb-2.5">
+                        Sistem hanya mengizinkan 1 Pre-Test. Silakan edit atau hapus Pre-Test &quot;{existingPreTest.title}&quot; jika ingin mengubahnya.
+                      </p>
+                      <Link
+                        href={`/admin/manajemen-kuisioner/${existingPreTest.id}/edit`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#00695C] text-white text-xs font-bold rounded-lg hover:bg-[#004d43] transition-all shadow-xs cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-sm">edit</span>
+                        <span>Edit Pre-Test Eksisting ({existingPreTest.title})</span>
+                      </Link>
+                    </div>
+                  )}
                 </div>
                 <div className="pt-3 border-t border-teal-100/80 grid grid-cols-1 gap-1.5 text-[11px] font-bold text-[#4A5568]">
                   <div className="flex items-center gap-1.5 text-[#00695C]">

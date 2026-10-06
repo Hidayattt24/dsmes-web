@@ -188,32 +188,65 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
               <span className="text-[#718096] block font-semibold mb-0.5">
                 Tipe Kuesioner
               </span>
-              <span className="font-bold text-[#1A202C]">{quiz.type}</span>
-            </div>
-            <div>
-              <span className="text-[#718096] block font-semibold mb-0.5">
-                Edukasi Terkait
-              </span>
-              <span className="font-bold text-[#00695C]">
-                {quiz.educationTitle || "-"}
-              </span>
-            </div>
-            <div>
-              <span className="text-[#718096] block font-semibold mb-0.5">
-                Batas Kelulusan
-              </span>
               <span className="font-bold text-[#1A202C]">
-                {quiz.passingScore}%
+                {quiz.type === "PRE_TEST" ? "Pre-Test" : "Post-Test"}
               </span>
             </div>
-            <div>
-              <span className="text-[#718096] block font-semibold mb-0.5">
-                Tingkat Kesulitan
-              </span>
-              <span className="font-bold text-amber-700">
-                {quiz.difficulty || "Sedang"}
-              </span>
-            </div>
+            {quiz.type === "PRE_TEST" ? (
+              <>
+                <div>
+                  <span className="text-[#718096] block font-semibold mb-0.5">
+                    Instrumen
+                  </span>
+                  <span className="font-bold text-[#00695C]">
+                    DMSES (Diabetes Self-Efficacy)
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[#718096] block font-semibold mb-0.5">
+                    Respon Jawaban
+                  </span>
+                  <span className="font-bold text-[#1A202C]">
+                    Skala Keyakinan (1 s/d 5)
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[#718096] block font-semibold mb-0.5">
+                    Batas Kelulusan
+                  </span>
+                  <span className="font-bold text-[#718096]">
+                    Tanpa Batas Kelulusan
+                  </span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <span className="text-[#718096] block font-semibold mb-0.5">
+                    Edukasi Terkait
+                  </span>
+                  <span className="font-bold text-[#00695C]">
+                    {quiz.educationTitle || "-"}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[#718096] block font-semibold mb-0.5">
+                    Batas Kelulusan
+                  </span>
+                  <span className="font-bold text-[#1A202C]">
+                    {quiz.passingScore}%
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[#718096] block font-semibold mb-0.5">
+                    Tingkat Kesulitan
+                  </span>
+                  <span className="font-bold text-amber-700">
+                    {quiz.difficulty || "Sedang"}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Categories & Questions List */}
@@ -227,118 +260,142 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
               </p>
             </div>
           ) : (
-            quiz.categories.map((cat, catIdx) => (
-              <div
-                key={cat.id || catIdx}
-                className="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xs overflow-hidden"
-              >
-                {/* Category Header */}
-                <div className="bg-gradient-to-r from-[#F8FAFC] to-[#F1F5F9] px-6 py-4 border-b border-[#E2E8F0] flex items-center justify-between">
-                  <div>
-                    <h3 className="font-bold text-sm text-[#1A202C] flex items-center gap-2">
-                      <span className="w-6 h-6 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-bold">
-                        {catIdx + 1}
-                      </span>
-                      {cat.title}
-                    </h3>
-                    {cat.description && (
-                      <p className="text-xs text-[#718096] mt-0.5 ml-8">
-                        {cat.description}
-                      </p>
-                    )}
-                  </div>
-                  <span className="text-xs font-semibold text-[#00695C] bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
-                    {cat.questions.length} Pertanyaan
-                  </span>
-                </div>
+            quiz.categories.map((cat, catIdx) => {
+              const questionsBefore = (quiz.categories ?? [])
+                .slice(0, catIdx)
+                .reduce((sum, c) => sum + (c.questions?.length ?? 0), 0);
 
-                {/* Questions List */}
-                <div className="divide-y divide-[#E2E8F0]/60 p-6 space-y-6">
-                  {cat.questions.map((q, qIdx) => (
-                    <div
-                      key={q.id || qIdx}
-                      className="pt-4 first:pt-0 space-y-3"
-                    >
-                      {/* Question Header */}
-                      <div className="flex items-start gap-3">
-                        <span className="text-xs font-bold text-[#00695C] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100 shrink-0">
-                          Soal #{q.displayOrder || qIdx + 1}
+              const displayCatTitle =
+                quiz.type === "PRE_TEST"
+                  ? cat.title === "Soal Post-Test" || !cat.title
+                    ? "Pertanyaan Pre-Test DMSES"
+                    : cat.title
+                  : cat.title === "Soal Post-Test" || !cat.title
+                  ? "Soal Post-Test Edukasi"
+                  : cat.title;
+
+              const displayCatDesc =
+                quiz.type === "PRE_TEST"
+                  ? cat.description ||
+                    "Kuesioner Efikasi Diri Manajemen Diabetes (Skala Keyakinan 1–5)"
+                  : cat.description;
+
+              return (
+                <div
+                  key={cat.id || catIdx}
+                  className="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xs overflow-hidden"
+                >
+                  {/* Category Header */}
+                  <div className="bg-gradient-to-r from-[#F8FAFC] to-[#F1F5F9] px-6 py-4 border-b border-[#E2E8F0] flex items-center justify-between">
+                    <div>
+                      <h3 className="font-bold text-sm text-[#1A202C] flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-bold">
+                          {catIdx + 1}
                         </span>
-                        <div className="flex-1">
-                          <p className="text-sm font-semibold text-[#1A202C] leading-relaxed">
-                            {q.questionText}
-                          </p>
+                        {displayCatTitle}
+                      </h3>
+                      {displayCatDesc && (
+                        <p className="text-xs text-[#718096] mt-0.5 ml-8">
+                          {displayCatDesc}
+                        </p>
+                      )}
+                    </div>
+                    <span className="text-xs font-semibold text-[#00695C] bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
+                      {cat.questions.length} Pertanyaan
+                    </span>
+                  </div>
 
-                          {/* Image preview if any */}
-                          {q.questionImageUrl && (
-                            <div className="mt-2 max-w-sm rounded-xl overflow-hidden border border-slate-200">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
-                                src={q.questionImageUrl}
-                                alt={`Ilustrasi Soal ${qIdx + 1}`}
-                                className="w-full h-auto object-cover max-h-48"
-                              />
+                  {/* Questions List */}
+                  <div className="divide-y divide-[#E2E8F0]/60 p-6 space-y-6">
+                    {cat.questions.map((q, qIdx) => {
+                      const absoluteQuestionNum = questionsBefore + qIdx + 1;
+                      return (
+                        <div
+                          key={q.id || qIdx}
+                          className="pt-4 first:pt-0 space-y-3"
+                        >
+                          {/* Question Header */}
+                          <div className="flex items-start gap-3">
+                            <span className="text-xs font-bold text-[#00695C] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100 shrink-0">
+                              Soal #{absoluteQuestionNum}
+                            </span>
+                            <div className="flex-1">
+                              <p className="text-sm font-semibold text-[#1A202C] leading-relaxed">
+                                {q.questionText}
+                              </p>
+
+                              {/* Image preview if any */}
+                              {q.questionImageUrl && (
+                                <div className="mt-2 max-w-sm rounded-xl overflow-hidden border border-slate-200">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img
+                                    src={q.questionImageUrl}
+                                    alt={`Ilustrasi Soal ${absoluteQuestionNum}`}
+                                    className="w-full h-auto object-cover max-h-48"
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Options Grid */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 ml-11">
+                            {q.choices.map((choice, cIdx) => (
+                              <div
+                                key={choice.id || cIdx}
+                                className={`p-3 rounded-xl border text-xs flex items-center justify-between transition-all ${
+                                  quiz.type === "POST_TEST" && choice.isCorrect
+                                    ? "bg-emerald-50/80 border-emerald-300 text-emerald-950 font-medium"
+                                    : "bg-[#F8FAFC] border-[#E2E8F0] text-[#4A5568]"
+                                }`}
+                              >
+                                <span className="flex items-center gap-2">
+                                  <span
+                                    className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                                      quiz.type === "POST_TEST" && choice.isCorrect
+                                        ? "bg-emerald-600 text-white"
+                                        : "bg-slate-200 text-slate-700"
+                                    }`}
+                                  >
+                                    {String.fromCharCode(65 + cIdx)}
+                                  </span>
+                                  <span>{choice.optionText}</span>
+                                </span>
+                                {quiz.type === "POST_TEST" && choice.isCorrect && (
+                                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md flex items-center gap-1">
+                                    <span className="material-symbols-outlined text-[12px]">
+                                      check_circle
+                                    </span>
+                                    <span>Kunci Jawaban</span>
+                                  </span>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Explanation if any */}
+                          {q.explanation && (
+                            <div className="ml-11 bg-blue-50/60 p-3 rounded-xl border border-blue-100 text-xs text-blue-900 flex items-start gap-2">
+                              <span className="material-symbols-outlined text-base text-blue-600 shrink-0 select-none">
+                                info
+                              </span>
+                              <div>
+                                <span className="font-bold block text-[#1E3A8A]">
+                                  Pembahasan Soal:
+                                </span>
+                                <p className="mt-0.5 text-blue-800">
+                                  {q.explanation}
+                                </p>
+                              </div>
                             </div>
                           )}
                         </div>
-                      </div>
-
-                      {/* Options Grid */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 ml-11">
-                        {q.choices.map((choice, cIdx) => (
-                          <div
-                            key={choice.id || cIdx}
-                            className={`p-3 rounded-xl border text-xs flex items-center justify-between transition-all ${
-                              choice.isCorrect
-                                ? "bg-emerald-50/80 border-emerald-300 text-emerald-950 font-medium"
-                                : "bg-[#F8FAFC] border-[#E2E8F0] text-[#4A5568]"
-                            }`}
-                          >
-                            <span className="flex items-center gap-2">
-                              <span
-                                className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                                  choice.isCorrect
-                                    ? "bg-emerald-600 text-white"
-                                    : "bg-slate-200 text-slate-700"
-                                }`}
-                              >
-                                {String.fromCharCode(65 + cIdx)}
-                              </span>
-                              <span>{choice.optionText}</span>
-                            </span>
-                            {choice.isCorrect && (
-                              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md flex items-center gap-1">
-                                <span className="material-symbols-outlined text-[12px]">
-                                  check_circle
-                                </span>
-                                <span>Kunci Jawaban</span>
-                              </span>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Explanation if any */}
-                      {q.explanation && (
-                        <div className="ml-11 bg-blue-50/60 p-3 rounded-xl border border-blue-100 text-xs text-blue-900 flex items-start gap-2">
-                          <span className="material-symbols-outlined text-base text-blue-600 shrink-0 select-none">
-                            info
-                          </span>
-                          <div>
-                            <span className="font-bold block text-[#1E3A8A]">
-                              Pembahasan Soal:
-                            </span>
-                            <p className="mt-0.5 text-blue-800">
-                              {q.explanation}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
       )}

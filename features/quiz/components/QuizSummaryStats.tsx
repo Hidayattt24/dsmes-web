@@ -25,7 +25,7 @@ export function QuizSummaryStats({ quiz }: QuizSummaryStatsProps) {
                 : "bg-emerald-100 text-emerald-800",
             ].join(" ")}
           >
-            {quiz.type}
+            {isPreTest ? "Pre-Test" : "Post-Test"}
           </span>
         </div>
         <div>

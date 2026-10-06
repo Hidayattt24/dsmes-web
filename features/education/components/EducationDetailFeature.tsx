@@ -40,10 +40,13 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
   const [relatedArticles, setRelatedArticles] = useState<EducationArticle[]>([]);
 
   useEffect(() => {
-    educationService.getArticles(rolePrefix).then((list) => {
-      const filtered = list.filter((art) => art.id !== articleId).slice(0, 3);
-      setRelatedArticles(filtered);
-    }).catch(() => {});
+    educationService
+      .getArticles(rolePrefix)
+      .then((list) => {
+        const filtered = list.filter((art) => art.id !== articleId).slice(0, 3);
+        setRelatedArticles(filtered);
+      })
+      .catch(() => {});
   }, [articleId, rolePrefix]);
 
   const handleConfirmDelete = async () => {
@@ -65,10 +68,84 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
     return <ErrorState message={error ?? "Artikel tidak ditemukan."} onRetry={refetch} />;
   }
 
-  const isDefaultArticle = article.id === "1";
+  const fallbackCover =
+    "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop";
 
   return (
     <section className="max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)] p-4 sm:p-6 space-y-6 sm:space-y-8">
+      {/* Scope CSS rules to style rich-text content rendered from editor & match user POV */}
+      <style>{`
+        .article-reader-container .editor-only-overlay,
+        .article-reader-container .editor-actions {
+          display: none !important;
+        }
+        .article-reader-container h2 {
+          font-size: 1.35rem;
+          font-weight: 700;
+          color: #0F172A;
+          margin-top: 1.75rem;
+          margin-bottom: 0.75rem;
+          line-height: 1.35;
+        }
+        .article-reader-container h3 {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #1E293B;
+          margin-top: 1.5rem;
+          margin-bottom: 0.5rem;
+          line-height: 1.4;
+        }
+        .article-reader-container h4 {
+          font-size: 1rem;
+          font-weight: 700;
+          color: #1E293B;
+          margin-top: 1.25rem;
+          margin-bottom: 0.5rem;
+        }
+        .article-reader-container p {
+          font-size: 0.975rem;
+          color: #334155;
+          line-height: 1.8;
+          margin-bottom: 1.15rem;
+        }
+        .article-reader-container ul {
+          list-style-type: disc;
+          padding-left: 1.5rem;
+          margin-bottom: 1.25rem;
+          color: #334155;
+        }
+        .article-reader-container ol {
+          list-style-type: decimal;
+          padding-left: 1.5rem;
+          margin-bottom: 1.25rem;
+          color: #334155;
+        }
+        .article-reader-container li {
+          font-size: 0.95rem;
+          line-height: 1.7;
+          margin-bottom: 0.4rem;
+        }
+        .article-reader-container blockquote,
+        .article-reader-container .bg-teal-50 {
+          background-color: #F0F9F8 !important;
+          border-left: 4px solid #00695C !important;
+          padding: 1.15rem 1.35rem !important;
+          margin: 1.5rem 0 !important;
+          border-radius: 0 0.85rem 0.85rem 0 !important;
+          color: #00695C !important;
+          font-weight: 500 !important;
+        }
+        .article-reader-container img {
+          max-width: 100% !important;
+          height: auto !important;
+          border-radius: 1rem !important;
+          margin: 1.5rem auto !important;
+          display: block !important;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+          border: 1px solid #E2E8F0 !important;
+        }
+      `}</style>
+
       {/* Breadcrumbs & Actions Row */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -102,41 +179,55 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
 
       {/* 12-Column Responsive Grid */}
       <div className="grid grid-cols-12 gap-6 sm:gap-8 items-start">
-        
-        {/* Main Content Area: 9 Columns (~72%) */}
+        {/* Main Content Area: 9 Columns (~75%) */}
         <div className="col-span-12 lg:col-span-9 space-y-6 sm:space-y-8">
-          
           {/* Article Card Container */}
-          <div className="premium-card p-4 sm:p-8 lg:p-10 space-y-6 sm:space-y-8">
-            
-            {/* Hero Image */}
-            <div className="relative h-[200px] sm:h-[320px] md:h-[380px] w-full rounded-xl overflow-hidden group border border-[#E2E8F0]/60">
+          <div className="bg-white border border-[#E2E8F0] rounded-2xl p-5 sm:p-8 lg:p-10 shadow-sm space-y-6 sm:space-y-8">
+            {/* Hero Cover Image */}
+            <div className="relative aspect-[16/9] w-full max-h-[420px] rounded-2xl overflow-hidden group border border-[#E2E8F0] bg-slate-100 shadow-sm">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={article.thumbnail}
-                alt="Hero"
+                src={article.thumbnail || fallbackCover}
+                alt={article.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
 
-            <div className="space-y-4 mt-6 sm:mt-8">
-              <div className="flex gap-2">
-                <span className="px-3 py-1 bg-[#F0F9F8] text-[#00695C] text-[10px] font-bold rounded-full uppercase tracking-widest font-[family-name:var(--font-poppins)]">
-                  Diabetes Care
+            {/* Title & Metadata Header */}
+            <div className="space-y-4 pt-2">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="px-3.5 py-1 bg-[#E6F4F1] text-[#00695C] text-xs font-bold rounded-full uppercase tracking-wider font-[family-name:var(--font-poppins)] inline-flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-sm">folder_open</span>
+                  <span>{article.category}</span>
                 </span>
-                <span className="px-3 py-1 bg-[#00695C] text-white text-[10px] font-bold rounded-full uppercase tracking-widest font-[family-name:var(--font-poppins)]">
-                  Terbitan Terbaru
+                <span
+                  className={[
+                    "px-3.5 py-1 text-xs font-bold rounded-full uppercase tracking-wider inline-flex items-center gap-1.5",
+                    article.status === "Diterbitkan"
+                      ? "bg-[#F0FDF4] text-[#15803D] border border-green-200"
+                      : "bg-[#F8FAFC] text-[#64748B] border border-slate-200",
+                  ].join(" ")}
+                >
+                  <span className="material-symbols-outlined text-sm">
+                    {article.status === "Diterbitkan" ? "check_circle" : "edit_note"}
+                  </span>
+                  <span>{article.status === "Diterbitkan" ? "Terbit" : "Draf"}</span>
                 </span>
               </div>
-              
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1A202C] leading-tight font-[family-name:var(--font-poppins)]">
+
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F172A] leading-tight font-[family-name:var(--font-poppins)] tracking-tight">
                 {article.title}
               </h1>
 
-              <div className="flex items-center flex-wrap gap-4 sm:gap-8 py-4 border-b border-[#E2E8F0] text-[#718096] text-[12px] sm:text-[13px] font-[family-name:var(--font-poppins)]">
+              {/* Metadata Row */}
+              <div className="flex items-center flex-wrap gap-4 sm:gap-6 py-4 border-y border-[#E2E8F0]/80 text-[#64748B] text-xs sm:text-sm font-[family-name:var(--font-poppins)] font-medium">
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[#00695C] text-[18px]">account_circle</span>
+                  <span>{article.createdBy}</span>
+                </div>
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-[#00695C] text-[18px]">calendar_today</span>
-                  <span>{article.createdAt === "12 Jan 2023" ? "24 Oktober 2023" : article.createdAt}</span>
+                  <span>{article.createdAt}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-[#00695C] text-[18px]">schedule</span>
@@ -144,162 +235,134 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-[#00695C] text-[18px]">visibility</span>
-                  <span>{article.readCount === 1420 ? "1,240" : article.readCount.toLocaleString("id-ID")} Dilihat</span>
+                  <span>{article.readCount.toLocaleString("id-ID")} Dilihat</span>
                 </div>
               </div>
             </div>
 
-            {/* Article Content Body */}
-            <article className="prose max-w-none text-[#1A202C] font-[family-name:var(--font-poppins)]">
-              {isDefaultArticle ? (
-                <>
-                  <p className="text-base sm:text-lg font-medium italic border-l-4 border-[#00695C] pl-4 sm:pl-6 bg-[#F0F9F8]/30 py-3 sm:py-4 rounded-r-lg leading-relaxed">
-                    Diabetes Melitus adalah kondisi kronis yang memerlukan perhatian berkelanjutan. Melalui edukasi manajemen mandiri (DSMES), pasien dapat secara signifikan meningkatkan kualitas hidup dan mengurangi risiko komplikasi jangka panjang.
-                  </p>
-                  
-                  <p className="text-base text-[#4A5568] leading-relaxed mt-6">
-                    Dalam artikel ini, kita akan membahas pilar-pilar utama pengelolaan diabetes, mulai dari pemantauan kadar gula darah secara mandiri, pengaturan pola makan yang seimbang, hingga pentingnya aktivitas fisik yang terukur. Pemahaman mendalam mengenai mekanisme penyakit membantu pasien mengambil keputusan yang tepat dalam situasi sehari-hari.
-                  </p>
+            {/* Short Description Summary (If available) */}
+            {article.shortDescription && (
+              <div className="bg-[#F8FAFC] border-l-4 border-[#00695C] p-4 sm:p-5 rounded-r-xl text-sm sm:text-base text-[#334155] italic leading-relaxed font-[family-name:var(--font-poppins)]">
+                {article.shortDescription}
+              </div>
+            )}
 
-                  {/* Inline Two-Column Images */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 my-6 sm:my-10">
-                    <div className="rounded-xl overflow-hidden border border-[#E2E8F0] shadow-sm aspect-[4/3] bg-[#F4F6F8]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        alt="Dietary education"
-                        className="w-full h-full object-cover"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMQYfz7rV6EhsE2sj7_zb9EH39viduL03wF_Kb3E8gay8BzbDvsdnNbSUgf87atScN8VloDV1vnL6uRhzjSCQiMZcqQwxNpHPuFs9Ofk_yYpwlVWrFid3BPfl7hn09w2eGTPl0AG2CTN4L1t0KjwCgfrA7G0YkrYjMu9odi2vge_V9R2yE7ylUl2skr2cxjNXt5dAi0fSaHw5wc56KcXaPNPngnTU4qIxnWvFQMTOpeqTPAzio03GUUtNqnf0biE6zwb2rF8sn6p8A"
-                      />
-                    </div>
-                    <div className="rounded-xl overflow-hidden border border-[#E2E8F0] shadow-sm aspect-[4/3] bg-[#F4F6F8]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        alt="Medical devices"
-                        className="w-full h-full object-cover"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOp-paqRbi5e6NHehRYQzI1TnXCm65JQIbt4Tg1Cr7RbQhMTALyYHdlqna5UZOVAPPTYR9yBxYyRliiThE3xAC1bQWrciqnf3B48VFAfWzgJYyaE1jT_YKaVIqqc50FpDpzeuRnqMOmk4aFvVPkBehxkT48Kf_-FivFW2ydpd-VaxnAfADlTKOJ1Ol_uzIokNGO4n4wc6QtOYMc2SYFWctM2CQ-ZPCVX09r-f9DLAPcmQbm-vNo163KX64XvTRgBubOKyXvB_gAfdR"
-                      />
-                    </div>
-                  </div>
-
-                  <h3 className="text-lg sm:text-xl font-bold text-[#1A202C] mb-4">Pentingnya Pemantauan Rutin</h3>
-                  <p className="text-base text-[#4A5568] leading-relaxed mb-6">
-                    Monitoring rutin bukan sekadar mencatat angka. Ini adalah proses belajar tentang bagaimana tubuh Anda merespons berbagai faktor seperti stres, makanan tertentu, dan olahraga. Data ini sangat krusial bagi tenaga medis untuk menyesuaikan rencana perawatan Anda secara personal.
-                  </p>
-
-                  <div className="bg-[#F0F9F8]/50 p-4 sm:p-8 rounded-2xl border-l-4 border-[#00695C] my-6 sm:my-10">
-                    <p className="text-[#00695C] font-semibold italic text-base sm:text-lg leading-relaxed">
-                      &quot;Kunci keberhasilan manajemen diabetes bukan pada obat semata, melainkan pada pemahaman pasien terhadap kondisi mereka sendiri.&quot;
-                    </p>
-                  </div>
-
-                  <h3 className="text-lg sm:text-xl font-bold text-[#1A202C] mb-4">Rekomendasi Aktivitas Fisik</h3>
-                  <p className="text-base text-[#4A5568] leading-relaxed mb-0">
-                    Aktivitas fisik membantu sel-sel tubuh menjadi lebih sensitif terhadap insulin. Kami merekomendasikan setidaknya 150 menit aktivitas aerobik intensitas sedang per minggu, yang dibagi menjadi minimal 3 hari dalam seminggu.
-                  </p>
-                </>
-              ) : (
-                <div className="relative">
-                  <style>{`
-                    .editor-only-overlay, .editor-actions {
-                      display: none !important;
-                    }
-                  `}</style>
-                  <div
-                    className="text-base text-[#4A5568] leading-relaxed space-y-6"
-                    dangerouslySetInnerHTML={{ __html: article.content }}
-                  />
-                </div>
-              )}
+            {/* Article Content Reader Body */}
+            <article className="article-reader-container text-[#1E293B] font-[family-name:var(--font-poppins)]">
+              <div
+                className="text-base text-[#334155] leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: article.content }}
+              />
             </article>
           </div>
 
-          {/* Footer Navigation Action */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 sm:py-6">
+          {/* Footer Status Bar */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 sm:py-6 border-t border-[#E2E8F0]/60">
             <button
               onClick={goBack}
-              className="flex items-center gap-2 text-[#718096] hover:text-[#00695C] transition-all font-semibold text-sm cursor-pointer"
+              className="flex items-center gap-2 text-[#64748B] hover:text-[#00695C] transition-all font-semibold text-sm cursor-pointer"
             >
               <span className="material-symbols-outlined text-[20px]">arrow_back</span>
               <span>Kembali ke Daftar Manajemen</span>
             </button>
-            <div className="flex gap-4 items-center text-[#718096]">
+            <div className="flex gap-2.5 items-center text-[#64748B] text-xs font-medium">
               <div className="w-2 h-2 rounded-full bg-[#00695C] animate-pulse"></div>
-              <span className="text-[11px] italic font-medium">Terakhir dilihat oleh Anda: Hari ini, 14:20</span>
+              <span>
+                Terakhir diedit oleh <b className="text-[#0F172A]">{article.createdBy}</b> pada{" "}
+                <b className="text-[#00695C]">{article.updatedAt}</b>
+              </span>
             </div>
           </div>
-
         </div>
 
-        {/* Right Sidebar: 3 Columns (~28%) */}
+        {/* Right Sidebar: 3 Columns (~25%) */}
         <div className="col-span-12 lg:col-span-3 space-y-6">
-          
           {/* Status Card */}
-          <div className="premium-card p-6">
-            <h4 className="text-[11px] font-bold text-[#718096] uppercase tracking-widest mb-6 font-[family-name:var(--font-poppins)]">
-              Status Artikel
+          <div className="bg-white border border-[#E2E8F0] rounded-2xl p-6 shadow-sm">
+            <h4 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-5 font-[family-name:var(--font-poppins)] flex items-center gap-2">
+              <span className="material-symbols-outlined text-base text-[#00695C]">info</span>
+              <span>Status Artikel</span>
             </h4>
-            <div className="space-y-4 font-[family-name:var(--font-poppins)]">
-              <div className="flex justify-between items-center py-2.5 border-b border-[#E2E8F0]/50">
-                <span className="text-[#718096] text-[13px]">Status</span>
-                <span className={[
-                  "text-[10px] font-bold px-3 py-1 rounded-full uppercase",
-                  article.status === "Diterbitkan"
-                    ? "bg-[#F0FDF4] text-[#15803d]"
-                    : "bg-[#F4F6F8] text-[#718096]",
-                ].join(" ")}>
+            <div className="space-y-3.5 font-[family-name:var(--font-poppins)] text-xs sm:text-sm">
+              <div className="flex justify-between items-center py-2 border-b border-[#E2E8F0]/60">
+                <span className="text-[#64748B] font-medium">Status</span>
+                <span
+                  className={[
+                    "text-[11px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wide",
+                    article.status === "Diterbitkan"
+                      ? "bg-[#F0FDF4] text-[#15803D] border border-green-200"
+                      : "bg-[#F8FAFC] text-[#64748B] border border-slate-200",
+                  ].join(" ")}
+                >
                   {article.status === "Diterbitkan" ? "Terbit" : "Draf"}
                 </span>
               </div>
-              <div className="flex justify-between items-center py-2.5 border-b border-[#E2E8F0]/50">
-                <span className="text-[#718096] text-[13px]">Visibilitas</span>
-                <span className="text-[#1A202C] font-semibold text-[13px]">Publik</span>
+              <div className="flex justify-between items-center py-2 border-b border-[#E2E8F0]/60">
+                <span className="text-[#64748B] font-medium">Visibilitas</span>
+                <span className="text-[#0F172A] font-semibold">Publik (Pasien)</span>
               </div>
-              <div className="flex justify-between items-center py-2.5 border-b border-[#E2E8F0]/50">
-                <span className="text-[#718096] text-[13px]">Update Terakhir</span>
-                <span className="text-[#1A202C] font-semibold text-[13px]">{article.updatedAt === "15 Jan 2023" ? "25/10/2023" : article.updatedAt}</span>
+              <div className="flex justify-between items-start py-2 border-b border-[#E2E8F0]/60">
+                <span className="text-[#64748B] font-medium">Kategori</span>
+                <span className="text-[#00695C] font-bold text-right max-w-[140px] truncate bg-[#E6F4F1] px-2.5 py-0.5 rounded-md text-xs">
+                  {article.category}
+                </span>
               </div>
-              <div className="flex justify-between items-center py-2.5">
-                <span className="text-[#718096] text-[13px]">Kategori</span>
-                <span className="text-[#00695C] font-bold text-[13px]">{article.category === "Nutrisi & Makanan" ? "Manajemen Diet" : article.category}</span>
+              <div className="flex justify-between items-center py-2 border-b border-[#E2E8F0]/60">
+                <span className="text-[#64748B] font-medium">Penulis / Admin</span>
+                <span className="text-[#0F172A] font-semibold truncate max-w-[130px]" title={article.createdBy}>
+                  {article.createdBy}
+                </span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-[#E2E8F0]/60">
+                <span className="text-[#64748B] font-medium">Tanggal Dibuat</span>
+                <span className="text-[#0F172A] font-medium">{article.createdAt}</span>
+              </div>
+              <div className="flex justify-between items-start py-2">
+                <span className="text-[#64748B] font-medium">Update Terakhir</span>
+                <span className="text-[#00695C] font-bold text-right text-xs max-w-[150px] leading-tight">
+                  {article.updatedAt}
+                </span>
               </div>
             </div>
           </div>
 
           {/* Related Articles Card */}
-          <div className="premium-card p-6">
-            <h4 className="text-[11px] font-bold text-[#718096] uppercase tracking-widest mb-6 font-[family-name:var(--font-poppins)]">
-              Artikel Terkait
+          <div className="bg-white border border-[#E2E8F0] rounded-2xl p-6 shadow-sm">
+            <h4 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-5 font-[family-name:var(--font-poppins)] flex items-center gap-2">
+              <span className="material-symbols-outlined text-base text-[#00695C]">auto_stories</span>
+              <span>Artikel Terkait</span>
             </h4>
             <div className="space-y-4 font-[family-name:var(--font-poppins)]">
               {relatedArticles.map((rel) => (
                 <Link
                   key={rel.id}
                   href={isStaff ? `/staff/manajemen-edukasi/${rel.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${rel.id}`}
-                  className="flex gap-4 p-2 rounded-xl hover:bg-[#F4F6F8] transition-all group"
+                  className="flex gap-3.5 p-2 rounded-xl hover:bg-[#F8FAFC] transition-all group border border-transparent hover:border-[#E2E8F0]"
                 >
-                  <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-[#E2E8F0] bg-[#F4F6F8]">
+                  <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border border-[#E2E8F0] bg-slate-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={rel.thumbnail || "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=200"}
+                      src={rel.thumbnail || fallbackCover}
                       alt={rel.title}
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="flex flex-col justify-center min-w-0">
-                    <h5 className="text-[13px] font-bold text-[#1A202C] leading-tight group-hover:text-[#00695C] transition-colors line-clamp-2">
+                    <h5 className="text-xs font-bold text-[#0F172A] leading-snug group-hover:text-[#00695C] transition-colors line-clamp-2">
                       {rel.title}
                     </h5>
-                    <p className="text-[11px] text-[#718096] mt-1.5">
-                      {rel.createdAt} • {rel.duration} Min
+                    <p className="text-[11px] text-[#64748B] mt-1 font-medium">
+                      {rel.duration} Min • {rel.category}
                     </p>
                   </div>
                 </Link>
               ))}
+              {relatedArticles.length === 0 && (
+                <p className="text-xs text-[#64748B] text-center py-4 italic">Belum ada artikel terkait lainnya.</p>
+              )}
             </div>
           </div>
-
         </div>
-
       </div>
 
       {!isStaff && (
