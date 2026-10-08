@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import Image from "next/image";
 
 import { AuthFormHeader } from "@/components/auth/AuthFormHeader";
 import { InputField }     from "@/components/ui/InputField";
@@ -39,11 +40,56 @@ export function LoginForm() {
 
   return (
     <div className="font-[family-name:var(--font-jakarta)]">
-      {/* Heading */}
-      <AuthFormHeader
-        title="Selamat Datang"
-        description="Silakan masuk untuk mengakses sistem DIBA (Diabetes Behaviour & Adherence Application)."
-      />
+      {/* Mobile-only hero header (desktop unchanged) */}
+      <div className="md:hidden mb-7">
+        <div className="hero-gradient relative overflow-hidden rounded-3xl px-5 pt-5 pb-6 shadow-lg shadow-[#004f45]/20">
+          <div className="absolute inset-0 medical-grid opacity-20 pointer-events-none" />
+          <div className="absolute -top-10 -right-10 w-36 h-36 bg-white/10 blur-2xl rounded-full pointer-events-none" />
+
+          <div className="relative">
+            <div className="inline-flex items-center bg-white rounded-2xl px-3 py-2 shadow-sm mb-5">
+              <Image
+                src="/logo.png"
+                alt="DIBA Logo"
+                width={240}
+                height={80}
+                className="h-9 w-auto max-w-[150px] object-contain"
+                priority
+              />
+            </div>
+            <h1 className="text-white text-2xl font-extrabold tracking-tight mb-1.5">
+              Selamat Datang 👋
+            </h1>
+            <p className="text-[#94e5d5]/90 text-[13px] leading-relaxed">
+              Masuk untuk mengakses sistem DIBA (Diabetes Behaviour &amp; Adherence Application).
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {[
+                { icon: "monitor_heart", label: "Monitoring" },
+                { icon: "school",        label: "Edukasi" },
+                { icon: "groups",        label: "Data Pasien" },
+              ].map((chip) => (
+                <span
+                  key={chip.label}
+                  className="inline-flex items-center gap-1 rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-semibold text-white"
+                >
+                  <span className="material-symbols-outlined text-[14px]">{chip.icon}</span>
+                  {chip.label}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop heading */}
+      <div className="hidden md:block">
+        <AuthFormHeader
+          title="Selamat Datang"
+          description="Silakan masuk untuk mengakses sistem DIBA (Diabetes Behaviour & Adherence Application)."
+        />
+      </div>
 
       {/* Form */}
       <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5 sm:gap-6">
@@ -72,7 +118,7 @@ export function LoginForm() {
         />
 
         {/* Remember me + Forgot password */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-2">
+        <div className="flex flex-row items-center justify-between gap-2">
           <label className="flex items-center gap-2 cursor-pointer group select-none">
             <input
               type="checkbox"

@@ -4,8 +4,8 @@ services:
     container_name: dsmes_web
     restart: unless-stopped
     ports:
-      # Temporary IP-only testing. Restrict to 127.0.0.1 after Nginx/HTTPS.
-      - "0.0.0.0:3000:3000"
+      # Bound to localhost only. Accessible via Nginx reverse proxy.
+      - "127.0.0.1:3000:3000"
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
       interval: 15s
