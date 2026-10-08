@@ -92,6 +92,64 @@ export const authService = {
     }
   },
 
+  /** Request an OTP for password reset via Resend email. */
+  async forgotPassword(email: string, ownerType: "staff" | "patient" = "staff"): Promise<void> {
+    try {
+      await axiosInstance.post("/auth/forgot-password", {
+        email,
+        owner_type: ownerType,
+      });
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      if (err.response?.data?.message) {
+        throw new Error(err.response.data.message);
+      }
+      throw error;
+    }
+  },
+
+  /** Verify the 6-digit OTP code sent to user email. */
+  async verifyOtp(email: string, otpCode: string, ownerType: "staff" | "patient" = "staff"): Promise<void> {
+    try {
+      await axiosInstance.post("/auth/verify-otp", {
+        email,
+        otp_code: otpCode,
+        owner_type: ownerType,
+      });
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      if (err.response?.data?.message) {
+        throw new Error(err.response.data.message);
+      }
+      throw error;
+    }
+  },
+
+  /** Reset user password using the verified OTP code. */
+  async resetPassword(
+    email:           string,
+    otpCode:         string,
+    password:        string,
+    confirmPassword: string,
+    ownerType:       "staff" | "patient" = "staff"
+  ): Promise<void> {
+    try {
+      await axiosInstance.post("/auth/reset-password", {
+        email,
+        otp_code: otpCode,
+        new_password: password,
+        confirm_password: confirmPassword,
+        owner_type: ownerType,
+      });
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      if (err.response?.data?.message) {
+        throw new Error(err.response.data.message);
+      }
+      throw error;
+    }
+  },
+
   /** Set a new password for a staff account using a registered email. */
   async resetPasswordByEmail(
     email:           string,

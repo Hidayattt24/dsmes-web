@@ -10,11 +10,13 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 interface ForgotPasswordState {
   readonly email: string;
+  readonly otpCode: string;
 }
 
 interface ForgotPasswordActions {
-  setEmail: (email: string) => void;
-  reset:    ()              => void;
+  setEmail:   (email: string) => void;
+  setOtpCode: (otpCode: string) => void;
+  reset:      () => void;
 }
 
 type ForgotPasswordStore = ForgotPasswordState & ForgotPasswordActions;
@@ -23,8 +25,10 @@ export const useForgotPasswordStore = create<ForgotPasswordStore>()(
   persist(
     (set) => ({
       email: "",
-      setEmail: (email) => set({ email }),
-      reset:    ()      => set({ email: "" }),
+      otpCode: "",
+      setEmail:   (email) => set({ email }),
+      setOtpCode: (otpCode) => set({ otpCode }),
+      reset:      () => set({ email: "", otpCode: "" }),
     }),
     {
       name:    "dsmes-forgot-password",

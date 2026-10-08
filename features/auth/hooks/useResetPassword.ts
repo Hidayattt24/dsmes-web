@@ -17,15 +17,31 @@ interface UseResetPasswordReturn {
 export function useResetPassword(): UseResetPasswordReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError]         = useState<string | null>(null);
-  const { email, reset }          = useForgotPasswordStore();
+  const { email, otpCode, reset } = useForgotPasswordStore();
   const { showToast }             = useToast();
   const router                    = useRouter();
 
   const submit = async (values: ResetPasswordFormValues): Promise<void> => {
+    if (!email || !otpCode) {
+      showToast({
+        type: "error",
+        title: "Sesi Kedaluwarsa",
+        description: "Silakan mulai ulang proses lupa kata sandi.",
+      });
+      router.push(ROUTES.LUPA_PASSWORD);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     try {
-      await authService.resetPasswordByEmail(email, values.password, values.confirmPassword);
+      await authService.resetPassword(
+        email,
+        otpCode,
+        values.password,
+        values.confirmPassword,
+        "staff"
+      );
       reset(); // clear session state — flow complete
       showToast({
         type: "success",

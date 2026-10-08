@@ -25,17 +25,17 @@ export function useForgotPassword(): UseForgotPasswordReturn {
     setIsLoading(true);
     setError(null);
     try {
-      await authService.checkEmail(values.email);
+      await authService.forgotPassword(values.email, "staff");
       setEmail(values.email);
       showToast({
         type: "success",
-        title: "Email Terverifikasi",
-        description: "Email terdaftar. Silakan masukkan kata sandi baru Anda.",
+        title: "Kode OTP Terkirim",
+        description: "Kode verifikasi telah dikirim ke alamat email Anda.",
       });
-      router.push(ROUTES.ATUR_ULANG_KATA_SANDI);
+      router.push(ROUTES.VERIFIKASI_OTP);
       return true;
     } catch (err) {
-      const rawMsg = err instanceof Error ? err.message : "Gagal memeriksa email. Coba lagi.";
+      const rawMsg = err instanceof Error ? err.message : "Gagal mengirim kode OTP. Coba lagi.";
       const lowerMsg = rawMsg.toLowerCase();
 
       let toastTitle = "Gagal Memeriksa Email";

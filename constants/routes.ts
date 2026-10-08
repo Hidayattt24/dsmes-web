@@ -7,6 +7,7 @@ export const ROUTES = {
   // Auth
   LOGIN: "/login",
   LUPA_PASSWORD: "/lupa-password",
+  VERIFIKASI_OTP: "/verifikasi-otp",
   ATUR_ULANG_KATA_SANDI: "/atur-ulang-kata-sandi",
   BERHASIL_RESET: "/berhasil-reset",
   // Admin pages
