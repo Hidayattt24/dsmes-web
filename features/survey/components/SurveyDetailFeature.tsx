@@ -73,12 +73,12 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
             </span>
             <span
               className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase border ${
-                survey.status === "published" || survey.is_active
+                survey.is_active && survey.status === "published"
                   ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                   : "bg-amber-50 text-amber-700 border-amber-200"
               }`}
             >
-              {survey.status === "published" || survey.is_active ? "Aktif" : "Draft"}
+              {survey.is_active && survey.status === "published" ? "Aktif" : "Draft"}
             </span>
           </div>
 

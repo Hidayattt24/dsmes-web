@@ -111,14 +111,14 @@ export function SurveyTable({
                         <span
                           className={[
                             "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase border",
-                            survey.status === "published" || survey.is_active
+                            survey.is_active && survey.status === "published"
                               ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                               : "bg-amber-50 text-amber-700 border-amber-200",
                           ].join(" ")}
                         >
-                          {survey.status === "published" || survey.is_active ? "Aktif" : "Draft"}
+                          {survey.is_active && survey.status === "published" ? "Aktif" : "Draft"}
                         </span>
-                        {survey.is_active && (
+                        {survey.is_active && survey.status === "published" && (
                           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Aktif di Mobile" />
                         )}
                       </div>
