@@ -27,7 +27,7 @@ export interface FoodMaster {
   dietary_fiber: number;
   energy: number;
 
-  nutrition_basis?: 'PER_100G' | 'PER_SERVING' | 'PER_PACKAGE';
+  nutrition_basis?: 'PER_100G' | 'PER_SERVING' | 'PER_PACKAGE' | 'UNVERIFIED';
   source: string;
   barcode: string;
   image_url: string;
@@ -63,7 +63,7 @@ export interface CreateFoodDTO {
   dietary_fiber?: number;
   energy?: number;
 
-  nutrition_basis?: 'PER_100G' | 'PER_SERVING' | 'PER_PACKAGE';
+  nutrition_basis?: 'PER_100G' | 'PER_SERVING' | 'PER_PACKAGE' | 'UNVERIFIED';
   source?: string;
   barcode?: string;
   image_url?: string;

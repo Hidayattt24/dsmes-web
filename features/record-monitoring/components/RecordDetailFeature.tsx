@@ -113,7 +113,9 @@ export function RecordDetailFeature({ patientId }: RecordDetailFeatureProps) {
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <BloodSugarHistoryCard logs={bloodSugarLogs} />
+        <div className="self-start">
+          <BloodSugarHistoryCard logs={bloodSugarLogs} />
+        </div>
         <MealHistoryCard
           logs={mealLogs}
           targetCalories={

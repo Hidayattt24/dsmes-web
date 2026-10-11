@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useToast } from "@/components/ui/Toast";
 import { ErrorState } from "@/components/common/ErrorState";
@@ -13,7 +13,10 @@ import { PatientProfileCard } from "./PatientProfileCard";
 import { PatientPersonalInfoCard } from "./PatientPersonalInfoCard";
 import { PatientMeasurementHistoryCard } from "./PatientMeasurementHistoryCard";
 import { BloodSugarHistoryCard } from "@/features/record-monitoring/components/BloodSugarHistoryCard";
-import { PatientCalorieChart } from "./PatientCalorieChart";
+import { MealHistoryCard } from "@/features/record-monitoring/components/MealHistoryCard";
+import { recordMonitoringService } from "@/features/record-monitoring/services/recordMonitoringService";
+import { calculateDSMESCalorieTarget } from "@/lib/calorieCalculator";
+import type { MealLog } from "@/features/record-monitoring/types/record";
 import {
   PatientEducationActivity,
   type PatientEducationSummary,
@@ -72,13 +75,35 @@ export function PatientDetailFeature({ patientId }: PatientDetailFeatureProps) {
   const {
     patient,
     bloodSugar,
-    meals,
     educationActivities,
     isLoading,
     error,
     refetch,
   } = usePatientDetail(patientId);
   const bloodSugarLogs = bloodSugar.map(toBloodSugarLog);
+  const [mealDate, setMealDate] = useState<string>(() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  });
+  const [mealLogs, setMealLogs] = useState<MealLog[]>([]);
+  const [isMealLoading, setIsMealLoading] = useState(false);
+
+  const loadMeals = useCallback(async () => {
+    setIsMealLoading(true);
+    try {
+      setMealLogs(await recordMonitoringService.getMealLogs(patientId, "admin", mealDate));
+    } catch {
+      setMealLogs([]);
+    } finally {
+      setIsMealLoading(false);
+    }
+  }, [patientId, mealDate]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void loadMeals();
+  }, [loadMeals]);
+
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isAddMeasurementOpen, setIsAddMeasurementOpen] = useState(false);
   const { showToast } = useToast();
@@ -210,7 +235,13 @@ export function PatientDetailFeature({ patientId }: PatientDetailFeatureProps) {
           <BloodSugarHistoryCard logs={bloodSugarLogs} />
         </div>
         <div className="lg:col-span-7">
-          <PatientCalorieChart data={meals} patient={patient} />
+          <MealHistoryCard
+            logs={mealLogs}
+            targetCalories={Number(patient.dailyCalorieTarget) || calculateDSMESCalorieTarget(patient)}
+            selectedDate={mealDate}
+            onDateChange={setMealDate}
+            isLoading={isMealLoading}
+          />
         </div>
         <div className="lg:col-span-5">
           <PatientEducationActivity

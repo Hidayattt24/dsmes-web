@@ -324,12 +324,28 @@ export function FoodImportModal({
                           <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-md ${
                             row.data.nutrition_basis === 'PER_PACKAGE'
                               ? 'bg-purple-50 text-purple-700 border border-purple-200'
+                              : row.data.nutrition_basis === 'PER_SERVING'
+                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                              : row.data.nutrition_basis === 'UNVERIFIED'
+                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
                               : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           }`}>
                             <span className="material-symbols-outlined text-sm select-none">
-                              {row.data.nutrition_basis === 'PER_PACKAGE' ? 'inventory_2' : 'nature'}
+                              {row.data.nutrition_basis === 'PER_PACKAGE'
+                                ? 'inventory_2'
+                                : row.data.nutrition_basis === 'PER_SERVING'
+                                ? 'restaurant'
+                                : row.data.nutrition_basis === 'UNVERIFIED'
+                                ? 'help_outline'
+                                : 'scale'}
                             </span>
-                            {row.data.nutrition_basis === 'PER_PACKAGE' ? 'Per Kemasan' : 'Per 100g BDD'}
+                            {row.data.nutrition_basis === 'PER_PACKAGE'
+                              ? 'Per Kemasan'
+                              : row.data.nutrition_basis === 'PER_SERVING'
+                              ? 'Per Sajian'
+                              : row.data.nutrition_basis === 'UNVERIFIED'
+                              ? 'Perlu Verifikasi'
+                              : 'Per 100g'}
                           </span>
                         </td>
                         <td className="py-2 px-3 text-right font-mono font-bold text-[#00695C]">{row.data.energy_kcal}</td>

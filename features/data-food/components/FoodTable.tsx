@@ -162,12 +162,18 @@ export function FoodTable({
                   <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-[#EDF2F7] text-[#2D3748]">
                     {food.serving_size}
                   </span>
-                  <span className="block text-[10px] text-emerald-700 font-semibold mt-0.5">
+                  <span className={`block text-[10px] font-semibold mt-0.5 ${
+                    food.nutrition_basis === "UNVERIFIED"
+                      ? "text-amber-600"
+                      : "text-emerald-700"
+                  }`}>
                     {food.nutrition_basis === "PER_SERVING"
                       ? "Per Sajian"
                       : food.nutrition_basis === "PER_PACKAGE"
                       ? "Per Kemasan"
-                      : "Per 100g (BDD)"}
+                      : food.nutrition_basis === "UNVERIFIED"
+                      ? "Perlu Verifikasi"
+                      : "Per 100g"}
                   </span>
                 </td>
                 <td className="py-4 px-5 text-right font-extrabold text-[#00695C]">

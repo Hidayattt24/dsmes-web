@@ -33,7 +33,7 @@ export function FoodFormFeature({ foodId }: Props) {
       tempId: "item-1",
       name: "",
       manufacturer: "",
-      serving_size: "Per 100 g BDD (Berat Dapat Dimakan)",
+      serving_size: "100 g",
       energy_kcal: 0,
       protein_g: 0,
       carbohydrate_g: 0,
@@ -51,9 +51,10 @@ export function FoodFormFeature({ foodId }: Props) {
   ]);
 
   const nutritionBasisOptions = [
-    { value: "PER_100G", label: "Per 100 gram (BDD)", icon: "scale" },
+    { value: "PER_100G", label: "Per 100 gram", icon: "scale" },
     { value: "PER_SERVING", label: "Per Sajian (Serving)", icon: "restaurant" },
     { value: "PER_PACKAGE", label: "Per Kemasan", icon: "inventory_2" },
+    { value: "UNVERIFIED", label: "Perlu Verifikasi", icon: "help_outline" },
   ];
 
   const statusOptions = [
@@ -104,7 +105,7 @@ export function FoodFormFeature({ foodId }: Props) {
       tempId: `item-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       name: "",
       manufacturer: "",
-      serving_size: "Per 100 g BDD (Berat Dapat Dimakan)",
+      serving_size: "100 g",
       energy_kcal: 0,
       protein_g: 0,
       carbohydrate_g: 0,
@@ -391,7 +392,7 @@ export function FoodFormFeature({ foodId }: Props) {
                         onChange={(e) =>
                           handleItemChange(index, "serving_size", e.target.value)
                         }
-                        placeholder="Contoh: Per 100 g BDD / 1 sachet (75g)"
+                        placeholder="Contoh: 100 g / 1 sachet (75g) / 1 porsi"
                         className="w-full px-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C] focus:bg-white transition-all font-[family-name:var(--font-poppins)]"
                       />
                     </div>
@@ -405,22 +406,34 @@ export function FoodFormFeature({ foodId }: Props) {
                           // Auto-update serving_size when basis changes
                           const updates: Partial<FoodFormItem> = { nutrition_basis: val as FoodFormItem['nutrition_basis'] };
                           if (val === 'PER_100G') {
-                            updates.serving_size = 'Per 100 g BDD (Berat Dapat Dimakan)';
-                          } else if (val === 'PER_PACKAGE' && (item.serving_size === 'Per 100 g BDD (Berat Dapat Dimakan)' || item.serving_size === '')) {
+                            updates.serving_size = '100 g';
+                          } else if (val === 'PER_PACKAGE') {
                             updates.serving_size = 'Per Kemasan';
+                          } else if (val === 'UNVERIFIED') {
+                            updates.serving_size = '0 g';
+                          } else if (val === 'PER_SERVING') {
+                            updates.serving_size = '1 porsi';
                           }
                           setItems(prev => prev.map((it, i) => i === index ? { ...it, ...updates } : it));
                         }}
                       />
                       <p className="text-[10px] text-[#718096] mt-1 flex items-center gap-1">
                         <span className="material-symbols-outlined text-sm select-none">
-                          {item.nutrition_basis === 'PER_100G' ? 'nature' : item.nutrition_basis === 'PER_PACKAGE' ? 'inventory_2' : 'restaurant'}
+                          {item.nutrition_basis === 'PER_100G'
+                            ? 'scale'
+                            : item.nutrition_basis === 'PER_PACKAGE'
+                            ? 'inventory_2'
+                            : item.nutrition_basis === 'UNVERIFIED'
+                            ? 'help_outline'
+                            : 'restaurant'}
                         </span>
                         {item.nutrition_basis === 'PER_100G'
-                          ? 'Data nutrisi per 100g BDD — digunakan untuk makanan umum'
+                          ? 'Data nutrisi per 100 gram'
                           : item.nutrition_basis === 'PER_PACKAGE'
-                          ? 'Data nutrisi per kemasan — sesuaikan berat kemasan di kolom Ukuran Porsi'
-                          : 'Data nutrisi per sajian — isi berat satu sajian di kolom Ukuran Porsi'}
+                          ? 'Data nutrisi per kemasan utuh'
+                          : item.nutrition_basis === 'UNVERIFIED'
+                          ? 'Basis nutrisi belum diverifikasi'
+                          : 'Data nutrisi per sajian — cantumkan ukuran saji'}
                       </p>
                     </div>
 

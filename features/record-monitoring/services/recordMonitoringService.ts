@@ -326,14 +326,27 @@ export const recordMonitoringService = {
       let type: "Sarapan" | "Siang" | "Cemilan" | "Malam" = "Sarapan";
       if (log.meal_type === "makan_siang") type = "Siang";
       else if (log.meal_type === "makan_malam") type = "Malam";
-      else if (log.meal_type === "cemilan") type = "Cemilan";
+      else if (log.meal_type === "camilan" || log.meal_type === "cemilan") type = "Cemilan";
+
+      const mult = Number(log.portion_multiplier) || 1;
+      const foodName = log.food?.name || log.food_name || "Makanan";
+      const servingSize = log.food?.serving_size ?? "";
 
       return {
         id: log.id,
         type,
-        title: `${log.food?.name ?? "Makanan"} (${dateStr})`,
+        title: `${foodName} (${dateStr})`,
+        foodName,
+        servingSize,
+        portionMultiplier: mult,
         time: timeStr,
-        calories: Math.round((log.food?.calories ?? 0) * (log.portion_multiplier ?? 1)),
+        calories: Math.round((log.food?.calories ?? log.calories ?? 0) * mult),
+        carbs: Number(((log.food?.carbs_g ?? log.carbs_g ?? 0) * mult).toFixed(1)),
+        protein: Number(((log.food?.protein_g ?? log.protein_g ?? 0) * mult).toFixed(1)),
+        fat: Number(((log.food?.fat_g ?? log.fat_g ?? 0) * mult).toFixed(1)),
+        sugar: Number(((log.food?.sugar_g ?? log.sugar_g ?? 0) * mult).toFixed(1)),
+        sodium: Number(((log.food?.sodium_mg ?? log.sodium_mg ?? 0) * mult).toFixed(1)),
+        fiber: Number(((log.food?.fiber_g ?? log.fiber_g ?? 0) * mult).toFixed(1)),
       };
     });
   },

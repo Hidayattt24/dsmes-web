@@ -110,8 +110,17 @@ export interface MealLog {
   readonly id: string;
   readonly type: "Sarapan" | "Siang" | "Cemilan" | "Malam";
   readonly title: string;
+  readonly foodName?: string;
+  readonly servingSize?: string;
+  readonly portionMultiplier?: number;
   readonly time: string;
   readonly calories: number;
+  readonly carbs?: number;
+  readonly protein?: number;
+  readonly fat?: number;
+  readonly sugar?: number;
+  readonly sodium?: number;
+  readonly fiber?: number;
 }
 
 export interface ActivityLog {

@@ -96,7 +96,9 @@ export function FoodDetailModal({ isOpen, onClose, food }: Props) {
                 ? "Per Sajian (Serving)"
                 : food.nutrition_basis === "PER_PACKAGE"
                 ? "Per Kemasan"
-                : "Per 100 gram (BDD)"}
+                : food.nutrition_basis === "UNVERIFIED"
+                ? "Perlu Verifikasi (Basis Tidak Diketahui)"
+                : "Per 100 gram"}
             </p>
             <p>
               <span className="font-bold text-[#1A202C]">Sumber Data:</span>{" "}
