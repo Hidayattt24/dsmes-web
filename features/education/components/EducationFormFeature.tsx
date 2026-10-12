@@ -311,11 +311,18 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
   const editorImageInputRef = useRef<HTMLInputElement>(null);
+  const isContentInitializedRef = useRef(false);
 
-  // Sync initial content from DB (only once when loading finishes)
+  // Reset content initialization flag if editing a different article
   useEffect(() => {
-    if (!isLoading && editorRef.current) {
-      editorRef.current.innerHTML = fields.content;
+    isContentInitializedRef.current = false;
+  }, [articleId]);
+
+  // Sync initial content from DB (strictly ONCE when loading finishes)
+  useEffect(() => {
+    if (!isLoading && editorRef.current && !isContentInitializedRef.current) {
+      editorRef.current.innerHTML = fields.content || "";
+      isContentInitializedRef.current = true;
     }
   }, [isLoading, fields.content]);
 
@@ -552,7 +559,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
   };
 
   // Centralized save handler that guarantees the latest DOM content and category are submitted
-  const handleSave = (forcedStatus?: "Diterbitkan" | "Draf") => {
+  const handleSave = async (forcedStatus?: "Diterbitkan" | "Draf") => {
     let latestContent = fields.content;
     if (editorRef.current) {
       const clone = editorRef.current.cloneNode(true) as HTMLElement;
@@ -573,7 +580,10 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
     handleChange("content", latestContent);
     handleChange("category", latestCategory);
 
-    save(forcedStatus, override);
+    const success = await save(forcedStatus, override);
+    if (success) {
+      setIsDirty(false);
+    }
   };
 
   const filteredCategories = categoriesList.filter((c) =>
@@ -688,7 +698,11 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
 
       {/* Back button above title */}
       <div className="mb-4">
-        <BackButton href={ROUTES.MANAJEMEN_EDUKASI} label="Manajemen Edukasi" />
+        <BackButton
+          href={ROUTES.MANAJEMEN_EDUKASI}
+          label="Manajemen Edukasi"
+          onClick={handleCancelClick}
+        />
       </div>
 
       {/* Action Toolbar */}
@@ -902,9 +916,14 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
 
           {/* Banner Upload Box */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider font-[family-name:var(--font-poppins)]">
-              Banner Materi
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider font-[family-name:var(--font-poppins)]">
+                Banner Materi <span className="text-[#94A3B8] font-normal lowercase">(opsional)</span>
+              </label>
+              <span className="text-[11px] text-[#00695C] font-semibold">
+                Ikon default otomatis jika kosong
+              </span>
+            </div>
             <input
               type="file"
               ref={fileInputRef}

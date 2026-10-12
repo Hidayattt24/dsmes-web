@@ -77,7 +77,6 @@ export function useEducationForm(articleId?: string) {
     if (!targetFields.title.trim()) newErrors.title = "Judul edukasi wajib diisi.";
     if (!targetFields.content.trim()) newErrors.content = "Konten edukasi wajib diisi.";
     if (targetFields.duration <= 0) newErrors.duration = "Durasi membaca harus lebih dari 0 menit.";
-    if (!targetFields.thumbnail.trim()) newErrors.thumbnail = "Gambar sampul/banner wajib diunggah.";
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
@@ -92,14 +91,17 @@ export function useEducationForm(articleId?: string) {
     return true;
   };
 
-  const save = async (forcedStatus?: "Diterbitkan" | "Draf", overrideFields?: Partial<FormFields>) => {
+  const save = async (
+    forcedStatus?: "Diterbitkan" | "Draf",
+    overrideFields?: Partial<FormFields>
+  ): Promise<boolean> => {
     const currentFields: FormFields = {
       ...fields,
       ...overrideFields,
       ...(forcedStatus ? { status: forcedStatus } : {}),
     };
 
-    if (!validate(currentFields)) return;
+    if (!validate(currentFields)) return false;
 
     setIsSaving(true);
     try {
@@ -118,6 +120,7 @@ export function useEducationForm(articleId?: string) {
       });
       router.push(ROUTES.MANAJEMEN_EDUKASI);
       router.refresh();
+      return true;
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } }; message?: string };
       const serverMsg = error.response?.data?.message || error.message || "Gagal menyimpan materi edukasi. Coba lagi.";
@@ -126,6 +129,7 @@ export function useEducationForm(articleId?: string) {
         title: "Gagal Menyimpan",
         description: serverMsg,
       });
+      return false;
     } finally {
       setIsSaving(false);
     }
