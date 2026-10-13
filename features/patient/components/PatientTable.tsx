@@ -11,20 +11,32 @@ interface PatientTableProps {
   readonly loading: boolean;
 }
 
-function GlucoseStatusBadge({ bloodSugar }: { readonly bloodSugar?: number }) {
-  if (bloodSugar === undefined || bloodSugar === null || bloodSugar === 0) {
+function GlucoseStatusBadge({ patient }: { readonly patient: Patient }) {
+  if (patient.latestBloodSugar === undefined || patient.latestBloodSugar === null || patient.latestBloodSugar === 0) {
     return <Badge variant="muted">Belum Ada</Badge>;
   }
-  if (bloodSugar < 70) {
-    return <Badge variant="error">Hipoglikemia</Badge>;
+
+  const label =
+    patient.latestBloodSugarClassificationLabel ||
+    (() => {
+      const s = (patient.latestBloodSugarStatus || "").toLowerCase();
+      if (s === "hyperglycemia" || s === "hiperglikemia" || s === "severe_hyperglycemia") return "Hiperglikemia";
+      if (s === "hypoglycemia" || s === "hipoglikemia" || s === "severe_hypoglycemia") return "Hipoglikemia";
+      if (s === "low_warning" || s === "waspada rendah" || s === "waspada_rendah") return "Waspada Rendah";
+      if (s === "elevated" || s === "prediabetes" || s === "waspada") return "Waspada";
+      return "Normal";
+    })();
+
+  let variant: "primary" | "warning" | "error" | "muted" = "primary";
+  if (label === "Hiperglikemia" || label === "Hipoglikemia") {
+    variant = "error";
+  } else if (label === "Waspada" || label === "Waspada Rendah") {
+    variant = "warning";
+  } else if (label === "Normal") {
+    variant = "primary";
   }
-  if (bloodSugar <= 130) {
-    return <Badge variant="primary">Normal</Badge>;
-  }
-  if (bloodSugar <= 180) {
-    return <Badge variant="warning">Waspada</Badge>;
-  }
-  return <Badge variant="error">Hiperglikemia</Badge>;
+
+  return <Badge variant={variant}>{label}</Badge>;
 }
 
 export function PatientTable({ patients, loading }: PatientTableProps) {
@@ -56,7 +68,7 @@ export function PatientTable({ patients, loading }: PatientTableProps) {
     {
       key: "medicalStatus",
       header: "Status Klasifikasi Medis Glukosa Darah",
-      render: (row) => <GlucoseStatusBadge bloodSugar={row.latestBloodSugar} />,
+      render: (row) => <GlucoseStatusBadge patient={row} />,
     },
     {
       key: "status",

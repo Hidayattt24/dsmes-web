@@ -28,6 +28,9 @@ export const ROUTES = {
   STAFF_MANAJEMEN_KUISIONER: "/staff/manajemen-kuisioner",
   STAFF_SURVEY: "/staff/survey",
   STAFF_PENGATURAN: "/staff/pengaturan",
+  // Legal
+  KEBIJAKAN_PRIVASI: "/kebijakan-privasi",
+  SYARAT_KETENTUAN: "/syarat-ketentuan",
 } as const;
 
 export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];

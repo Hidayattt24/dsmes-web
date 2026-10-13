@@ -65,6 +65,11 @@ function mapBackendPatientToFrontend(p: any): Patient {
     physicalActivityLevel: (p.physical_activity_level as string) ?? "",
 
     latestBloodSugar: p.latest_blood_sugar as number | undefined,
+    latestBloodSugarStatus: (p.latest_blood_sugar_status as string) || undefined,
+    latestBloodSugarClassificationLabel: (p.latest_blood_sugar_classification_label as string) || undefined,
+    latestBloodSugarColor: (p.latest_blood_sugar_color as string) || undefined,
+    latestBloodSugarType: (p.latest_blood_sugar_type as string) || undefined,
+    latestBloodSugarReferenceRange: (p.latest_blood_sugar_reference_range as string) || undefined,
     averageBloodSugar: p.average_blood_sugar as number | undefined,
     latestWeight: p.latest_weight as number | undefined,
     bmi: p.bmi as number | undefined,

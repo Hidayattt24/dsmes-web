@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 
 interface AuthCardProps {
   readonly children: ReactNode;
@@ -23,13 +24,13 @@ export function AuthCard({ children }: AuthCardProps) {
         </p>
         <div className="flex gap-4 sm:gap-6 items-center">
           <Link
-            href="#"
+            href={ROUTES.KEBIJAKAN_PRIVASI}
             className="text-xs sm:text-sm text-[#4A5568] hover:text-[#004f45] transition-colors font-[family-name:var(--font-jakarta)] py-1"
           >
             Kebijakan Privasi
           </Link>
           <Link
-            href="#"
+            href={ROUTES.SYARAT_KETENTUAN}
             className="text-xs sm:text-sm text-[#4A5568] hover:text-[#004f45] transition-colors font-[family-name:var(--font-jakarta)] py-1"
           >
             Syarat &amp; Ketentuan

@@ -64,9 +64,9 @@ function toBloodSugarLog(log: any): BloodSugarLog {
     status: log.category || log.status || "normal",
     classificationLabel:
       log.category_label || log.classification_label || "Normal",
-    referenceRangeText: log.reference_range_text || "< 140 mg/dL",
+    referenceRangeText: log.reference_range_text || log.reference_range || "< 140 mg/dL",
     recommendation: log.recommendation || "-",
-    colorIndicator: log.color_indicator || "#10B981",
+    colorIndicator: log.color_indicator || log.color || "#10B981",
     rawDate: d,
   };
 }

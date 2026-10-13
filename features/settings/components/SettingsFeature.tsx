@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 import { useSettingsForm } from "../hooks/useSettingsForm";
 import { ProfilePhotoCard } from "./ProfilePhotoCard";
 import { AccountInfoForm } from "./AccountInfoForm";
@@ -114,6 +116,103 @@ export function SettingsFeature() {
           onSubmitPassword={handlePasswordChange}
         />
       </form>
+
+      {/* Legal & Medical Guidelines Section */}
+      <section className="bg-white rounded-2xl border border-[#E2E8F0] p-6 shadow-xs">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-[#E6F2F1] text-[#00695C] flex items-center justify-center">
+            <span className="material-symbols-outlined text-[22px]">policy</span>
+          </div>
+          <div>
+            <h2 className="text-lg font-bold text-[#1A202C]">Kebijakan, Legal & Kredit Sistem</h2>
+            <p className="text-xs text-[#718096]">Dokumen resmi privasi data penelitian, ketentuan layanan, dan referensi standar medis.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <Link
+            href={ROUTES.KEBIJAKAN_PRIVASI}
+            className="p-4 rounded-xl border border-[#E2E8F0] hover:border-[#00695C] hover:bg-[#F0FDF4] transition-all group flex items-start justify-between"
+          >
+            <div>
+              <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-[#E6F2F1] text-[#00695C] mb-1">
+                05-Okt-2026
+              </span>
+              <h3 className="font-bold text-sm text-[#1A202C] group-hover:text-[#00695C] transition-colors">
+                Kebijakan Privasi DIBA
+              </h3>
+              <p className="text-xs text-[#718096] mt-1">
+                Tata kelola data kesehatan pasien, etika penelitian akademik, dan batasan penggunaan AI/ML.
+              </p>
+            </div>
+            <span className="material-symbols-outlined text-[#718096] group-hover:text-[#00695C] text-lg">
+              arrow_forward
+            </span>
+          </Link>
+
+          <Link
+            href={ROUTES.SYARAT_KETENTUAN}
+            className="p-4 rounded-xl border border-[#E2E8F0] hover:border-[#00695C] hover:bg-[#F0FDF4] transition-all group flex items-start justify-between"
+          >
+            <div>
+              <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 mb-1">
+                Ketentuan Layanan
+              </span>
+              <h3 className="font-bold text-sm text-[#1A202C] group-hover:text-[#00695C] transition-colors">
+                Syarat & Ketentuan DIBA
+              </h3>
+              <p className="text-xs text-[#718096] mt-1">
+                Batasan tanggung jawab medis, hak kekayaan intelektual (HAKI), dan aturan penggunaan sistem.
+              </p>
+            </div>
+            <span className="material-symbols-outlined text-[#718096] group-hover:text-[#00695C] text-lg">
+              arrow_forward
+            </span>
+          </Link>
+        </div>
+
+        <div className="mt-6 pt-5 border-t border-[#E2E8F0] text-xs text-[#718096] space-y-2">
+          <p className="font-semibold text-[#1A202C]">Sumber Data & Standar Klinis:</p>
+          <ul className="list-disc list-inside space-y-1">
+            <li>
+              <strong>Dataset Nutrisi:</strong>{" "}
+              <a
+                href="https://www.kaggle.com/datasets/fritze/informasi-nilai-gizi-indonesia"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[#00695C] hover:underline"
+              >
+                Informasi Nilai Gizi Indonesia (Kaggle) ↗
+              </a>
+            </li>
+            <li>
+              <strong>Standar Nasional:</strong> PB PERKENI —{" "}
+              <a
+                href="https://pbperkeni.or.id/wp-content/uploads/2021/11/22-10-21-Website-Pedoman-Pemantauan-Glukosa-Darah-Mandiri-Ebook.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[#00695C] hover:underline"
+              >
+                Pedoman Pemantauan Glukosa Darah Mandiri (PGDM 2021) ↗
+              </a>
+            </li>
+            <li>
+              <strong>Standar Internasional:</strong> ADA —{" "}
+              <a
+                href="https://diabetes.org/about-diabetes/diagnosis"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[#00695C] hover:underline"
+              >
+                Standards of Care in Diabetes: Kriteria Diagnosis ↗
+              </a>
+            </li>
+            <li>
+              <strong>Tipografi:</strong> Font Poppins & Plus Jakarta Sans (Google Fonts Open Font License).
+            </li>
+          </ul>
+        </div>
+      </section>
 
       {/* Cancel Warning Confirmation Dialog */}
       <ConfirmationModal

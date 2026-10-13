@@ -42,10 +42,10 @@ export function BloodSugarHistoryCard({
   const chartSourceLogs = dateFiltered.length > 0 ? dateFiltered : logs;
   const hasData = logs.length > 0;
 
-  // Sort chronological ascending, take last 7 for chart
+  // Sort newest first (kiri baru ke kanan lama), take top 7 for chart
   const chartLogs = [...chartSourceLogs]
-    .sort((a, b) => getParsedDate(a).getTime() - getParsedDate(b).getTime())
-    .slice(-7);
+    .sort((a, b) => getParsedDate(b).getTime() - getParsedDate(a).getTime())
+    .slice(0, 7);
 
   const N = chartLogs.length;
 
@@ -98,6 +98,23 @@ export function BloodSugarHistoryCard({
     }
   };
 
+  const getReferenceRange = (log: BloodSugarLog) => {
+    if (log.referenceRangeText && log.referenceRangeText.trim() !== "") {
+      return log.referenceRangeText;
+    }
+    const t = (log.measurementTimeType || "").toLowerCase();
+    if (t === "fasting" || t === "puasa" || t === "before_meal" || t === "sebelum_makan") {
+      return "80 – 130 mg/dL";
+    }
+    if (t === "after_meal" || t === "sesudah_makan") {
+      return "< 180 mg/dL";
+    }
+    if (t === "before_bed" || t === "sebelum_tidur") {
+      return "100 – 140 mg/dL";
+    }
+    return "< 140 mg/dL";
+  };
+
   const getGlucoseStatus = (log: BloodSugarLog) => {
     const status = (log.status || "").toLowerCase();
     const label =
@@ -143,7 +160,7 @@ export function BloodSugarHistoryCard({
     date: log.date,
     time: log.time,
     classificationLabel: log.classificationLabel || getGlucoseStatus(log).label,
-    rangeText: log.referenceRangeText || "< 140 mg/dL",
+    rangeText: getReferenceRange(log),
   }));
 
   const linePath =
@@ -169,7 +186,7 @@ export function BloodSugarHistoryCard({
       ? Math.round(values.reduce((a, b) => a + b, 0) / values.length)
       : null;
   const latestVal =
-    chartLogs.length > 0 ? chartLogs[chartLogs.length - 1].glucoseValue : null;
+    chartLogs.length > 0 ? chartLogs[0].glucoseValue : null;
 
   return (
     <div className="premium-card p-6 flex flex-col font-[family-name:var(--font-poppins)]">
@@ -319,10 +336,17 @@ export function BloodSugarHistoryCard({
             {points.map((pt, idx) => {
               const isHovered = hoveredIdx === idx;
               const color = getPointColor(pt.type);
+              const TOOLTIP_W = 230;
+              const TOOLTIP_H = 66;
               const tooltipX = Math.max(
                 CHART_L,
-                Math.min(CHART_R - 140, pt.x - 70),
+                Math.min(CHART_R - TOOLTIP_W, pt.x - TOOLTIP_W / 2),
               );
+              const tooltipY =
+                pt.y - TOOLTIP_H - 12 < CHART_T
+                  ? pt.y + 14
+                  : pt.y - TOOLTIP_H - 12;
+              const tooltipCenterX = tooltipX + TOOLTIP_W / 2;
 
               return (
                 <g key={`pt-${idx}`}>
@@ -366,16 +390,16 @@ export function BloodSugarHistoryCard({
                     <g>
                       <rect
                         x={tooltipX}
-                        y={pt.y - 65}
-                        width={140}
-                        height={50}
+                        y={tooltipY}
+                        width={TOOLTIP_W}
+                        height={TOOLTIP_H}
                         rx={10}
                         fill="#1E293B"
-                        fillOpacity={0.95}
+                        fillOpacity={0.96}
                       />
                       <text
-                        x={tooltipX + 70}
-                        y={pt.y - 48}
+                        x={tooltipCenterX}
+                        y={tooltipY + 20}
                         textAnchor="middle"
                         fill="#ffffff"
                         fontSize="11"
@@ -384,20 +408,20 @@ export function BloodSugarHistoryCard({
                         {pt.val} mg/dL ({pt.classificationLabel})
                       </text>
                       <text
-                        x={tooltipX + 70}
-                        y={pt.y - 34}
+                        x={tooltipCenterX}
+                        y={tooltipY + 37}
                         textAnchor="middle"
                         fill="#94A3B8"
-                        fontSize="9"
+                        fontSize="9.5"
                       >
                         {pt.label} • Acuan: {pt.rangeText}
                       </text>
                       <text
-                        x={tooltipX + 70}
-                        y={pt.y - 20}
+                        x={tooltipCenterX}
+                        y={tooltipY + 52}
                         textAnchor="middle"
                         fill="#CBD5E1"
-                        fontSize="9"
+                        fontSize="9.5"
                       >
                         {pt.date} • {pt.time}
                       </text>
@@ -524,7 +548,7 @@ export function BloodSugarHistoryCard({
                         </span>
                       </td>
                       <td className="py-2.5 px-3 text-[#4A5568] text-[11px]">
-                        {log.referenceRangeText || "< 140 mg/dL"}
+                        {getReferenceRange(log)}
                       </td>
                     </tr>
                   );

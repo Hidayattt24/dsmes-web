@@ -49,6 +49,11 @@ export interface Patient {
 
   // Summary Stats & Measurements
   readonly latestBloodSugar?: number;
+  readonly latestBloodSugarStatus?: string;
+  readonly latestBloodSugarClassificationLabel?: string;
+  readonly latestBloodSugarColor?: string;
+  readonly latestBloodSugarType?: string;
+  readonly latestBloodSugarReferenceRange?: string;
   readonly averageBloodSugar?: number;
   readonly latestWeight?: number;
   readonly bmi?: number;
