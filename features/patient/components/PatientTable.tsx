@@ -1,4 +1,5 @@
 "use client";
+import { ComplianceStatusBadge } from "@/components/common/ComplianceStatusBadge";
 
 import { DataTable, type TableColumn } from "@/components/common/DataTable";
 import type { Patient } from "@/types/patient";
@@ -74,22 +75,13 @@ export function PatientTable({ patients, loading }: PatientTableProps) {
       key: "status",
       header: "Status Kepatuhan",
       render: (row) => {
-        const comp = typeof row.compliance === "number" ? Math.round(row.compliance) : 0;
-        let badgeStyle = "bg-[#FFF5F5] text-[#C53030] border-red-200";
-        let label = `Tidak Patuh (${comp}%)`;
-        if (comp >= 70) {
-          badgeStyle = "bg-[#F0FDF4] text-[#166534] border-emerald-200";
-          label = `Patuh (${comp}%)`;
-        } else if (comp >= 40) {
-          badgeStyle = "bg-[#FFFBEB] text-[#B45309] border-amber-200";
-          label = `Kurang Patuh (${comp}%)`;
-        }
         return (
-          <span
-            className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold border tracking-tight ${badgeStyle}`}
-          >
-            {label}
-          </span>
+          <ComplianceStatusBadge
+            today={row.todayCompliance}
+            fallback={row.compliance}
+            weekly={row.weeklyCompliance}
+            weeklyLabel={row.weeklyComplianceLabel}
+          />
         );
       },
     },

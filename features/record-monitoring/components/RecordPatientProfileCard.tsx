@@ -83,27 +83,33 @@ export function RecordPatientProfileCard({ patient }: RecordPatientProfileCardPr
             }`}>
               <span className="material-symbols-outlined text-[16px]">task_alt</span>
               <span className="text-[11px] font-bold uppercase tracking-widest font-[family-name:var(--font-poppins)]">
-                Kepatuhan: {patient.complianceLabel || (patient.compliance >= 75 ? "Patuh" : "Kurang")} ({patient.compliance}%)
+                Kepatuhan Hari Ini: {patient.todayComplianceLabel || patient.complianceLabel || (patient.compliance >= 75 ? "Patuh" : "Kurang")} ({patient.todayCompliance ?? patient.compliance}%)
               </span>
             </div>
+            {typeof patient.weeklyCompliance === "number" && (
+              <p className="text-[10px] font-semibold text-[#718096] text-center">
+                Konsistensi 7 Hari: {Math.round(patient.weeklyCompliance)}%
+                {patient.weeklyComplianceLabel ? ` (${patient.weeklyComplianceLabel})` : ""}
+              </p>
+            )}
 
-            {patient.complianceBreakdown && (
+            {(patient.todayComplianceBreakdown ?? patient.complianceBreakdown) && (
               <div className="grid grid-cols-2 gap-1.5 text-[10px] font-semibold text-[#718096] pt-1">
                 <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex justify-between">
                   <span>Gula Darah:</span>
-                  <span className="font-bold text-[#00695C]">{patient.complianceBreakdown.bloodSugarScore} pts</span>
+                  <span className="font-bold text-[#00695C]">{(patient.todayComplianceBreakdown ?? patient.complianceBreakdown)!.bloodSugarScore} pts</span>
                 </div>
                 <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex justify-between">
                   <span>Makanan:</span>
-                  <span className="font-bold text-[#B45309]">{patient.complianceBreakdown.foodScore} pts</span>
+                  <span className="font-bold text-[#B45309]">{(patient.todayComplianceBreakdown ?? patient.complianceBreakdown)!.foodScore} pts</span>
                 </div>
                 <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex justify-between">
                   <span>Aktivitas:</span>
-                  <span className="font-bold text-[#166534]">{patient.complianceBreakdown.activityScore} pts</span>
+                  <span className="font-bold text-[#166534]">{(patient.todayComplianceBreakdown ?? patient.complianceBreakdown)!.activityScore} pts</span>
                 </div>
                 <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex justify-between">
                   <span>Obat:</span>
-                  <span className="font-bold text-[#2B6CB0]">{patient.complianceBreakdown.medicationScore} pts</span>
+                  <span className="font-bold text-[#2B6CB0]">{(patient.todayComplianceBreakdown ?? patient.complianceBreakdown)!.medicationScore} pts</span>
                 </div>
               </div>
             )}

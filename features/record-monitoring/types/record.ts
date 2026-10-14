@@ -38,6 +38,11 @@ export interface PatientRecord {
   readonly compliance: number;
   readonly complianceLabel?: string;
   readonly complianceBreakdown?: ComplianceBreakdown;
+  readonly todayCompliance?: number;
+  readonly todayComplianceLabel?: string;
+  readonly todayComplianceBreakdown?: ComplianceBreakdown;
+  readonly weeklyCompliance?: number;
+  readonly weeklyComplianceLabel?: string;
   readonly lastActiveAt?: string;
 
   readonly whatsapp: string;

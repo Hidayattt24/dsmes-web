@@ -90,10 +90,16 @@ export function RecordDetailFeature({ patientId }: RecordDetailFeatureProps) {
               <span className="material-symbols-outlined text-[14px] mr-1">
                 task_alt
               </span>
-              {patient.complianceLabel ||
+              Hari Ini:{" "}
+              {patient.todayComplianceLabel || patient.complianceLabel ||
                 (patient.compliance >= 75 ? "Patuh" : "Kurang")}{" "}
-              ({patient.compliance}%)
+              ({patient.todayCompliance ?? patient.compliance}%)
             </span>
+            {typeof patient.weeklyCompliance === "number" && (
+              <span className="text-xs font-semibold text-[#718096]">
+                Konsistensi 7 Hari: {Math.round(patient.weeklyCompliance)}%
+              </span>
+            )}
           </div>
           {patient.puskesmas && patient.puskesmas !== "-" && (
             <p className="text-xs font-medium text-[#718096] mt-1">

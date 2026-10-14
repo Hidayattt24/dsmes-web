@@ -156,6 +156,16 @@ const mapPatientRecord = (data: any): PatientRecord => {
     dailyCalorieTarget: data.daily_calorie_target,
     compliance: data.compliance ?? 0,
     complianceLabel: data.compliance_label || undefined,
+    todayCompliance: data.today_compliance ?? data.compliance ?? 0,
+    todayComplianceLabel: data.today_compliance_label || undefined,
+    todayComplianceBreakdown: data.today_compliance_breakdown ? {
+      bloodSugarScore: data.today_compliance_breakdown.blood_sugar_score ?? 0,
+      foodScore: data.today_compliance_breakdown.food_score ?? 0,
+      activityScore: data.today_compliance_breakdown.activity_score ?? 0,
+      medicationScore: data.today_compliance_breakdown.medication_score ?? 0,
+    } : undefined,
+    weeklyCompliance: data.weekly_compliance ?? undefined,
+    weeklyComplianceLabel: data.weekly_compliance_label || undefined,
     complianceBreakdown: data.compliance_breakdown ? {
       bloodSugarScore: data.compliance_breakdown.blood_sugar_score ?? 0,
       foodScore: data.compliance_breakdown.food_score ?? 0,

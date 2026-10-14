@@ -12,6 +12,16 @@ export interface Patient {
   readonly bloodType: "A" | "B" | "AB" | "O";
   readonly registeredAt: string;
   readonly compliance: number; // e.g. 85 for 85%
+  readonly todayCompliance?: number;
+  readonly todayComplianceLabel?: string;
+  readonly todayComplianceBreakdown?: {
+    readonly bloodSugarScore: number;
+    readonly foodScore: number;
+    readonly activityScore: number;
+    readonly medicationScore: number;
+  };
+  readonly weeklyCompliance?: number;
+  readonly weeklyComplianceLabel?: string;
   readonly interventionType: "Mobile App" | "Web App";
   readonly diabetesType: string;
   readonly doctor: string;

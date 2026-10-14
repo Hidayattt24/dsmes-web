@@ -339,8 +339,30 @@ export function MedicalGuideInfoModal({
                   <strong>Status Kepatuhan Pasien</strong> dihitung secara
                   otomatis oleh sistem berdasarkan konsistensi pengisian log
                   mandiri 4 pilar (Gula Darah, Asupan Makanan, Aktivitas Fisik,
-                  dan Obat/Insulin).
+                  dan Obat/Insulin; masing-masing maksimal 25 poin).
                 </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="border border-[#E2E8F0] rounded-xl p-3 bg-white">
+                  <p className="font-bold text-[#1A202C]">Kepatuhan Hari Ini</p>
+                  <p className="mt-1 leading-relaxed">
+                    Dihitung hanya dari catatan pada hari ini. Jika pasien belum
+                    mencatat apa pun, statusnya &quot;Belum Ada Catatan Hari
+                    Ini&quot; (bukan Tidak Patuh). Ditampilkan pada Data Pasien
+                    dan profil pasien.
+                  </p>
+                </div>
+                <div className="border border-[#E2E8F0] rounded-xl p-3 bg-white">
+                  <p className="font-bold text-[#1A202C]">
+                    Tren Kepatuhan 7 Hari
+                  </p>
+                  <p className="mt-1 leading-relaxed">
+                    Rata-rata skor harian selama 7 hari terakhir untuk menilai
+                    konsistensi jangka panjang. Dipakai pada Monitoring Catatan
+                    dan klasifikasi di bawah ini.
+                  </p>
+                </div>
               </div>
 
               <div className="space-y-3">

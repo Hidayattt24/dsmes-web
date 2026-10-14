@@ -1,4 +1,5 @@
 "use client";
+import { ComplianceStatusBadge } from "@/components/common/ComplianceStatusBadge";
 
 import { DataTable, type TableColumn } from "@/components/common/DataTable";
 import { Avatar } from "@/components/ui/Avatar";
@@ -227,17 +228,14 @@ export function RecordMonitoringTable({
       key: "status",
       header: "Status Kepatuhan",
       render: (row) => {
-        const comp = typeof row.compliance === "number" ? Math.round(row.compliance) : 0;
-        let badgeVariant: "primary" | "warning" | "error" = "error";
-        let label = `Tidak Patuh (${comp}%)`;
-        if (comp >= 70) {
-          badgeVariant = "primary";
-          label = `Patuh (${comp}%)`;
-        } else if (comp >= 40) {
-          badgeVariant = "warning";
-          label = `Kurang Patuh (${comp}%)`;
-        }
-        return <Badge variant={badgeVariant}>{label}</Badge>;
+        return (
+          <ComplianceStatusBadge
+            today={row.todayCompliance}
+            fallback={row.compliance}
+            weekly={row.weeklyCompliance}
+            weeklyLabel={row.weeklyComplianceLabel}
+          />
+        );
       },
     },
     {

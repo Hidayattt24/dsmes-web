@@ -1,3 +1,4 @@
+import { ComplianceStatusBadge } from "@/components/common/ComplianceStatusBadge";
 import { DataTable, type TableColumn } from "@/components/common/DataTable";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
@@ -74,17 +75,14 @@ export function StaffPriorityPatientTable({ patients, loading }: StaffPriorityPa
       key: "compliance",
       header: "Status Kepatuhan",
       render: (row) => {
-        const compl = row.compliance;
-        let label = "Patuh";
-        let badgeVariant: "primary" | "warning" | "error" = "primary";
-        if (compl < 40) {
-          label = "Tidak Patuh";
-          badgeVariant = "error";
-        } else if (compl < 70) {
-          label = "Kurang Patuh";
-          badgeVariant = "warning";
-        }
-        return <Badge variant={badgeVariant}>{label}</Badge>;
+        return (
+          <ComplianceStatusBadge
+            today={row.todayCompliance}
+            fallback={row.compliance}
+            weekly={row.weeklyCompliance}
+            weeklyLabel={row.weeklyComplianceLabel}
+          />
+        );
       },
     },
     {
