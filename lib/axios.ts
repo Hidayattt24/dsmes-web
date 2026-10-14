@@ -103,10 +103,13 @@ axiosInstance.interceptors.response.use(
         }
       } catch (refreshError) {
         processQueue(refreshError, null);
-        tokenService.clearTokens();
-        // Redirect to login on client side if possible
-        if (typeof window !== "undefined") {
-          window.location.href = "/login?expired=true";
+        // Only definitive 401 on refresh means token is truly invalid or expired.
+        // Network disruptions, timeouts, and server 5xx errors MUST NOT clear tokens!
+        if (axios.isAxiosError(refreshError) && refreshError.response?.status === 401) {
+          tokenService.clearTokens();
+          if (typeof window !== "undefined") {
+            window.location.href = "/login?expired=true";
+          }
         }
         return Promise.reject(refreshError);
       } finally {

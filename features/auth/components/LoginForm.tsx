@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 import { AuthFormHeader } from "@/components/auth/AuthFormHeader";
 import { InputField }     from "@/components/ui/InputField";
@@ -16,6 +17,8 @@ import { ROUTES }                            from "@/constants/routes";
 
 export function LoginForm() {
   const { isLoading, fieldError, submit } = useLogin();
+  const searchParams = useSearchParams();
+  const isExpired = searchParams?.get("expired") === "true";
 
   const {
     register,
@@ -93,6 +96,18 @@ export function LoginForm() {
 
       {/* Form */}
       <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5 sm:gap-6">
+        {isExpired && (
+          <div className="rounded-2xl border border-amber-200 bg-amber-50/90 p-4 text-xs sm:text-sm text-amber-900 shadow-sm animate-fadeIn">
+            <div className="flex items-center gap-2 font-bold text-amber-800">
+              <span className="material-symbols-outlined text-[20px] text-amber-600">lock_clock</span>
+              Sesi Masuk Berakhir
+            </div>
+            <p className="mt-1 text-amber-700 leading-relaxed text-xs">
+              Sesi autentikasi Anda telah berakhir. Silakan masuk kembali dengan akun Anda untuk melanjutkan aktivitas.
+            </p>
+          </div>
+        )}
+
         <InputField
           label="Email"
           type="email"

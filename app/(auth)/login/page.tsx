@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { AuthCard }      from "@/components/auth/AuthCard";
 import { AuthHeroPanel } from "@/components/auth/AuthHeroPanel";
@@ -12,7 +13,9 @@ export default function LoginPage() {
   return (
     <>
       <AuthCard>
-        <LoginForm />
+        <Suspense fallback={<div className="p-8 text-center text-sm text-gray-500">Memuat formulir...</div>}>
+          <LoginForm />
+        </Suspense>
       </AuthCard>
       <AuthHeroPanel />
     </>
