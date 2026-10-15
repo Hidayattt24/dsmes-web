@@ -46,7 +46,7 @@ export function PatientActivityAnalyticsCard({
   const circumference = 2 * Math.PI * radius; // ~251.327
 
   const items = [
-    { label: "Gula Darah", count: bloodSugar.count, pct: bloodSugar.percentage, color: "#00695C", bg: "bg-[#00695C]", icon: "water_drop" },
+    { label: "Gula Darah", count: bloodSugar.count, pct: bloodSugar.percentage, color: "#3B67FC", bg: "bg-[#3B67FC]", icon: "water_drop" },
     { label: "Asupan Makanan", count: food.count, pct: food.percentage, color: "#B45309", bg: "bg-[#B45309]", icon: "restaurant" },
     { label: "Aktivitas Fisik", count: physicalActivity.count, pct: physicalActivity.percentage, color: "#166534", bg: "bg-[#166534]", icon: "directions_run" },
     { label: "Kepatuhan Obat", count: medication.count, pct: medication.percentage, color: "#2B6CB0", bg: "bg-[#2B6CB0]", icon: "medication" },
@@ -67,7 +67,7 @@ export function PatientActivityAnalyticsCard({
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#E2E8F0] pb-5">
         <div>
           <h3 className="text-lg font-bold text-[#1A202C] flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#00695C]">analytics</span>
+            <span className="material-symbols-outlined text-[#3B67FC]">analytics</span>
             Analisis Keaktifan Kesehatan Pasien
           </h3>
           <p className="text-xs text-[#718096] mt-0.5">
@@ -86,7 +86,7 @@ export function PatientActivityAnalyticsCard({
       {/* Top 3 Summary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-[#F8FAFC] p-4 rounded-xl border border-[#E2E8F0]/50 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[#00695C]/10 text-[#00695C] flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-lg bg-[#3B67FC]/10 text-[#3B67FC] flex items-center justify-center font-bold">
             <span className="material-symbols-outlined text-[20px]">equalizer</span>
           </div>
           <div>

@@ -119,7 +119,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
             type="button"
             onClick={handleExportCSV}
             disabled={isExporting || totalResponses === 0}
-            className="px-5 py-2.5 bg-[#00695C] hover:bg-[#004D40] text-white font-bold text-xs rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-5 py-2.5 bg-[#3B67FC] hover:bg-[#1A63ED] text-white font-bold text-xs rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <span className="material-symbols-outlined text-base">download</span>
             <span>{isExporting ? "Mengunduh CSV..." : "Ekspor CSV"}</span>
@@ -158,7 +158,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
 
         <div className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-2xs">
           <span className="text-xs font-bold text-[#718096] uppercase tracking-wider block">Rata-rata Durasi</span>
-          <p className="text-3xl font-bold text-[#00695C] mt-2">
+          <p className="text-3xl font-bold text-[#3B67FC] mt-2">
             {Math.floor(analytics.average_duration_secs / 60)}m {analytics.average_duration_secs % 60}d
           </p>
           <p className="text-[11px] font-medium text-[#718096] mt-1">Waktu pengerjaan survei</p>
@@ -215,7 +215,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
             {analytics.interpretations.map((item) => (
               <div key={item.label} className="p-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-center">
                 <span className="text-xs font-bold text-[#4A5568] block">{item.label}</span>
-                <span className="text-2xl font-bold text-[#00695C] block mt-1">{item.count}</span>
+                <span className="text-2xl font-bold text-[#3B67FC] block mt-1">{item.count}</span>
                 <span className="text-[11px] font-medium text-[#718096]">{item.percentage.toFixed(1)}%</span>
               </div>
             ))}
@@ -233,7 +233,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
                 <h4 className="font-bold text-sm text-[#1A202C] leading-relaxed">
                   Soal #{q.display_order}. {q.question_text}
                 </h4>
-                <span className="text-xs font-bold text-[#00695C] bg-[#E6FFFA] px-3 py-1 rounded-lg border border-[#00695C]/20 shrink-0">
+                <span className="text-xs font-bold text-[#3B67FC] bg-[#E6FFFA] px-3 py-1 rounded-lg border border-[#3B67FC]/20 shrink-0">
                   Rata-rata: {q.average_rating.toFixed(2)} / 5
                 </span>
               </div>
@@ -248,7 +248,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
                       <span className="w-16 font-bold text-[#4A5568]">Skor {ratingVal}</span>
                       <div className="flex-1 bg-[#E2E8F0] h-3 rounded-full overflow-hidden">
                         <div
-                          className="bg-[#00695C] h-full rounded-full transition-all duration-300"
+                          className="bg-[#3B67FC] h-full rounded-full transition-all duration-300"
                           style={{ width: `${pct}%` }}
                         />
                       </div>
@@ -309,7 +309,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
                     {isSUS ? (
                       <>
                         <td className="py-3.5 px-4 font-semibold">{r.raw_score?.toFixed(1) ?? "-"}</td>
-                        <td className="py-3.5 px-4 font-bold text-[#00695C]">{r.sus_score?.toFixed(1) ?? "-"}</td>
+                        <td className="py-3.5 px-4 font-bold text-[#3B67FC]">{r.sus_score?.toFixed(1) ?? "-"}</td>
                         <td className="py-3.5 px-4 font-semibold">
                           <span
                             className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${getInterpretationBadgeClass(
@@ -328,7 +328,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
                     ) : (
                       <>
                         <td className="py-3.5 px-4 font-semibold">{r.total_score?.toFixed(1) ?? "-"}</td>
-                        <td className="py-3.5 px-4 font-bold text-[#00695C]">{r.average_score?.toFixed(2) ?? "-"}</td>
+                        <td className="py-3.5 px-4 font-bold text-[#3B67FC]">{r.average_score?.toFixed(2) ?? "-"}</td>
                         <td className="py-3.5 px-4 font-semibold">{r.percentage_score?.toFixed(1) ?? "-"}%</td>
                         <td className="py-3.5 px-4">
                           <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase border bg-emerald-50 text-emerald-700 border-emerald-200">
@@ -341,7 +341,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
                       <button
                         type="button"
                         onClick={() => setSelectedResponse(r)}
-                        className="px-3 py-1.5 bg-[#00695C]/10 hover:bg-[#00695C]/20 text-[#00695C] border border-[#00695C]/30 rounded-lg text-xs font-bold transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                        className="px-3 py-1.5 bg-[#3B67FC]/10 hover:bg-[#3B67FC]/20 text-[#3B67FC] border border-[#3B67FC]/30 rounded-lg text-xs font-bold transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-2xs"
                         title="Lihat Detail Jawaban Peserta"
                       >
                         <span className="material-symbols-outlined text-[16px] select-none">visibility</span>
@@ -425,7 +425,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
                   <>
                     <div>
                       <span className="text-[11px] font-bold uppercase text-[#718096] block">Skor SUS (0-100)</span>
-                      <span className="text-2xl font-bold text-[#00695C]">
+                      <span className="text-2xl font-bold text-[#3B67FC]">
                         {selectedResponse.sus_score?.toFixed(1) ?? "-"}
                       </span>
                     </div>
@@ -450,7 +450,7 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
                   <>
                     <div>
                       <span className="text-[11px] font-bold uppercase text-[#718096] block">Skor Rata-Rata</span>
-                      <span className="text-2xl font-bold text-[#00695C]">
+                      <span className="text-2xl font-bold text-[#3B67FC]">
                         {selectedResponse.average_score?.toFixed(2) ?? "-"} / 5
                       </span>
                     </div>
@@ -485,14 +485,14 @@ export function SurveyAnalyticsFeature({ surveyId, isStaff = false }: SurveyAnal
                     {selectedResponse.answers.map((ans, idx) => (
                       <div
                         key={ans.question_id || idx}
-                        className="p-4 rounded-xl border border-[#E2E8F0] bg-white hover:border-[#00695C]/30 transition-all space-y-2.5"
+                        className="p-4 rounded-xl border border-[#E2E8F0] bg-white hover:border-[#3B67FC]/30 transition-all space-y-2.5"
                       >
                         <div className="flex justify-between items-start gap-3">
                           <p className="text-xs font-bold text-[#1A202C] leading-relaxed">
-                            <span className="text-[#00695C] mr-1.5">#{idx + 1}.</span>
+                            <span className="text-[#3B67FC] mr-1.5">#{idx + 1}.</span>
                             {ans.question_text || `Pertanyaan #${idx + 1}`}
                           </p>
-                          <span className="px-2.5 py-1 bg-[#00695C]/10 text-[#00695C] text-xs font-bold rounded-lg shrink-0 border border-[#00695C]/20">
+                          <span className="px-2.5 py-1 bg-[#3B67FC]/10 text-[#3B67FC] text-xs font-bold rounded-lg shrink-0 border border-[#3B67FC]/20">
                             Skor: {ans.rating_value} / 5
                           </span>
                         </div>

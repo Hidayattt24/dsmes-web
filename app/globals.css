@@ -7,9 +7,9 @@
   --font-poppins: "Poppins", sans-serif;
   --font-jakarta: "Plus Jakarta Sans", sans-serif;
 
-  /* ── Dashboard color palette (Poppins / teal #00695C) ── */
-  --color-primary:         #00695C;
-  --color-primary-light:   #F0F9F8;
+  /* ── Dashboard color palette (Poppins / blue #3B67FC) ── */
+  --color-primary:         #3B67FC;
+  --color-primary-light:   #EEF2FF;
   --color-surface-bg:      #F4F6F8;
   --color-surface-card:    #FFFFFF;
   --color-text-main:       #1A202C;
@@ -20,17 +20,17 @@
   --color-warning-bg:      #FFFBEB;
   --color-warning-text:    #B45309;
 
-  /* ── Auth color palette (Plus Jakarta Sans / teal #004f45) ── */
-  --color-auth-primary:              #004f45;
-  --color-auth-primary-container:    #00695c;
+  /* ── Auth color palette (Plus Jakarta Sans / navy #001B6B) ── */
+  --color-auth-primary:              #001B6B;
+  --color-auth-primary-container:    #1A63ED;
   --color-auth-surface:              #fbf9f8;
   --color-auth-on-surface:           #1b1c1c;
   --color-auth-on-surface-variant:   #3e4946;
   --color-auth-outline-variant:      #bec9c5;
   --color-auth-outline:              #6e7976;
-  --color-auth-secondary:            #286b33;
-  --color-auth-on-primary-fixed:     #00201b;
-  --color-auth-on-primary-container: #94e5d5;
+  --color-auth-secondary:            #07CADE;
+  --color-auth-on-primary-fixed:     #001F60;
+  --color-auth-on-primary-container: #B9F5FB;
 
   /* ── Spacing scale ── */
   --spacing-stack-sm: 12px;
@@ -46,7 +46,7 @@
 
   /* ── Shadows ── */
   --shadow-premium: 0 4px 20px rgba(0, 0, 0, 0.02);
-  --shadow-auth:    0 8px 32px -4px rgba(0, 79, 69, 0.12);
+  --shadow-auth:    0 8px 32px -4px rgba(0, 27, 107, 0.12);
 
   /* ── Touch target ── */
   --input-height: 56px;
@@ -55,7 +55,7 @@
 /* ─── Global Base ─────────────────────────────────────────────────────────── */
 :root {
   color-scheme: light;
-  --primary: #00695C;
+  --primary: #3B67FC;
   --primary-foreground: #FFFFFF;
   --muted: #F4F6F8;
   --muted-foreground: #718096;
@@ -67,6 +67,21 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#smooth-wrapper {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+#smooth-content {
+  min-height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* ─── Scrollbar ───────────────────────────────────────────────────────────── */
@@ -101,20 +116,20 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 16px rgba(0, 105, 92, 0.04);
+  box-shadow: 0 4px 16px rgba(59, 103, 252, 0.04);
 }
 
 /* Medical grid pattern (auth hero background) */
 .medical-grid {
   background-image:
-    linear-gradient(rgba(0, 79, 69, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 79, 69, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(7, 202, 222, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(7, 202, 222, 0.08) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
 /* Auth hero gradient */
 .hero-gradient {
-  background: radial-gradient(circle at top left, #004f45, #00201b);
+  background: linear-gradient(180deg, #00C0F3 6.92%, #1A63ED 85.56%, #001F60 164.21%) !important;
 }
 
 /* Material Symbols default settings */

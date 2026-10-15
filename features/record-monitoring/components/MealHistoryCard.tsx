@@ -55,8 +55,8 @@ export function MealHistoryCard({
       arcColor = "#DC2626";
     } else if (rawPercentage >= 90) {
       badgeText = "Target Tercapai";
-      badgeStyle = "text-[#00695C] bg-[#F0F9F8] border border-emerald-200";
-      arcColor = "#00695C";
+      badgeStyle = "text-[#3B67FC] bg-[#EEF2FF] border border-emerald-200";
+      arcColor = "#3B67FC";
     } else {
       badgeText = "Batas Aman";
       badgeStyle = "text-[#B45309] bg-[#FFFBEB] border border-amber-200";
@@ -94,7 +94,7 @@ export function MealHistoryCard({
               type="date"
               value={selectedDate}
               onChange={(e) => onDateChange(e.target.value)}
-              className="text-xs font-medium border border-[#E2E8F0] rounded-lg px-2.5 py-1 bg-[#F8FAFC] text-[#4A5568] focus:outline-none focus:ring-1 focus:ring-[#00695C] cursor-pointer"
+              className="text-xs font-medium border border-[#E2E8F0] rounded-lg px-2.5 py-1 bg-[#F8FAFC] text-[#4A5568] focus:outline-none focus:ring-1 focus:ring-[#3B67FC] cursor-pointer"
             />
           </div>
         )}
@@ -191,7 +191,7 @@ export function MealHistoryCard({
         <p className="text-[11px] font-bold uppercase tracking-wider text-[#718096] mb-2 flex items-center justify-between">
           <span>Daftar Makanan Pasien ({logs.length})</span>
           {hasData && (
-            <span className="text-[10px] font-semibold text-[#00695C]">
+            <span className="text-[10px] font-semibold text-[#3B67FC]">
               {logs.length} catatan tercatat
             </span>
           )}
@@ -199,7 +199,7 @@ export function MealHistoryCard({
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center text-center p-6 h-full min-h-[160px]">
-            <div className="animate-spin rounded-full h-7 w-7 border-b-2 border-[#00695C] mb-2"></div>
+            <div className="animate-spin rounded-full h-7 w-7 border-b-2 border-[#3B67FC] mb-2"></div>
             <p className="text-xs text-[#718096]">Memuat catatan makanan...</p>
           </div>
         ) : !hasData ? (
@@ -217,7 +217,7 @@ export function MealHistoryCard({
               >
                 <div className="flex justify-between items-start gap-2">
                   <div className="flex items-start gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-[#00695C]/10 flex items-center justify-center text-[#00695C] flex-shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-full bg-[#3B67FC]/10 flex items-center justify-center text-[#3B67FC] flex-shrink-0 mt-0.5">
                       <span className="material-symbols-outlined text-[18px]">
                         {getIcon(log.type)}
                       </span>
@@ -227,7 +227,7 @@ export function MealHistoryCard({
                         {log.foodName || log.title}
                       </p>
                       <p className="text-[11px] text-[#718096] mt-0.5">
-                        <span className="font-semibold text-[#00695C]">{log.type}</span>
+                        <span className="font-semibold text-[#3B67FC]">{log.type}</span>
                         {log.portionMultiplier
                           ? ` · ${log.portionMultiplier}x porsi`
                           : ""}{" "}

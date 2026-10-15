@@ -38,10 +38,15 @@ export function ParticipantQuizDetailFeature({
     );
   }
 
-  const { participant, quizTitle, questionAnalysis } = detail;
-  const isPreTest =
-    participant.selfEfficacyCategory !== undefined ||
-    questionAnalysis.some((q) => q.correctAnswer === "");
+  const { participant, quizTitle, questionAnalysis, type, scope } = detail;
+  const isApplication = scope === "APPLICATION";
+  const isPreTest = type === "PRE_TEST";
+  const isApplicationPreTest = isApplication && isPreTest;
+  const scoreLabel = isApplicationPreTest
+    ? "Skor DSMES / DSMQR"
+    : isPreTest
+      ? "Skor Pre-Test"
+      : "Skor Post-Test";
 
   const dmsesCategory =
     participant.selfEfficacyCategory ||
@@ -63,7 +68,7 @@ export function ParticipantQuizDetailFeature({
               ? `/staff/manajemen-kuisioner/${quizId}`
               : `${ROUTES.MANAJEMEN_KUISIONER}/${quizId}`
           }
-          className="flex items-center gap-2 text-[#00695C] hover:underline text-xs font-semibold mb-2"
+          className="flex items-center gap-2 text-[#3B67FC] hover:underline text-xs font-semibold mb-2"
         >
           <span className="material-symbols-outlined text-sm select-none">
             arrow_back
@@ -71,9 +76,11 @@ export function ParticipantQuizDetailFeature({
           <span>Kembali ke Hasil Kuesioner</span>
         </Link>
         <h2 className="text-2xl font-bold text-[#1A202C]">
-          {isPreTest
-            ? "Hasil Efikasi Diri Pasien (DMSES)"
-            : "Hasil Evaluasi Belajar Pasien"}
+          {isApplicationPreTest
+            ? "Hasil Efikasi Diri Pasien (DMES/DSMQR)"
+            : isPreTest
+              ? "Hasil Pre-Test Edukasi Pasien"
+              : "Hasil Post-Test Edukasi Pasien"}
         </h2>
         <p className="text-sm text-[#718096] mt-1">
           Rincian jawaban kuesioner oleh {participant.patientName}
@@ -130,21 +137,42 @@ export function ParticipantQuizDetailFeature({
           </div>
           <div>
             <p className="text-[10px] font-bold text-[#718096] uppercase tracking-wider mb-1">
-              {isPreTest ? "Skor DMSES & Kategori" : "Skor Akhir & Status"}
+              {scoreLabel}
             </p>
-            <div className="flex items-center gap-2">
-              <span className="text-base font-bold text-[#00695C]">
-                {isPreTest
-                  ? `${participant.score} / 100`
-                  : `${participant.score}%`}
-              </span>
-              <Badge variant="primary">
-                {isPreTest
-                  ? dmsesCategory
-                  : participant.passed
-                    ? "Lulus"
-                    : "Gagal"}
-              </Badge>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <span className="text-base font-bold text-[#3B67FC]">
+                  {isApplicationPreTest
+                    ? `DSMES: ${participant.scoreDsmes ?? participant.score}`
+                    : `${participant.score}%`}
+                </span>
+                <Badge variant="primary">
+                  {isApplicationPreTest
+                    ? dmsesCategory
+                    : participant.passed
+                      ? "Lulus"
+                      : "Gagal"}
+                </Badge>
+              </div>
+              {isApplicationPreTest && participant.scoreDsmqr !== undefined && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-amber-800">
+                    DSMQR: {participant.scoreDsmqr}
+                  </span>
+                  {participant.dsmqrCategory && (
+                    <span className="text-[10px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
+                      {participant.dsmqrCategory}
+                    </span>
+                  )}
+                </div>
+              )}
+              {isApplicationPreTest && participant.scorePreTest !== undefined && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-slate-700">
+                    Pre-Test: {participant.scorePreTest}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -153,7 +181,7 @@ export function ParticipantQuizDetailFeature({
       {/* Question Analysis List */}
       <div className="space-y-6">
         <h3 className="text-base font-bold text-[#1A202C]">
-          {isPreTest
+          {isApplicationPreTest
             ? "Rincian Jawaban Respon Keyakinan Pasien"
             : "Analisis Pertanyaan"}
         </h3>
@@ -163,8 +191,8 @@ export function ParticipantQuizDetailFeature({
               key={qa.id}
               className={[
                 "p-6 rounded-2xl border transition-all space-y-4 shadow-sm",
-                isPreTest
-                  ? "bg-white border-teal-100/80 hover:border-[#00695C]/30"
+                isApplicationPreTest
+                  ? "bg-white border-[#AFC2FF]/80 hover:border-[#3B67FC]/30"
                   : qa.isCorrect
                     ? "bg-emerald-50/20 border-emerald-200"
                     : "bg-red-50/20 border-red-200",
@@ -176,8 +204,8 @@ export function ParticipantQuizDetailFeature({
                   <div
                     className={[
                       "w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs text-white",
-                      isPreTest
-                        ? "bg-[#00695C]"
+                      isApplicationPreTest
+                        ? "bg-[#3B67FC]"
                         : qa.isCorrect
                           ? "bg-emerald-600"
                           : "bg-red-600",
@@ -185,11 +213,20 @@ export function ParticipantQuizDetailFeature({
                   >
                     {qa.questionNumber}
                   </div>
-                  <h4 className="text-sm font-bold text-[#1A202C]">
-                    {qa.questionText}
-                  </h4>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-sm font-bold text-[#1A202C]">
+                        {qa.questionText}
+                      </h4>
+                      {qa.instrumentCategory && (
+                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 uppercase">
+                          {qa.instrumentCategory}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                {!isPreTest && (
+                {!isApplicationPreTest && (
                   <Badge variant={qa.isCorrect ? "primary" : "error"}>
                     {qa.isCorrect ? "Benar" : "Salah"}
                   </Badge>
@@ -199,19 +236,19 @@ export function ParticipantQuizDetailFeature({
               {/* Answers Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-medium">
                 {/* Patient Answer */}
-                <div className="p-3.5 rounded-xl border border-teal-100 bg-[#F0F9F8]/60">
+                <div className="p-3.5 rounded-xl border border-[#AFC2FF] bg-[#EEF2FF]/60">
                   <p className="font-bold text-[#718096] mb-1">
-                    {isPreTest
+                    {isApplicationPreTest
                       ? "Pilihan Respon Keyakinan Pasien (1–5)"
                       : "Jawaban Pasien"}
                   </p>
-                  <p className="text-[#00695C] font-bold text-sm">
+                  <p className="text-[#3B67FC] font-bold text-sm">
                     {qa.patientAnswer}
                   </p>
                 </div>
 
                 {/* Correct Answer (Post-Test only) */}
-                {!isPreTest && !qa.isCorrect && (
+                {!isApplicationPreTest && !qa.isCorrect && (
                   <div className="p-3.5 rounded-xl border border-emerald-100 bg-emerald-50/30">
                     <p className="font-bold text-[#718096] mb-1">
                       Jawaban Benar

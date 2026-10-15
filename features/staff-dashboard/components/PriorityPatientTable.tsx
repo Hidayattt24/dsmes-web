@@ -33,7 +33,7 @@ export function PriorityPatientTable({ patients, loading }: PriorityPatientTable
       header: "Nama Pasien",
       render: (row) => (
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#00695C] flex items-center justify-center text-white text-xs font-bold shrink-0">
+          <div className="w-9 h-9 rounded-full bg-[#3B67FC] flex items-center justify-center text-white text-xs font-bold shrink-0">
             {row.name.split(" ").map((n) => n[0]).join("").substring(0, 2).toUpperCase()}
           </div>
           <div>
@@ -71,7 +71,7 @@ export function PriorityPatientTable({ patients, loading }: PriorityPatientTable
       render: (row) => (
         <Link
           href={`/staff/pemantauan-catatan-pasien/${row.id}`}
-          className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#00695C] transition-all cursor-pointer shadow-sm hover:scale-[1.01]"
+          className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#3B67FC] transition-all cursor-pointer shadow-sm hover:scale-[1.01]"
         >
           <span>Detail</span>
           <span className="material-symbols-outlined text-sm select-none ml-1">visibility</span>

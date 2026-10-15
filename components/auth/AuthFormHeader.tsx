@@ -10,7 +10,7 @@ export function AuthFormHeader({ title, description }: AuthFormHeaderProps) {
     <div className="mb-6 sm:mb-8 font-[family-name:var(--font-jakarta)]">
       <div className="mb-5 sm:mb-6">
         <Image
-          src="/logo.png"
+          src="/logo-diba-care.png"
           alt="DIBA Logo"
           width={240}
           height={80}

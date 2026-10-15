@@ -69,12 +69,12 @@ export function ProfilePhotoCard({
               // eslint-disable-next-line @next/next/no-img-element
               <img alt="Profile Photo" className="w-full h-full object-cover" src={profilePhoto} />
             ) : (
-              <span className="text-3xl font-bold text-[#00695C] select-none">{initials}</span>
+              <span className="text-3xl font-bold text-[#3B67FC] select-none">{initials}</span>
             )}
           </div>
           <button
             onClick={handleEditClick}
-            className="absolute bottom-0 right-0 w-10 h-10 bg-[#00695C] text-white rounded-full flex items-center justify-center border-4 border-white shadow-md hover:scale-110 transition-transform cursor-pointer"
+            className="absolute bottom-0 right-0 w-10 h-10 bg-[#3B67FC] text-white rounded-full flex items-center justify-center border-4 border-white shadow-md hover:scale-110 transition-transform cursor-pointer"
             type="button"
             title="Ubah Foto"
           >

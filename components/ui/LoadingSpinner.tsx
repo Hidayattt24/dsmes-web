@@ -12,7 +12,7 @@ export function LoadingSpinner({ size = "md", className = "" }: LoadingSpinnerPr
       aria-label="Memuat..."
       className={[
         "inline-block animate-spin rounded-full",
-        "border-[3px] border-[#E2E8F0] border-t-[#00695C]",
+        "border-[3px] border-[#E2E8F0] border-t-[#3B67FC]",
         sizeMap[size],
         className,
       ].join(" ")}

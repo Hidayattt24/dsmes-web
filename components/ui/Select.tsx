@@ -151,7 +151,7 @@ export function Select({
             "w-full flex items-center justify-between h-12 px-4 rounded-xl border bg-white outline-none transition-all text-sm font-semibold select-none",
             disabled ? "bg-slate-50 border-[#E2E8F0] text-slate-400 cursor-not-allowed" : "",
             loading ? "bg-white border-[#E2E8F0] text-slate-400 cursor-wait" : "",
-            error ? "border-red-500 focus:ring-1 focus:ring-red-500 focus:border-red-500" : "border-[#E2E8F0] focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C]",
+            error ? "border-red-500 focus:ring-1 focus:ring-red-500 focus:border-red-500" : "border-[#E2E8F0] focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC]",
             !disabled && !loading ? "cursor-pointer hover:bg-slate-50/50" : "",
             selectedOption ? "text-[#1A202C]" : "text-[#718096]",
           ].join(" ")}
@@ -166,7 +166,7 @@ export function Select({
             
             {/* Selected Option Icon */}
             {!icon && selectedOption?.icon && (
-              <span className="material-symbols-outlined text-[18px] text-[#00695C] select-none shrink-0">
+              <span className="material-symbols-outlined text-[18px] text-[#3B67FC] select-none shrink-0">
                 {selectedOption.icon}
               </span>
             )}
@@ -179,7 +179,7 @@ export function Select({
           <div className="flex items-center gap-1 shrink-0 ml-2">
             {/* Loading Indicator */}
             {loading && (
-              <div className="w-4 h-4 border-2 border-[#00695C] border-t-transparent rounded-full animate-spin mr-1" />
+              <div className="w-4 h-4 border-2 border-[#3B67FC] border-t-transparent rounded-full animate-spin mr-1" />
             )}
             
             {/* Chevron icon */}
@@ -227,10 +227,10 @@ export function Select({
                       className={[
                         "flex items-center justify-between px-4 py-2.5 text-sm font-semibold cursor-pointer transition-colors select-none",
                         isSelected
-                          ? "bg-[#00695C]/10 text-[#00695C] font-bold"
+                          ? "bg-[#3B67FC]/10 text-[#3B67FC] font-bold"
                           : "text-[#4A5568]",
                         isActive && !isSelected ? "bg-slate-50" : "",
-                        isActive && isSelected ? "bg-[#00695C]/15" : "",
+                        isActive && isSelected ? "bg-[#3B67FC]/15" : "",
                       ].join(" ")}
                     >
                       <div className="flex items-center gap-2.5 truncate">
@@ -238,7 +238,7 @@ export function Select({
                           <span
                             className={[
                               "material-symbols-outlined text-[18px] select-none shrink-0",
-                              isSelected ? "text-[#00695C]" : "text-[#718096]",
+                              isSelected ? "text-[#3B67FC]" : "text-[#718096]",
                             ].join(" ")}
                           >
                             {opt.icon}
@@ -253,7 +253,7 @@ export function Select({
                             className={[
                               "text-[10px] font-extrabold px-2 py-0.5 rounded-full",
                               isSelected
-                                ? "bg-[#00695C] text-white"
+                                ? "bg-[#3B67FC] text-white"
                                 : "bg-slate-100 text-[#718096]",
                             ].join(" ")}
                           >
@@ -262,7 +262,7 @@ export function Select({
                         )}
 
                         {isSelected && (
-                          <span className="material-symbols-outlined text-[18px] text-[#00695C] select-none font-bold">
+                          <span className="material-symbols-outlined text-[18px] text-[#3B67FC] select-none font-bold">
                             check
                           </span>
                         )}

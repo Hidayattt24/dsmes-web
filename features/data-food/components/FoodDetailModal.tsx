@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import type { FoodMaster } from "@/features/data-food/types/food";
+import { Portal } from "@/components/ui/Portal";
 
 interface Props {
   readonly isOpen: boolean;
@@ -10,14 +11,23 @@ interface Props {
 }
 
 export function FoodDetailModal({ isOpen, onClose, food }: Props) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    if (isOpen) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
   if (!isOpen || !food) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto font-[family-name:var(--font-poppins)]">
+    <Portal>
+    <div className="fixed inset-0 z-[9000] bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto font-[family-name:var(--font-poppins)]">
       <div className="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-[#E2E8F0] animate-in fade-in zoom-in duration-200">
         <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#E6F4F1] text-[#00695C] flex items-center justify-center font-bold text-lg">
+            <div className="w-10 h-10 rounded-2xl bg-[#E8F0FF] text-[#3B67FC] flex items-center justify-center font-bold text-lg">
               {food.name.charAt(0).toUpperCase()}
             </div>
             <div>
@@ -36,16 +46,16 @@ export function FoodDetailModal({ isOpen, onClose, food }: Props) {
         </div>
 
         <div className="mt-5 space-y-4">
-          <div className="bg-[#F0F9F8] border border-[#00695C]/20 rounded-2xl p-4 flex items-center justify-between">
+          <div className="bg-[#EEF2FF] border border-[#3B67FC]/20 rounded-2xl p-4 flex items-center justify-between">
             <div>
-              <span className="text-xs font-bold uppercase text-[#00695C]">
+              <span className="text-xs font-bold uppercase text-[#3B67FC]">
                 Total Kalori (Energi)
               </span>
-              <h2 className="text-3xl font-extrabold text-[#00695C]">
+              <h2 className="text-3xl font-extrabold text-[#3B67FC]">
                 {food.energy_kcal} <span className="text-sm font-bold">kcal</span>
               </h2>
             </div>
-            <span className="material-symbols-outlined text-4xl text-[#00695C] select-none">
+            <span className="material-symbols-outlined text-4xl text-[#3B67FC] select-none">
               local_fire_department
             </span>
           </div>
@@ -123,5 +133,6 @@ export function FoodDetailModal({ isOpen, onClose, food }: Props) {
         </div>
       </div>
     </div>
+    </Portal>
   );
 }

@@ -20,7 +20,7 @@ export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
         type="button"
         onClick={toggleVisibility}
         aria-label={visible ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
-        className="text-[#6e7976] hover:text-[#004f45] transition-colors"
+        className="text-[#6e7976] hover:text-[#001B6B] transition-colors"
       >
         <span className="material-symbols-outlined text-[22px]">
           {visible ? "visibility_off" : "visibility"}

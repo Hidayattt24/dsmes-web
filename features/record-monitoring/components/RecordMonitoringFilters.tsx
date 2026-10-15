@@ -55,7 +55,7 @@ export function RecordMonitoringFilters({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Cari Pasien..."
-          className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12"
+          className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12"
         />
       </div>
 

@@ -10,7 +10,7 @@ export function PatientProfileCard({ patient }: PatientProfileCardProps) {
   return (
     <div className="premium-card p-8 flex flex-col items-center text-center justify-center min-h-[350px]">
       <div className="relative mb-6">
-        <div className="w-32 h-32 rounded-full border-2 border-[#00695C]/20 p-1.5">
+        <div className="w-32 h-32 rounded-full border-2 border-[#3B67FC]/20 p-1.5">
           <div className="w-full h-full rounded-full overflow-hidden bg-[#F4F6F8] shadow-inner flex items-center justify-center">
             {patient.avatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -20,14 +20,14 @@ export function PatientProfileCard({ patient }: PatientProfileCardProps) {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <span className="font-bold text-3xl text-[#00695C] select-none">
+              <span className="font-bold text-3xl text-[#3B67FC] select-none">
                 {patient.initials}
               </span>
             )}
           </div>
         </div>
         {patient.accountStatus === "Terverifikasi" && (
-          <div className="absolute -bottom-1 right-2 w-8 h-8 bg-[#00695C] rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white">
+          <div className="absolute -bottom-1 right-2 w-8 h-8 bg-[#3B67FC] rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white">
             <span className="material-symbols-outlined text-[18px]">verified</span>
           </div>
         )}
@@ -36,8 +36,8 @@ export function PatientProfileCard({ patient }: PatientProfileCardProps) {
       <h3 className="font-semibold text-2xl text-[#1A202C] mb-1 font-[family-name:var(--font-poppins)]">
         {patient.name}
       </h3>
-      <div className="px-4 py-1 bg-[#00695C]/5 rounded-full border border-[#00695C]/10 mb-6">
-        <p className="text-[#00695C] font-semibold text-xs tracking-wide font-[family-name:var(--font-poppins)]">
+      <div className="px-4 py-1 bg-[#3B67FC]/5 rounded-full border border-[#3B67FC]/10 mb-6">
+        <p className="text-[#3B67FC] font-semibold text-xs tracking-wide font-[family-name:var(--font-poppins)]">
           # {patient.patientCode && patient.patientCode !== "-" ? patient.patientCode : patient.id.slice(0, 5)}
         </p>
       </div>

@@ -5,6 +5,7 @@ import { Avatar } from "@/components/ui/Avatar";
 import { useSidebarStore } from "@/lib/stores/sidebarStore";
 import { MAIN_NAV_ITEMS, STAFF_NAV_ITEMS } from "@/constants/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import { Portal } from "@/components/ui/Portal";
 
 export function HeaderNavbar() {
   const { user } = useAuth();
@@ -25,7 +26,8 @@ export function HeaderNavbar() {
   };
 
   return (
-    <header className="h-20 w-full sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-[#E2E8F0] flex justify-between items-center px-6 md:px-10">
+    <Portal>
+    <header className="fixed top-0 right-0 left-0 md:left-[280px] h-20 z-30 bg-white/80 backdrop-blur-md border-b border-[#E2E8F0] flex justify-between items-center px-6 md:px-10">
       
       {/* Left side: Mobile only */}
       <div className="flex md:hidden items-center gap-3 mr-auto">
@@ -70,5 +72,6 @@ export function HeaderNavbar() {
         </div>
       </div>
     </header>
+    </Portal>
   );
 }

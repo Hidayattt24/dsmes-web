@@ -26,8 +26,8 @@ export function MonitoringTabs({ activeTab, onTabChange, tabs }: MonitoringTabsP
               className={[
                 "flex items-center gap-2 px-5 py-3 border-b-2 font-bold text-sm transition-all cursor-pointer outline-none whitespace-nowrap",
                 isActive
-                  ? "border-[#00695C] text-[#00695C]"
-                  : "border-transparent text-[#718096] hover:text-[#00695C] hover:border-[#00695C]/35",
+                  ? "border-[#3B67FC] text-[#3B67FC]"
+                  : "border-transparent text-[#718096] hover:text-[#3B67FC] hover:border-[#3B67FC]/35",
               ].join(" ")}
             >
               <span className="material-symbols-outlined text-lg select-none">
@@ -38,7 +38,7 @@ export function MonitoringTabs({ activeTab, onTabChange, tabs }: MonitoringTabsP
                 <span
                   className={[
                     "ml-1.5 px-2 py-0.5 rounded-full text-[10px] font-extrabold",
-                    isActive ? "bg-[#00695C] text-white" : "bg-slate-100 text-[#718096]",
+                    isActive ? "bg-[#3B67FC] text-white" : "bg-slate-100 text-[#718096]",
                   ].join(" ")}
                 >
                   {tab.badgeCount}

@@ -36,7 +36,7 @@ export function QuizQuestionCard({
       <div className="absolute top-6 right-6 flex gap-2">
         <button
           onClick={() => onDuplicate(index)}
-          className="p-2 text-[#718096] hover:text-[#00695C] hover:bg-slate-100 rounded-full transition-colors cursor-pointer"
+          className="p-2 text-[#718096] hover:text-[#3B67FC] hover:bg-slate-100 rounded-full transition-colors cursor-pointer"
           title="Duplikasi Pertanyaan"
           type="button"
         >
@@ -68,7 +68,7 @@ export function QuizQuestionCard({
         <textarea
           value={question.questionText}
           onChange={(e) => onQuestionChange(index, { questionText: e.target.value })}
-          className="w-full rounded-xl border border-[#E2E8F0] bg-white p-4 focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C] text-sm text-[#1A202C] transition-shadow resize-y min-h-[90px] outline-none"
+          className="w-full rounded-xl border border-[#E2E8F0] bg-white p-4 focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC] text-sm text-[#1A202C] transition-shadow resize-y min-h-[90px] outline-none"
           placeholder="Tuliskan pertanyaan di sini..."
           required
           rows={3}
@@ -88,8 +88,8 @@ export function QuizQuestionCard({
             <div
               key={OPTION_LABELS[choiceIndex]}
               className={[
-                "flex items-center gap-3 p-3 rounded-xl border bg-white transition-all focus-within:border-[#00695C] focus-within:ring-1 focus-within:ring-[#00695C]",
-                choice.isCorrect ? "border-[#00695C] ring-1 ring-[#00695C]" : "border-[#E2E8F0]",
+                "flex items-center gap-3 p-3 rounded-xl border bg-white transition-all focus-within:border-[#3B67FC] focus-within:ring-1 focus-within:ring-[#3B67FC]",
+                choice.isCorrect ? "border-[#3B67FC] ring-1 ring-[#3B67FC]" : "border-[#E2E8F0]",
               ].join(" ")}
             >
               <input
@@ -97,7 +97,7 @@ export function QuizQuestionCard({
                 name={`correct_q_${index}`}
                 checked={choice.isCorrect}
                 onChange={() => onCorrectChange(index, choiceIndex)}
-                className="w-5 h-5 text-[#00695C] border-[#E2E8F0] focus:ring-[#00695C] cursor-pointer"
+                className="w-5 h-5 text-[#3B67FC] border-[#E2E8F0] focus:ring-[#3B67FC] cursor-pointer"
                 required
               />
               <div className="flex-1 flex items-center gap-3">
@@ -125,7 +125,7 @@ export function QuizQuestionCard({
         <textarea
           value={question.explanation ?? ""}
           onChange={(e) => onQuestionChange(index, { explanation: e.target.value })}
-          className="w-full rounded-xl border border-[#E2E8F0] bg-[#F4F6F8]/60 p-4 focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C] text-sm text-[#1A202C] transition-shadow resize-y min-h-[70px] outline-none"
+          className="w-full rounded-xl border border-[#E2E8F0] bg-[#F4F6F8]/60 p-4 focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC] text-sm text-[#1A202C] transition-shadow resize-y min-h-[70px] outline-none"
           placeholder="Tulis penjelasan mengapa jawaban tersebut benar untuk edukasi lanjutan..."
           rows={2}
         />

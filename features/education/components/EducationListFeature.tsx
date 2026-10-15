@@ -63,7 +63,7 @@ export function EducationListFeature() {
         {!isStaff && (
           <Link
             href={`${ROUTES.MANAJEMEN_EDUKASI}/tambah`}
-            className="flex items-center gap-2 bg-[#0F766E] hover:bg-[#0D6E66] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-md shadow-[#0F766E]/10"
+            className="flex items-center gap-2 bg-[#3B67FC] hover:bg-[#1A63ED] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-md shadow-[#3B67FC]/10"
           >
             <span className="material-symbols-outlined text-[18px]">add</span>
             <span>Tambah Edukasi</span>
@@ -86,7 +86,7 @@ export function EducationListFeature() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari judul, ringkasan, atau pembuat..."
-            className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#0F766E] focus:ring-1 focus:ring-[#0F766E] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12 font-[family-name:var(--font-poppins)]"
+            className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12 font-[family-name:var(--font-poppins)]"
           />
         </div>
 
@@ -148,7 +148,7 @@ export function EducationListFeature() {
                   className={[
                     "w-9 h-9 flex items-center justify-center rounded-lg text-xs font-bold transition-all cursor-pointer",
                     currentPage === num
-                      ? "bg-[#0F766E] text-white shadow-sm shadow-[#0F766E]/20"
+                       ? "bg-[#3B67FC] text-white shadow-sm shadow-[#3B67FC]/20"
                       : "hover:bg-[#F4F6F8] text-[#718096] font-semibold",
                   ].join(" ")}
                 >

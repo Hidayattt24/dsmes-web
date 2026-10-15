@@ -73,7 +73,7 @@ export function SettingsFeature() {
             type="button"
             onClick={handleSave}
             disabled={isSaving}
-            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-[#00695C] text-white px-8 py-2.5 rounded-xl font-semibold hover:opacity-90 transition-all active:scale-95 shadow-md shadow-[#00695C]/10 cursor-pointer disabled:opacity-50 text-center"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-[#3B67FC] text-white px-8 py-2.5 rounded-xl font-semibold hover:opacity-90 transition-all active:scale-95 shadow-md shadow-[#3B67FC]/10 cursor-pointer disabled:opacity-50 text-center"
           >
             {isSaving ? (
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
@@ -120,7 +120,7 @@ export function SettingsFeature() {
       {/* Legal & Medical Guidelines Section */}
       <section className="bg-white rounded-2xl border border-[#E2E8F0] p-6 shadow-xs">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-[#E6F2F1] text-[#00695C] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-[#E8F0FF] text-[#3B67FC] flex items-center justify-center">
             <span className="material-symbols-outlined text-[22px]">policy</span>
           </div>
           <div>
@@ -132,40 +132,40 @@ export function SettingsFeature() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <Link
             href={ROUTES.KEBIJAKAN_PRIVASI}
-            className="p-4 rounded-xl border border-[#E2E8F0] hover:border-[#00695C] hover:bg-[#F0FDF4] transition-all group flex items-start justify-between"
+            className="p-4 rounded-xl border border-[#E2E8F0] hover:border-[#3B67FC] hover:bg-[#F0FDF4] transition-all group flex items-start justify-between"
           >
             <div>
-              <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-[#E6F2F1] text-[#00695C] mb-1">
+              <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-[#E8F0FF] text-[#3B67FC] mb-1">
                 05-Okt-2026
               </span>
-              <h3 className="font-bold text-sm text-[#1A202C] group-hover:text-[#00695C] transition-colors">
+              <h3 className="font-bold text-sm text-[#1A202C] group-hover:text-[#3B67FC] transition-colors">
                 Kebijakan Privasi DIBA
               </h3>
               <p className="text-xs text-[#718096] mt-1">
                 Tata kelola data kesehatan pasien, etika penelitian akademik, dan batasan penggunaan AI/ML.
               </p>
             </div>
-            <span className="material-symbols-outlined text-[#718096] group-hover:text-[#00695C] text-lg">
+            <span className="material-symbols-outlined text-[#718096] group-hover:text-[#3B67FC] text-lg">
               arrow_forward
             </span>
           </Link>
 
           <Link
             href={ROUTES.SYARAT_KETENTUAN}
-            className="p-4 rounded-xl border border-[#E2E8F0] hover:border-[#00695C] hover:bg-[#F0FDF4] transition-all group flex items-start justify-between"
+            className="p-4 rounded-xl border border-[#E2E8F0] hover:border-[#3B67FC] hover:bg-[#F0FDF4] transition-all group flex items-start justify-between"
           >
             <div>
               <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 mb-1">
                 Ketentuan Layanan
               </span>
-              <h3 className="font-bold text-sm text-[#1A202C] group-hover:text-[#00695C] transition-colors">
+              <h3 className="font-bold text-sm text-[#1A202C] group-hover:text-[#3B67FC] transition-colors">
                 Syarat & Ketentuan DIBA
               </h3>
               <p className="text-xs text-[#718096] mt-1">
                 Batasan tanggung jawab medis, hak kekayaan intelektual (HAKI), dan aturan penggunaan sistem.
               </p>
             </div>
-            <span className="material-symbols-outlined text-[#718096] group-hover:text-[#00695C] text-lg">
+            <span className="material-symbols-outlined text-[#718096] group-hover:text-[#3B67FC] text-lg">
               arrow_forward
             </span>
           </Link>
@@ -180,7 +180,7 @@ export function SettingsFeature() {
                 href="https://www.kaggle.com/datasets/fritze/informasi-nilai-gizi-indonesia"
                 target="_blank"
                 rel="noreferrer"
-                className="text-[#00695C] hover:underline"
+                className="text-[#3B67FC] hover:underline"
               >
                 Informasi Nilai Gizi Indonesia (Kaggle) ↗
               </a>
@@ -191,7 +191,7 @@ export function SettingsFeature() {
                 href="https://pbperkeni.or.id/wp-content/uploads/2021/11/22-10-21-Website-Pedoman-Pemantauan-Glukosa-Darah-Mandiri-Ebook.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="text-[#00695C] hover:underline"
+                className="text-[#3B67FC] hover:underline"
               >
                 Pedoman Pemantauan Glukosa Darah Mandiri (PGDM 2021) ↗
               </a>
@@ -202,7 +202,7 @@ export function SettingsFeature() {
                 href="https://diabetes.org/about-diabetes/diagnosis"
                 target="_blank"
                 rel="noreferrer"
-                className="text-[#00695C] hover:underline"
+                className="text-[#3B67FC] hover:underline"
               >
                 Standards of Care in Diabetes: Kriteria Diagnosis ↗
               </a>

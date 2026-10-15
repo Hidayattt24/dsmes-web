@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import type { ExcelImportPreviewResponse, CreateFoodDTO, ExcelImportRow } from "@/features/data-food/types/food";
+import { Portal } from "@/components/ui/Portal";
 
 interface Props {
   readonly isOpen: boolean;
@@ -29,6 +30,14 @@ export function FoodImportModal({
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filterTab, setFilterTab] = useState<"all" | "valid" | "invalid">("all");
   const [activeRows, setActiveRows] = useState<ExcelImportRow[]>([]);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    if (isOpen) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
 
   // Update active rows when preview changes
   React.useEffect(() => {
@@ -114,11 +123,12 @@ export function FoodImportModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto font-[family-name:var(--font-poppins)]">
+    <Portal>
+    <div className="fixed inset-0 z-[9000] bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto font-[family-name:var(--font-poppins)]">
       <div className="bg-white rounded-3xl max-w-4xl w-full p-6 shadow-2xl border border-[#E2E8F0] max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0] shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#E6F4F1] text-[#00695C] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-2xl bg-[#E8F0FF] text-[#3B67FC] flex items-center justify-center">
               <span className="material-symbols-outlined text-2xl select-none">file_upload</span>
             </div>
             <div>
@@ -149,11 +159,11 @@ export function FoodImportModal({
               onDrop={handleDrop}
               className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all ${
                 dragOver
-                  ? "border-[#00695C] bg-[#F0F9F8]"
+                  ? "border-[#3B67FC] bg-[#EEF2FF]"
                   : "border-[#E2E8F0] bg-[#F8FAFC]"
               }`}
             >
-              <span className="material-symbols-outlined text-5xl text-[#00695C] mb-2 select-none">
+              <span className="material-symbols-outlined text-5xl text-[#3B67FC] mb-2 select-none">
                 cloud_upload
               </span>
               <h4 className="text-base font-bold text-[#1A202C]">
@@ -162,7 +172,7 @@ export function FoodImportModal({
               <p className="text-xs text-[#718096] mt-1 max-w-md mx-auto">
                 Kolom wajib: name/nama, manufacturer/produsen, serving_size/porsi. Nilai nutrisi otomatis dikonversi ke format desimal.
               </p>
-              <label className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 rounded-xl bg-[#00695C] hover:bg-[#004D40] text-white text-xs font-bold cursor-pointer shadow-sm transition-all">
+              <label className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 rounded-xl bg-[#3B67FC] hover:bg-[#1A63ED] text-white text-xs font-bold cursor-pointer shadow-sm transition-all">
                 <span className="material-symbols-outlined text-base select-none">file_open</span>
                 Pilih File Komputer
                 <input
@@ -188,7 +198,7 @@ export function FoodImportModal({
 
           {importing && (
             <div className="py-12 text-center">
-              <span className="material-symbols-outlined text-4xl text-[#00695C] animate-spin select-none">
+              <span className="material-symbols-outlined text-4xl text-[#3B67FC] animate-spin select-none">
                 progress_activity
               </span>
               <p className="text-sm font-medium text-[#718096] mt-2">
@@ -236,7 +246,7 @@ export function FoodImportModal({
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Cari dalam pratinjau..."
-                    className="w-full pl-9 pr-3 py-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#1A202C] focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:bg-white"
+                    className="w-full pl-9 pr-3 py-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#1A202C] focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:bg-white"
                   />
                 </div>
 
@@ -348,7 +358,7 @@ export function FoodImportModal({
                               : 'Per 100g'}
                           </span>
                         </td>
-                        <td className="py-2 px-3 text-right font-mono font-bold text-[#00695C]">{row.data.energy_kcal}</td>
+                        <td className="py-2 px-3 text-right font-mono font-bold text-[#3B67FC]">{row.data.energy_kcal}</td>
                         <td className="py-2 px-3 text-right font-mono">{row.data.protein_g}</td>
                         <td className="py-2 px-3 text-right font-mono">{row.data.carbohydrate_g}</td>
                         <td className="py-2 px-3 text-right font-mono">{row.data.fat_g}</td>
@@ -403,7 +413,7 @@ export function FoodImportModal({
                   setSelectedFile(null);
                   onReset();
                 }}
-                className="text-xs text-[#00695C] font-bold hover:underline cursor-pointer"
+                className="text-xs text-[#3B67FC] font-bold hover:underline cursor-pointer"
               >
                 &larr; Unggah File Lain
               </button>
@@ -423,7 +433,7 @@ export function FoodImportModal({
                 type="button"
                 disabled={importing}
                 onClick={handleConfirmImport}
-                className="h-11 px-6 rounded-xl bg-[#00695C] hover:bg-[#004D40] text-white text-sm font-bold shadow-sm transition-all disabled:opacity-50 flex items-center gap-2 cursor-pointer"
+                className="h-11 px-6 rounded-xl bg-[#3B67FC] hover:bg-[#1A63ED] text-white text-sm font-bold shadow-sm transition-all disabled:opacity-50 flex items-center gap-2 cursor-pointer"
               >
                 {importing && (
                   <span className="material-symbols-outlined text-lg animate-spin select-none">
@@ -437,5 +447,6 @@ export function FoodImportModal({
         </div>
       </div>
     </div>
+    </Portal>
   );
 }

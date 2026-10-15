@@ -104,7 +104,7 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
   }
 
   const statsCards: StatCard[] = [
-    { label: "Total Pasien", value: analytics?.total_patients ?? 0, icon: "group", color: "#00695C", bg: "#F0F9F8" },
+    { label: "Total Pasien", value: analytics?.total_patients ?? 0, icon: "group", color: "#3B67FC", bg: "#EEF2FF" },
     { label: "Selesai", value: analytics?.completed_count ?? 0, icon: "check_circle", color: "#166534", bg: "#F0FDF4" },
     { label: "Baca Artikel", value: analytics?.read_article_count ?? 0, icon: "menu_book", color: "#2B6CB0", bg: "#EBF8FF" },
     { label: "Tonton Video", value: analytics?.watched_video_count ?? 0, icon: "play_circle", color: "#B45309", bg: "#FFFBEB" },
@@ -192,8 +192,8 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
           {/* Average Rating Score Card */}
-          <div className="md:col-span-4 p-6 rounded-2xl bg-[#F0F9F8] border border-[#CCECE6] flex flex-col items-center justify-center text-center">
-            <p className="text-xs font-bold uppercase tracking-wider text-[#00695C] mb-2 font-[family-name:var(--font-poppins)]">
+          <div className="md:col-span-4 p-6 rounded-2xl bg-[#EEF2FF] border border-[#CCECE6] flex flex-col items-center justify-center text-center">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#3B67FC] mb-2 font-[family-name:var(--font-poppins)]">
               Rata-rata Rating
             </p>
             <div className="text-4xl font-extrabold text-[#1A202C] mb-1 font-[family-name:var(--font-poppins)]">

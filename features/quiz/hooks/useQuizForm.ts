@@ -3,14 +3,17 @@ import { useRouter } from "next/navigation";
 import { quizService } from "../services/quizService";
 import type {
   QuestionnaireType,
+  QuestionnaireScope,
   QuestionnaireDifficulty,
   QuestionnaireStatus,
+  EligiblePreTest,
 } from "../types/quiz";
 import { useToast } from "@/components/ui/Toast";
 
 export interface FormChoice {
   id?: string;
   optionText: string;
+  scoreValue?: number;
   isCorrect: boolean;
 }
 
@@ -26,18 +29,22 @@ export interface FormCategory {
   id?: string;
   title: string;
   description: string;
+  instrumentCategory?: "PRE_TEST" | "DSMQR" | "DSMES";
   questions: FormQuestion[];
 }
 
 export interface QuestionnaireFormFields {
   title: string;
   type: QuestionnaireType;
+  scope: QuestionnaireScope;
   description: string;
   educationId: string;
   difficulty: QuestionnaireDifficulty;
   passingScore: number;
   status: QuestionnaireStatus;
   categories: FormCategory[];
+  sourcePreTestId?: string;
+  copyQuestionsFromPreTest?: boolean;
 }
 
 interface ArticleOption {
@@ -45,8 +52,9 @@ interface ArticleOption {
   readonly label: string;
 }
 
-const createEmptyChoice = (label = "", isCorrect = false): FormChoice => ({
+const createEmptyChoice = (label = "", isCorrect = false, scoreValue?: number): FormChoice => ({
   optionText: label,
+  scoreValue,
   isCorrect,
 });
 
@@ -62,11 +70,31 @@ const createEmptyQuestion = (): FormQuestion => ({
   ],
 });
 
-const createEmptyCategory = (title = ""): FormCategory => ({
+const createEmptyCategory = (
+  title = "",
+  instrumentCategory: "PRE_TEST" | "DSMQR" | "DSMES" = "PRE_TEST"
+): FormCategory => ({
   title,
   description: "",
+  instrumentCategory,
   questions: [createEmptyQuestion()],
 });
+
+const createInstrumentChoices = (category: "DSMQR" | "DSMES"): FormChoice[] =>
+  category === "DSMQR"
+    ? [
+        createEmptyChoice("Sangat sesuai", false, 4),
+        createEmptyChoice("Sesuai", false, 3),
+        createEmptyChoice("Kurang sesuai", false, 2),
+        createEmptyChoice("Tidak sesuai", false, 1),
+      ]
+    : [
+        createEmptyChoice("Sama sekali tidak yakin", false, 1),
+        createEmptyChoice("Sedikit yakin", false, 2),
+        createEmptyChoice("Cukup yakin", false, 3),
+        createEmptyChoice("Yakin", false, 4),
+        createEmptyChoice("Sangat yakin", false, 5),
+      ];
 
 export function useQuizForm(quizId?: string) {
   const router = useRouter();
@@ -74,37 +102,31 @@ export function useQuizForm(quizId?: string) {
 
   const [fields, setFields] = useState<QuestionnaireFormFields>({
     title: "",
-    type: "POST_TEST",
+    type: "PRE_TEST",
+    scope: "APPLICATION",
     description: "",
     educationId: "",
     difficulty: "Sedang",
     passingScore: 80,
     status: "Draft",
-    categories: [createEmptyCategory("Soal Post-Test")],
+    sourcePreTestId: "",
+    copyQuestionsFromPreTest: false,
+    categories: [
+      { ...createEmptyCategory("Pertanyaan DSMQR", "DSMQR"), questions: [{ ...createEmptyQuestion(), choices: createInstrumentChoices("DSMQR") }] },
+      { ...createEmptyCategory("Pertanyaan DSMES", "DSMES"), questions: [{ ...createEmptyQuestion(), choices: createInstrumentChoices("DSMES") }] },
+    ],
   });
 
   const [articleOptions, setArticleOptions] = useState<readonly ArticleOption[]>([]);
   const [existingPreTest, setExistingPreTest] = useState<{ id: string; title: string } | null>(null);
+  const [eligiblePreTests, setEligiblePreTests] = useState<readonly EligiblePreTest[]>([]);
+  const [isLoadingPreTests, setIsLoadingPreTests] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Check if Pre-Test already exists in the system when creating new
+  // Initial load
   useEffect(() => {
-    if (quizId) return;
-    const checkPreTest = async () => {
-      try {
-        const res = await quizService.getQuizzes({ type: "PRE_TEST", limit: 5 });
-        if (res.items && res.items.length > 0) {
-          const pre = res.items[0];
-          setExistingPreTest({ id: pre.id, title: pre.title });
-          setFields((prev) => ({
-            ...prev,
-            type: "POST_TEST",
-          }));
-        }
-      } catch {}
-    };
-    checkPreTest();
+    // If we have an initial query or state, load articles
   }, [quizId]);
 
   // Load published articles for dropdown
@@ -137,6 +159,7 @@ export function useQuizForm(quizId?: string) {
             id: cat.id,
             title: cat.title,
             description: cat.description ?? "",
+            instrumentCategory: (cat.instrumentCategory as "PRE_TEST" | "DSMQR" | "DSMES") || "PRE_TEST",
             questions: (cat.questions ?? []).map((q) => ({
               id: q.id,
               questionText: q.questionText,
@@ -145,6 +168,7 @@ export function useQuizForm(quizId?: string) {
               choices: (q.choices ?? []).map((c) => ({
                 id: c.id,
                 optionText: c.optionText,
+                scoreValue: c.scoreValue,
                 isCorrect: c.isCorrect,
               })),
             })),
@@ -153,13 +177,19 @@ export function useQuizForm(quizId?: string) {
           setFields({
             title: found.title,
             type: found.type,
+            scope: found.scope ?? (found.educationId ? "EDUCATION" : "APPLICATION"),
             description: found.description ?? "",
             educationId: found.educationId ?? "",
             difficulty: found.difficulty ?? "Sedang",
             passingScore: found.passingScore ?? 80,
             status: found.status,
+            sourcePreTestId: found.sourcePreTestId ?? "",
+            copyQuestionsFromPreTest: false,
             categories: loadedCategories.length > 0 ? loadedCategories : [createEmptyCategory()],
           });
+          if (found.sourcePreTestId) {
+            setExistingPreTest({ id: found.sourcePreTestId, title: found.pairedQuestionnaireTitle ?? "Pre-Test terpasang" });
+          }
         }
       } catch {
         showToast({
@@ -174,15 +204,63 @@ export function useQuizForm(quizId?: string) {
     loadQuiz();
   }, [quizId, showToast]);
 
+  useEffect(() => {
+    if (fields.type !== "POST_TEST" || (fields.scope === "EDUCATION" && !fields.educationId)) {
+      return;
+    }
+
+    let active = true;
+    quizService.getEligiblePreTests(fields.scope, fields.educationId || undefined)
+      .then((items) => {
+        if (active) setEligiblePreTests(items);
+      })
+      .catch(() => {
+        if (active) setEligiblePreTests([]);
+      })
+      .finally(() => {
+        if (active) setIsLoadingPreTests(false);
+      });
+    return () => { active = false; };
+  }, [fields.type, fields.scope, fields.educationId]);
+
   const handleChange = useCallback((key: keyof QuestionnaireFormFields, val: unknown) => {
+    if (key === "scope" || key === "educationId" || key === "type") {
+      setEligiblePreTests([]);
+      setIsLoadingPreTests(true);
+    }
     setFields((prev) => {
       const updated = { ...prev, [key]: val };
-      if (key === "type" && val === "PRE_TEST") {
-        updated.educationId = "";
+      if (key === "scope" && val !== prev.scope) {
+        if (val === "APPLICATION") {
+          updated.educationId = "";
+          updated.categories = [
+            { ...createEmptyCategory("Pertanyaan DSMQR", "DSMQR"), questions: [{ ...createEmptyQuestion(), choices: createInstrumentChoices("DSMQR") }] },
+            { ...createEmptyCategory("Pertanyaan DSMES", "DSMES"), questions: [{ ...createEmptyQuestion(), choices: createInstrumentChoices("DSMES") }] },
+          ];
+        } else {
+          updated.categories = [createEmptyCategory("Soal Kuesioner Edukasi", "PRE_TEST")];
+        }
+      }
+      if ((key === "scope" || key === "educationId" || key === "type") && val !== prev[key]) {
+        updated.sourcePreTestId = "";
       }
       return updated;
     });
   }, []);
+
+  const handleQuestionImageChange = useCallback(
+    (catIndex: number, qIndex: number, url: string) => {
+      setFields((prev) => {
+        const updatedCats = [...prev.categories];
+        const cat = updatedCats[catIndex];
+        const updatedQuestions = [...cat.questions];
+        updatedQuestions[qIndex] = { ...updatedQuestions[qIndex], questionImageUrl: url };
+        updatedCats[catIndex] = { ...cat, questions: updatedQuestions };
+        return { ...prev, categories: updatedCats };
+      });
+    },
+    []
+  );
 
   // Category manipulation
   const addCategory = useCallback(() => {
@@ -227,9 +305,14 @@ export function useQuizForm(quizId?: string) {
       if (!updatedCats[catIndex]) {
         updatedCats[catIndex] = createEmptyCategory("Soal Post-Test");
       }
+      const instrumentCategory = updatedCats[catIndex].instrumentCategory;
+      const question = createEmptyQuestion();
+      if (instrumentCategory === "DSMQR" || instrumentCategory === "DSMES") {
+        question.choices = createInstrumentChoices(instrumentCategory);
+      }
       updatedCats[catIndex] = {
         ...updatedCats[catIndex],
-        questions: [...updatedCats[catIndex].questions, createEmptyQuestion()],
+        questions: [...updatedCats[catIndex].questions, question],
       };
       return { ...prev, categories: updatedCats };
     });
@@ -345,6 +428,20 @@ export function useQuizForm(quizId?: string) {
     []
   );
 
+  const handleChoiceScoreChange = useCallback((catIndex: number, qIndex: number, choiceIndex: number, value: string) => {
+    setFields((prev) => {
+      const categories = [...prev.categories];
+      const category = categories[catIndex];
+      const questions = [...category.questions];
+      const question = questions[qIndex];
+      const choices = [...question.choices];
+      choices[choiceIndex] = { ...choices[choiceIndex], scoreValue: value === "" ? undefined : Number(value) };
+      questions[qIndex] = { ...question, choices };
+      categories[catIndex] = { ...category, questions };
+      return { ...prev, categories };
+    });
+  }, []);
+
   const setCorrectChoice = useCallback((catIndex: number, qIndex: number, choiceIndex: number) => {
     setFields((prev) => {
       const updatedCats = [...prev.categories];
@@ -373,11 +470,20 @@ export function useQuizForm(quizId?: string) {
         return;
       }
 
-      if (fields.type === "POST_TEST" && !fields.educationId) {
+      if (fields.scope === "EDUCATION" && !fields.educationId) {
         showToast({
           type: "error",
           title: "Validasi Gagal",
-          description: "Pilih Materi Edukasi Terkait untuk Post-Test.",
+          description: "Pilih Materi Edukasi Terkait untuk Kuesioner.",
+        });
+        return;
+      }
+
+      if (fields.type === "POST_TEST" && !fields.sourcePreTestId) {
+        showToast({
+          type: "error",
+          title: "Validasi Gagal",
+          description: "Pilih Pre-Test yang akan dipasangkan.",
         });
         return;
       }
@@ -393,66 +499,45 @@ export function useQuizForm(quizId?: string) {
         return {
           ...cat,
           title: catTitle,
+          instrumentCategory: cat.instrumentCategory || "PRE_TEST",
         };
       });
 
-      // Validate questions inside categories or PRE_TEST questions
-      if (fields.type === "PRE_TEST") {
-        const questionsList = formattedCategories[0]?.questions || [];
-        if (questionsList.length === 0) {
+      // Copied post-tests get categories from selected pre-test on server.
+      const shouldCopyQuestions = fields.type === "POST_TEST" && fields.copyQuestionsFromPreTest;
+      for (let cIdx = 0; !shouldCopyQuestions && cIdx < formattedCategories.length; cIdx++) {
+        const cat = formattedCategories[cIdx];
+        if (cat.questions.length === 0) {
           showToast({
             type: "error",
             title: "Validasi Gagal",
-            description: "Pre-Test wajib memiliki minimal 1 pertanyaan.",
+            description: `Kategori "${cat.title}" belum memiliki soal.`,
           });
           return;
         }
 
-        for (let qIdx = 0; qIdx < questionsList.length; qIdx++) {
-          const q = questionsList[qIdx];
+        for (let qIdx = 0; qIdx < cat.questions.length; qIdx++) {
+          const q = cat.questions[qIdx];
           if (!q.questionText.trim()) {
             showToast({
               type: "error",
               title: "Validasi Gagal",
-              description: `Soal #${qIdx + 1} belum memiliki teks pertanyaan.`,
+              description: `Soal #${qIdx + 1} pada kategori "${cat.title}" belum memiliki teks pertanyaan.`,
             });
             return;
           }
-        }
-      } else {
-        // Validate POST_TEST questions and choices
-        for (let cIdx = 0; cIdx < formattedCategories.length; cIdx++) {
-          const cat = formattedCategories[cIdx];
-          if (cat.questions.length === 0) {
+
+          const hasValidChoice = q.choices.some((c) => c.optionText.trim().length > 0);
+          if (!hasValidChoice) {
             showToast({
               type: "error",
               title: "Validasi Gagal",
-              description: `Kategori "${cat.title}" belum memiliki soal.`,
+              description: `Soal #${qIdx + 1} pada kategori "${cat.title}" harus memiliki minimal 1 pilihan jawaban bertuliskan teks.`,
             });
             return;
           }
 
-          for (let qIdx = 0; qIdx < cat.questions.length; qIdx++) {
-            const q = cat.questions[qIdx];
-            if (!q.questionText.trim()) {
-              showToast({
-                type: "error",
-                title: "Validasi Gagal",
-                description: `Soal #${qIdx + 1} belum memiliki teks pertanyaan.`,
-              });
-              return;
-            }
-
-            const hasValidChoice = q.choices.some((c) => c.optionText.trim().length > 0);
-            if (!hasValidChoice) {
-              showToast({
-                type: "error",
-                title: "Validasi Gagal",
-                description: `Soal #${qIdx + 1} harus memiliki minimal 1 pilihan jawaban bertuliskan teks.`,
-              });
-              return;
-            }
-
+          if (fields.scope === "EDUCATION") {
             const hasCorrectChoice = q.choices.some((c) => c.isCorrect && c.optionText.trim().length > 0);
             if (!hasCorrectChoice) {
               showToast({
@@ -471,7 +556,7 @@ export function useQuizForm(quizId?: string) {
         const payload: QuestionnaireFormFields = {
           ...fields,
           status: targetStatus,
-          categories: formattedCategories,
+          categories: shouldCopyQuestions ? [] : formattedCategories,
         };
 
         let result;
@@ -522,6 +607,8 @@ export function useQuizForm(quizId?: string) {
     fields,
     articleOptions,
     existingPreTest,
+    eligiblePreTests,
+    isLoadingPreTests,
     isLoading,
     isSaving,
     handleChange,
@@ -534,7 +621,9 @@ export function useQuizForm(quizId?: string) {
     addChoice,
     deleteChoice,
     handleChoiceChange,
+    handleChoiceScoreChange,
     setCorrectChoice,
+    handleQuestionImageChange,
     save,
     cancel,
   };

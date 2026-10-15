@@ -9,6 +9,7 @@ interface QuizTableProps {
   readonly onDeleteClick: (id: string) => void;
   readonly onPageChange: (page: number) => void;
   readonly onToggleStatusClick?: (quiz: QuestionnaireRecord) => void;
+  readonly onPairClick?: (quiz: QuestionnaireRecord) => void;
 }
 
 export function QuizTable({
@@ -17,6 +18,7 @@ export function QuizTable({
   onDeleteClick,
   onPageChange,
   onToggleStatusClick,
+  onPairClick,
 }: QuizTableProps) {
   const pathname = usePathname();
   const isStaff = pathname.startsWith("/staff");
@@ -35,9 +37,9 @@ export function QuizTable({
       <div className="p-6 border-b border-[#E2E8F0] flex justify-between items-center bg-[#F8FAFC]">
         <div>
           <h3 className="text-base font-bold text-[#1A202C]">Daftar Kuesioner</h3>
-          <p className="text-xs text-[#718096]">Manajemen kuesioner Pre-Test & Post-Test pasien</p>
+          <p className="text-xs text-[#718096]">Pasangkan pengukuran sebelum dan sesudah berdasarkan ranah</p>
         </div>
-        <span className="text-xs font-semibold text-[#00695C] bg-[#F0F9F8] px-3 py-1.5 rounded-full border border-[#00695C]/15">
+        <span className="text-xs font-semibold text-[#3B67FC] bg-[#EEF2FF] px-3 py-1.5 rounded-full border border-[#3B67FC]/15">
           Total: {pagination.total} Kuesioner
         </span>
       </div>
@@ -48,10 +50,10 @@ export function QuizTable({
           <thead>
             <tr className="border-b border-[#E2E8F0] bg-white text-xs font-bold text-[#718096] uppercase tracking-wider">
               <th className="py-4 px-6 font-semibold">Nama Kuesioner</th>
-              <th className="py-4 px-6 font-semibold">Tipe</th>
-              <th className="py-4 px-6 font-semibold">Materi Edukasi</th>
-              <th className="py-4 px-6 font-semibold text-center">Passing / Kesulitan</th>
-              <th className="py-4 px-6 font-semibold text-center">Kategori</th>
+              <th className="py-4 px-6 font-semibold">Ranah</th>
+              <th className="py-4 px-6 font-semibold">Tahap</th>
+              <th className="py-4 px-6 font-semibold">Relasi / Materi</th>
+              <th className="py-4 px-6 font-semibold">Pasangan</th>
               <th className="py-4 px-6 font-semibold text-center">Soal</th>
               <th className="py-4 px-6 font-semibold">Status</th>
               <th className="py-4 px-6 font-semibold text-right">Aksi</th>
@@ -68,46 +70,61 @@ export function QuizTable({
               quizzes.map((quiz) => (
                 <tr key={quiz.id} className="hover:bg-slate-50/50 transition-colors">
                   {/* Nama */}
-                  <td className="py-4 px-6 font-semibold text-[#00695C] hover:underline">
+                  <td className="py-4 px-6 font-semibold text-[#3B67FC] hover:underline">
                     <Link href={isStaff ? `/staff/manajemen-kuisioner/${quiz.id}` : `${ROUTES.MANAJEMEN_KUISIONER}/${quiz.id}`}>
                       {quiz.title}
                     </Link>
                   </td>
 
-                  {/* Tipe */}
+                  {/* Scope */}
+                  <td className="py-4 px-6">
+                    <div className="flex items-center gap-2 font-bold text-[#1A202C]">
+                      <span className="material-symbols-outlined text-[18px] text-[#3B67FC]">
+                        {quiz.scope === "EDUCATION" ? "menu_book" : "monitor_heart"}
+                      </span>
+                      {quiz.scope === "EDUCATION" ? "Edukasi" : "Aplikasi"}
+                    </div>
+                  </td>
+
+                  {/* Stage */}
                   <td className="py-4 px-6">
                     <span
                       className={[
-                        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold border",
+                        "inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold border uppercase tracking-wide",
                         quiz.type === "PRE_TEST"
-                          ? "bg-[#F0F9F8] text-[#00695C] border-[#00695C]/20"
-                          : "bg-teal-50 text-teal-800 border-teal-200",
+                          ? "bg-[#EEF2FF] text-[#3B67FC] border-[#3B67FC]/20"
+                          : "bg-[#EEF2FF] text-[#001B6B] border-[#8FAAFF]",
                       ].join(" ")}
                     >
                       {quiz.type === "PRE_TEST" ? "Pre-Test" : "Post-Test"}
                     </span>
                   </td>
 
-                  {/* Materi Edukasi */}
+                  {/* Relation / Material */}
                   <td className="py-4 px-6 text-[#718096] font-medium">
-                    {quiz.educationTitle || "-"}
+                    {quiz.scope === "EDUCATION" ? quiz.educationTitle || "Materi belum tersedia" : "Program DIBA"}
                   </td>
 
-                  {/* Passing / Kesulitan */}
-                  <td className="py-4 px-6 text-center text-xs">
-                    {quiz.type === "PRE_TEST" ? (
-                      <span className="text-[#A0AEC0]">-</span>
+                  {/* Pair */}
+                  <td className="py-4 px-6 text-xs">
+                    {quiz.pairedQuestionnaireId || quiz.sourcePreTestId || quiz.isLinkedToPreTest ? (
+                      <div className="max-w-52">
+                        <span className="inline-flex items-center gap-1 font-bold text-emerald-700">
+                          <span className="material-symbols-outlined text-[15px]">link</span>
+                          Terpasang
+                        </span>
+                        {quiz.pairedQuestionnaireTitle && (
+                          <p className="mt-0.5 truncate text-[10px] text-[#718096]" title={quiz.pairedQuestionnaireTitle}>
+                            {quiz.type === "POST_TEST" ? "Pre-Test: " : "Post-Test: "}{quiz.pairedQuestionnaireTitle}
+                          </p>
+                        )}
+                      </div>
                     ) : (
-                      <div>
-                        <span className="font-bold text-[#00695C]">{quiz.passingScore ?? "-"}%</span>
-                        <span className="text-[#718096] ml-1">({quiz.difficulty ?? "-"})</span>
+                      <div className="flex flex-col items-start gap-1">
+                          <span className="inline-flex items-center gap-1 text-amber-700 font-semibold"><span className="material-symbols-outlined text-[15px]">link_off</span>{quiz.type === "POST_TEST" ? "Belum dipasangkan" : "Belum ada Post-Test"}</span>
+                        {quiz.type === "POST_TEST" && !isStaff && onPairClick && <button type="button" onClick={() => onPairClick(quiz)} className="text-[10px] font-bold text-[#3B67FC] hover:underline cursor-pointer">Hubungkan ke Pre-Test</button>}
                       </div>
                     )}
-                  </td>
-
-                  {/* Total Kategori */}
-                  <td className="py-4 px-6 text-center font-semibold">
-                    {quiz.categoryCount ?? 0}
                   </td>
 
                   {/* Total Soal */}
@@ -137,7 +154,7 @@ export function QuizTable({
                       {/* Lihat Detail */}
                       <Link
                         href={isStaff ? `/staff/manajemen-kuisioner/${quiz.id}` : `${ROUTES.MANAJEMEN_KUISIONER}/${quiz.id}`}
-                        className="p-2 hover:text-[#00695C] hover:bg-[#00695C]/10 rounded-lg transition-colors flex items-center"
+                        className="p-2 hover:text-[#3B67FC] hover:bg-[#3B67FC]/10 rounded-lg transition-colors flex items-center"
                         title="Lihat Detail & Soal"
                       >
                         <span className="material-symbols-outlined text-[20px] select-none">visibility</span>
@@ -221,7 +238,7 @@ export function QuizTable({
                 className={[
                   "w-8 h-8 flex items-center justify-center rounded-lg font-bold transition-colors cursor-pointer",
                   pagination.page === idx + 1
-                    ? "bg-[#00695C] text-white"
+                    ? "bg-[#3B67FC] text-white"
                     : "border border-[#E2E8F0] text-[#1A202C] hover:bg-slate-100",
                 ].join(" ")}
               >

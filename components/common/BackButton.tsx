@@ -12,7 +12,7 @@ export function BackButton({ href, label, onClick }: BackButtonProps) {
       <button
         type="button"
         onClick={onClick}
-        className="flex items-center gap-2 text-[#718096] hover:text-[#00695C] transition-colors font-medium text-sm font-[family-name:var(--font-poppins)] cursor-pointer bg-transparent border-none p-0"
+        className="flex items-center gap-2 text-[#718096] hover:text-[#3B67FC] transition-colors font-medium text-sm font-[family-name:var(--font-poppins)] cursor-pointer bg-transparent border-none p-0"
       >
         <span className="material-symbols-outlined text-[20px]">arrow_back</span>
         <span>{label}</span>
@@ -23,7 +23,7 @@ export function BackButton({ href, label, onClick }: BackButtonProps) {
   return (
     <Link
       href={href}
-      className="flex items-center gap-2 text-[#718096] hover:text-[#00695C] transition-colors font-medium text-sm font-[family-name:var(--font-poppins)]"
+      className="flex items-center gap-2 text-[#718096] hover:text-[#3B67FC] transition-colors font-medium text-sm font-[family-name:var(--font-poppins)]"
     >
       <span className="material-symbols-outlined text-[20px]">arrow_back</span>
       <span>{label}</span>

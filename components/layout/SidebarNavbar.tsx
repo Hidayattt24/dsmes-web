@@ -8,6 +8,7 @@ import { useSidebarStore } from "@/lib/stores/sidebarStore";
 import { usePathname }    from "next/navigation";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useAuth } from "@/hooks/useAuth";
+import { Portal } from "@/components/ui/Portal";
 
 export function SidebarNavbar() {
   const { logout } = useAuth();
@@ -50,7 +51,7 @@ export function SidebarNavbar() {
       {/* Official branding logo: full logo image */}
       <div className="px-6 mb-8 flex items-center justify-center relative">
         <Image
-          src="/logo.png"
+          src="/logo-diba-care.png"
           alt="Logo DIBA"
           width={240}
           height={80}
@@ -93,9 +94,9 @@ export function SidebarNavbar() {
   );
 
   return (
-    <>
+    <Portal>
       {/* Desktop fixed sidebar */}
-      <aside className="w-[280px] h-screen sticky left-0 top-0 bg-white flex flex-col py-8 border-r border-[#E2E8F0] hidden md:flex z-40 shrink-0">
+      <aside className="fixed left-0 top-0 w-[280px] h-screen bg-white flex flex-col py-8 border-r border-[#E2E8F0] hidden md:flex z-40 shrink-0">
         {renderSidebarContent(false)}
       </aside>
 
@@ -127,6 +128,6 @@ export function SidebarNavbar() {
         onConfirm={handleLogout}
         onCancel={() => setIsLogoutOpen(false)}
       />
-    </>
+    </Portal>
   );
 }

@@ -109,7 +109,7 @@ export function DataTable<T>({
           data.map((row) => (
             <div
               key={keyExtract(row)}
-              className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-sm space-y-4 hover:shadow-md transition-all duration-300 relative group"
+              className="bg-white p-5 rounded-2xl border border-[#E2E8F0] shadow-sm space-y-4 hover:shadow-md transition-shadow duration-300 relative group"
             >
               {/* Card Header: Title + Role + Status */}
               <div className="flex justify-between items-start gap-4">
@@ -197,7 +197,7 @@ export function DataTable<T>({
               data.map((row) => (
                 <tr
                   key={keyExtract(row)}
-                  className="hover:bg-[#F4F6F8]/30 transition-all group"
+                  className="hover:bg-[#F4F6F8]/30 transition-colors group"
                 >
                   {columns.map((col) => (
                     <td key={col.key} className={`px-8 py-5 ${col.className ?? ""}`}>

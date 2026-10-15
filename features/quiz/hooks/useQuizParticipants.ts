@@ -3,11 +3,13 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { quizService } from "../services/quizService";
-import type { Quiz, QuizParticipant } from "../types/quiz";
+import type { Quiz, QuizParticipant, QuestionnairePair, QuestionnaireComparisonRow } from "../types/quiz";
 
 interface UseQuizParticipantsReturn {
   readonly quiz: Quiz | null;
   readonly participants: readonly QuizParticipant[];
+  readonly pair: QuestionnairePair | null;
+  readonly comparison: readonly QuestionnaireComparisonRow[] | null;
   readonly isLoading: boolean;
   readonly error: string | null;
   readonly searchQuery: string;
@@ -21,6 +23,8 @@ export function useQuizParticipants(quizId: string): UseQuizParticipantsReturn {
 
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [participants, setParticipants] = useState<readonly QuizParticipant[]>([]);
+  const [pair, setPair] = useState<QuestionnairePair | null>(null);
+  const [comparison, setComparison] = useState<readonly QuestionnaireComparisonRow[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,13 +33,17 @@ export function useQuizParticipants(quizId: string): UseQuizParticipantsReturn {
     setIsLoading(true);
     setError(null);
     try {
-      const [quizDetail, pList] = await Promise.all([
+      const [quizDetail, pList, pairDetail, comparisonRows] = await Promise.all([
         quizService.getQuizById(quizId, rolePrefix),
         quizService.getParticipantsByQuizId(quizId, rolePrefix),
+        quizService.getQuizPair(quizId, rolePrefix),
+        quizService.getQuizComparison(quizId, rolePrefix),
       ]);
       if (quizDetail) {
         setQuiz(quizDetail);
         setParticipants(pList);
+        setPair(pairDetail);
+        setComparison(comparisonRows);
       } else {
         setError("Kuesioner tidak ditemukan.");
       }
@@ -67,6 +75,8 @@ export function useQuizParticipants(quizId: string): UseQuizParticipantsReturn {
   return {
     quiz,
     participants: filteredParticipants,
+    pair,
+    comparison,
     isLoading,
     error,
     searchQuery,

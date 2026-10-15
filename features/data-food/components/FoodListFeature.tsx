@@ -218,14 +218,14 @@ export function FoodListFeature() {
           </button>
           <button
             onClick={() => setIsImportOpen(true)}
-            className="h-12 px-5 rounded-xl border border-[#00695C] bg-[#F0F9F8] text-[#00695C] hover:bg-[#00695C] hover:text-white text-sm font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm"
+            className="h-12 px-5 rounded-xl border border-[#3B67FC] bg-[#EEF2FF] text-[#3B67FC] hover:bg-[#3B67FC] hover:text-white text-sm font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm"
           >
             <span className="material-symbols-outlined text-xl select-none">file_upload</span>
             <span>Impor Excel</span>
           </button>
           <Link
             href={`${ROUTES.DATA_MAKANAN}/tambah`}
-            className="h-12 px-6 rounded-xl bg-[#00695C] text-white text-sm font-bold hover:bg-[#004D40] transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#00695C]/20"
+            className="h-12 px-6 rounded-xl bg-[#3B67FC] text-white text-sm font-bold hover:bg-[#1A63ED] transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#3B67FC]/20"
           >
             <span className="material-symbols-outlined text-xl select-none">add</span>
             <span>Buat Makanan Baru</span>

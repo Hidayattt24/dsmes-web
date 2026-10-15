@@ -39,7 +39,7 @@ export function RecordPatientProfileCard({ patient }: RecordPatientProfileCardPr
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-4 premium-card p-8 flex flex-col items-center text-center justify-center min-h-[350px]">
           <div className="relative mb-6">
-            <div className="w-32 h-32 rounded-full border-2 border-[#00695C]/20 p-1.5">
+            <div className="w-32 h-32 rounded-full border-2 border-[#3B67FC]/20 p-1.5">
               <div className="w-full h-full rounded-full overflow-hidden bg-[#F4F6F8] shadow-inner flex items-center justify-center">
                 {patient.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -49,14 +49,14 @@ export function RecordPatientProfileCard({ patient }: RecordPatientProfileCardPr
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <span className="font-bold text-3xl text-[#00695C] select-none">
+                  <span className="font-bold text-3xl text-[#3B67FC] select-none">
                     {patient.initials}
                   </span>
                 )}
               </div>
             </div>
             {patient.accountStatus === "Terverifikasi" && (
-              <div className="absolute -bottom-1 right-2 w-8 h-8 bg-[#00695C] rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white">
+              <div className="absolute -bottom-1 right-2 w-8 h-8 bg-[#3B67FC] rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white">
                 <span className="material-symbols-outlined text-[18px]">verified</span>
               </div>
             )}
@@ -65,8 +65,8 @@ export function RecordPatientProfileCard({ patient }: RecordPatientProfileCardPr
           <h3 className="font-semibold text-2xl text-[#1A202C] mb-1 font-[family-name:var(--font-poppins)]">
             {patient.name}
           </h3>
-          <div className="px-4 py-1 bg-[#00695C]/5 rounded-full border border-[#00695C]/10 mb-6">
-            <p className="text-[#00695C] font-semibold text-xs tracking-wide font-[family-name:var(--font-poppins)]">
+          <div className="px-4 py-1 bg-[#3B67FC]/5 rounded-full border border-[#3B67FC]/10 mb-6">
+            <p className="text-[#3B67FC] font-semibold text-xs tracking-wide font-[family-name:var(--font-poppins)]">
               # {patient.patientCode && patient.patientCode !== "-" ? patient.patientCode : patient.id.slice(0, 5)}
             </p>
           </div>
@@ -94,21 +94,17 @@ export function RecordPatientProfileCard({ patient }: RecordPatientProfileCardPr
             )}
 
             {(patient.todayComplianceBreakdown ?? patient.complianceBreakdown) && (
-              <div className="grid grid-cols-2 gap-1.5 text-[10px] font-semibold text-[#718096] pt-1">
-                <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex justify-between">
-                  <span>Gula Darah:</span>
-                  <span className="font-bold text-[#00695C]">{(patient.todayComplianceBreakdown ?? patient.complianceBreakdown)!.bloodSugarScore} pts</span>
-                </div>
-                <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex justify-between">
-                  <span>Makanan:</span>
+              <div className="grid grid-cols-3 gap-1.5 text-[10px] font-semibold text-[#718096] pt-1">
+                <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex flex-col items-center">
+                  <span>Makanan</span>
                   <span className="font-bold text-[#B45309]">{(patient.todayComplianceBreakdown ?? patient.complianceBreakdown)!.foodScore} pts</span>
                 </div>
-                <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex justify-between">
-                  <span>Aktivitas:</span>
+                <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex flex-col items-center">
+                  <span>Aktivitas</span>
                   <span className="font-bold text-[#166534]">{(patient.todayComplianceBreakdown ?? patient.complianceBreakdown)!.activityScore} pts</span>
                 </div>
-                <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex justify-between">
-                  <span>Obat:</span>
+                <div className="bg-[#F8FAFC] px-2 py-1 rounded border border-[#E2E8F0] flex flex-col items-center">
+                  <span>Obat</span>
                   <span className="font-bold text-[#2B6CB0]">{(patient.todayComplianceBreakdown ?? patient.complianceBreakdown)!.medicationScore} pts</span>
                 </div>
               </div>

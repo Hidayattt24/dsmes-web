@@ -1,21 +1,29 @@
 import { Select } from "@/components/ui/Select";
-import type { QuizSortBy } from "../types/quiz";
+import type { QuestionnaireScope, QuizSortBy } from "../types/quiz";
 
 interface QuizFiltersProps {
   readonly searchQuery: string;
   readonly filterType: "Semua" | "PRE_TEST" | "POST_TEST";
+  readonly filterScope: "Semua" | QuestionnaireScope;
   readonly filterStatus: "Semua" | "Aktif" | "Draft" | "Nonaktif";
   readonly sortBy: QuizSortBy;
   readonly onSearchChange: (val: string) => void;
   readonly onTypeChange: (val: "Semua" | "PRE_TEST" | "POST_TEST") => void;
+  readonly onScopeChange: (val: "Semua" | QuestionnaireScope) => void;
   readonly onStatusChange: (val: "Semua" | "Aktif" | "Draft" | "Nonaktif") => void;
   readonly onSortChange: (val: QuizSortBy) => void;
 }
 
 const typeOptions = [
-  { value: "Semua", label: "Semua Tipe" },
-  { value: "PRE_TEST", label: "Pre-Test" },
-  { value: "POST_TEST", label: "Post-Test" },
+  { value: "Semua", label: "Semua Tahap" },
+  { value: "PRE_TEST", label: "Sebelum (Pre-Test)" },
+  { value: "POST_TEST", label: "Sesudah (Post-Test)" },
+] as const;
+
+const scopeOptions = [
+  { value: "Semua", label: "Semua Ranah" },
+  { value: "APPLICATION", label: "Aplikasi" },
+  { value: "EDUCATION", label: "Edukasi" },
 ] as const;
 
 const statusOptions = [
@@ -34,10 +42,12 @@ const sortOptions = [
 export function QuizFilters({
   searchQuery,
   filterType,
+  filterScope,
   filterStatus,
   sortBy,
   onSearchChange,
   onTypeChange,
+  onScopeChange,
   onStatusChange,
   onSortChange,
 }: QuizFiltersProps) {
@@ -53,17 +63,27 @@ export function QuizFilters({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Cari Judul atau Deskripsi Kuesioner..."
-          className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12"
+          className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12"
         />
       </div>
 
-      {/* Type Filter */}
+      {/* Scope Filter */}
+      <div className="w-full sm:w-44">
+        <Select
+          value={filterScope}
+          onChange={(val) => onScopeChange(val as "Semua" | QuestionnaireScope)}
+          options={scopeOptions}
+          placeholder="Ranah"
+        />
+      </div>
+
+      {/* Stage Filter */}
       <div className="w-full sm:w-44">
         <Select
           value={filterType}
           onChange={(val) => onTypeChange(val as "Semua" | "PRE_TEST" | "POST_TEST")}
           options={typeOptions}
-          placeholder="Tipe"
+          placeholder="Tahap"
         />
       </div>
 

@@ -91,7 +91,7 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href={`${basePath}/${survey.id}/analytics?from=detail`}
-            className="px-4 py-2.5 bg-[#00695C] hover:bg-[#004D40] text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shadow-sm"
+            className="px-4 py-2.5 bg-[#3B67FC] hover:bg-[#1A63ED] text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shadow-sm"
           >
             <span className="material-symbols-outlined text-base">analytics</span>
             Analitik & Respons
@@ -136,7 +136,7 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
                     key={lIdx}
                     className="px-3 py-1 bg-white border border-[#E2E8F0] rounded-lg text-xs font-medium text-[#4A5568]"
                   >
-                    <strong className="text-[#00695C] mr-1">{lIdx + 1}:</strong> {lbl}
+                    <strong className="text-[#3B67FC] mr-1">{lIdx + 1}:</strong> {lbl}
                   </span>
                 ))}
               </div>

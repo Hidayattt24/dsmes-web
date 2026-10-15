@@ -30,7 +30,7 @@ export function AccountSecurityForm({
   return (
     <div className="premium-card p-8 bg-white font-[family-name:var(--font-poppins)]">
       <h2 className="text-lg font-bold text-[#1A202C] mb-8 flex items-center gap-2 select-none">
-        <span className="material-symbols-outlined text-[#00695C]">security</span>
+        <span className="material-symbols-outlined text-[#3B67FC]">security</span>
         <span>Keamanan Akun</span>
       </h2>
       <div className="space-y-6">
@@ -42,14 +42,14 @@ export function AccountSecurityForm({
             </label>
             <div className="relative w-full md:w-1/2">
               <input
-                className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 pr-12 text-sm font-semibold text-[#1A202C] outline-none transition-all"
+                className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#3B67FC] focus:bg-white focus:ring-1 focus:ring-[#3B67FC] rounded-xl px-5 py-3.5 pr-12 text-sm font-semibold text-[#1A202C] outline-none transition-all"
                 placeholder="Masukkan kata sandi saat ini"
                 type={showCurrentPassword ? "text" : "password"}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
               />
               <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#00695C] transition-colors cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#3B67FC] transition-colors cursor-pointer"
                 type="button"
                 onClick={() => setShowCurrentPassword(!showCurrentPassword)}
               >
@@ -67,14 +67,14 @@ export function AccountSecurityForm({
             </label>
             <div className="relative w-full">
               <input
-                className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 pr-12 text-sm font-semibold text-[#1A202C] outline-none transition-all"
+                className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#3B67FC] focus:bg-white focus:ring-1 focus:ring-[#3B67FC] rounded-xl px-5 py-3.5 pr-12 text-sm font-semibold text-[#1A202C] outline-none transition-all"
                 placeholder="Masukkan kata sandi baru"
                 type={showNewPassword ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
               />
               <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#00695C] transition-colors cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#3B67FC] transition-colors cursor-pointer"
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
               >
@@ -92,14 +92,14 @@ export function AccountSecurityForm({
             </label>
             <div className="relative w-full">
               <input
-                className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 pr-12 text-sm font-semibold text-[#1A202C] outline-none transition-all"
+                className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#3B67FC] focus:bg-white focus:ring-1 focus:ring-[#3B67FC] rounded-xl px-5 py-3.5 pr-12 text-sm font-semibold text-[#1A202C] outline-none transition-all"
                 placeholder="Ulangi kata sandi baru"
                 type={showConfirmNewPassword ? "text" : "password"}
                 value={confirmNewPassword}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
               />
               <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#00695C] transition-colors cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#3B67FC] transition-colors cursor-pointer"
                 type="button"
                 onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
               >
@@ -111,7 +111,7 @@ export function AccountSecurityForm({
           </div>
         </div>
 
-        <div className="flex items-center gap-3 py-3 px-5 bg-[#F0F9F8] border border-[#B2DFDB]/40 text-[#00695C] rounded-xl select-none">
+        <div className="flex items-center gap-3 py-3 px-5 bg-[#EEF2FF] border border-[#A8EEFA]/40 text-[#3B67FC] rounded-xl select-none">
           <span className="material-symbols-outlined text-lg">info</span>
           <p className="text-xs font-semibold leading-relaxed">
             Gunakan minimal 8 karakter dengan kombinasi huruf besar, huruf kecil, angka, dan simbol.
@@ -122,7 +122,7 @@ export function AccountSecurityForm({
           <button
             onClick={onSubmitPassword}
             disabled={isSaving}
-            className="px-8 py-3 border-2 border-[#00695C] text-[#00695C] hover:bg-[#00695C] hover:text-white rounded-xl text-sm font-bold transition-all cursor-pointer disabled:opacity-50 font-[family-name:var(--font-poppins)]"
+            className="px-8 py-3 border-2 border-[#3B67FC] text-[#3B67FC] hover:bg-[#3B67FC] hover:text-white rounded-xl text-sm font-bold transition-all cursor-pointer disabled:opacity-50 font-[family-name:var(--font-poppins)]"
             type="button"
           >
             Ubah Kata Sandi

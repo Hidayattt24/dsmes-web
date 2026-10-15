@@ -68,7 +68,7 @@ export function RecordMonitoringFeature() {
         <button
           type="button"
           onClick={() => setIsGuideOpen(true)}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#00695C] shadow-sm transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#3B67FC] shadow-sm transition-all cursor-pointer"
         >
           <span className="material-symbols-outlined text-sm">menu_book</span>
           <span>Panduan Standar</span>

@@ -12,7 +12,7 @@ export function QuizSummaryStats({ quiz }: QuizSummaryStatsProps) {
       {/* Tipe & Judul */}
       <div className="bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
         <div className="flex items-center justify-between mb-4">
-          <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-[#00695C]">
+          <div className="w-10 h-10 rounded-full bg-[#DCE5FF] flex items-center justify-center text-[#3B67FC]">
             <span className="material-symbols-outlined select-none text-xl">
               {isPreTest ? "psychology" : "workspace_premium"}
             </span>
@@ -21,7 +21,7 @@ export function QuizSummaryStats({ quiz }: QuizSummaryStatsProps) {
             className={[
               "px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
               isPreTest
-                ? "bg-teal-100 text-teal-800"
+                ? "bg-[#DCE5FF] text-[#001B6B]"
                 : "bg-emerald-100 text-emerald-800",
             ].join(" ")}
           >

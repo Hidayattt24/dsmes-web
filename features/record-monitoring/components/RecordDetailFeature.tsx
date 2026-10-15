@@ -14,6 +14,7 @@ import { DetailPageLoader } from "@/components/ui/loading";
 import { BackButton } from "@/components/common/BackButton";
 
 import { PatientMeasurementHistoryCard } from "@/features/patient/components/PatientMeasurementHistoryCard";
+import { PatientAppUsageCard } from "@/components/common/PatientAppUsageCard";
 import { calculateDSMESCalorieTarget } from "@/lib/calorieCalculator";
 
 interface RecordDetailFeatureProps {
@@ -34,6 +35,7 @@ export function RecordDetailFeature({ patientId }: RecordDetailFeatureProps) {
     activityLogs,
     medicationLogs,
     activityAnalytics,
+    appUsage,
     analyticsDays,
     setAnalyticsDays,
     isAnalyticsLoading,
@@ -112,6 +114,12 @@ export function RecordDetailFeature({ patientId }: RecordDetailFeatureProps) {
       <RecordPatientSummaryCard patient={patient} />
 
       <RecordPatientProfileCard patient={patient} />
+
+      {/* App Usage Duration Card */}
+      <PatientAppUsageCard
+        totalFormatted={appUsage?.totalFormatted ?? "0 menit"}
+        dailyUsages={appUsage?.dailyUsages ?? []}
+      />
 
       <PatientMeasurementHistoryCard
         measurements={patient.measurements}

@@ -432,7 +432,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
 
   // Helper to use clinical template
   const applyClinicalTemplate = () => {
-    const template = `<h3 class="text-lg font-bold text-[#1E293B] mt-4 mb-2">Cara Mengukur Gula Darah</h3><p class="text-sm text-[#4A5568] leading-relaxed mb-4">Cuci tangan sebelum menggunakan glukometer. Pastikan tangan benar-benar kering sebelum menyentuh strip tes untuk menghindari kontaminasi atau hasil yang tidak akurat.</p><h4 class="text-sm font-bold text-[#1E293B] mb-2">Langkah-langkah:</h4><ol class="list-decimal pl-5 text-sm text-[#4A5568] space-y-1 mb-4"><li>Siapkan alat (glukometer, strip, lancet)</li><li>Bersihkan jari dengan alkohol swab</li><li>Gunakan strip pada glukometer</li></ol><div class="bg-teal-50 border-l-4 border-[#00695C] p-4 my-4 rounded-r-lg text-sm text-[#00695C] font-semibold"><strong>Info Penting:</strong> Pemeriksaan sebaiknya dilakukan sebelum sarapan untuk hasil baseline yang paling akurat.</div>`;
+    const template = `<h3 class="text-lg font-bold text-[#1E293B] mt-4 mb-2">Cara Mengukur Gula Darah</h3><p class="text-sm text-[#4A5568] leading-relaxed mb-4">Cuci tangan sebelum menggunakan glukometer. Pastikan tangan benar-benar kering sebelum menyentuh strip tes untuk menghindari kontaminasi atau hasil yang tidak akurat.</p><h4 class="text-sm font-bold text-[#1E293B] mb-2">Langkah-langkah:</h4><ol class="list-decimal pl-5 text-sm text-[#4A5568] space-y-1 mb-4"><li>Siapkan alat (glukometer, strip, lancet)</li><li>Bersihkan jari dengan alkohol swab</li><li>Gunakan strip pada glukometer</li></ol><div class="bg-[#EEF2FF] border-l-4 border-[#3B67FC] p-4 my-4 rounded-r-lg text-sm text-[#3B67FC] font-semibold"><strong>Info Penting:</strong> Pemeriksaan sebaiknya dilakukan sebelum sarapan untuk hasil baseline yang paling akurat.</div>`;
     handleChange("content", template);
     handleChange("duration", 5);
     if (editorRef.current) {
@@ -451,7 +451,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
     } else if (type === "langkah") {
       snippet = '<ol class="list-decimal pl-5 text-sm text-[#4A5568] space-y-1 mb-4"><li>Langkah pertama</li><li>Langkah kedua</li></ol>';
     } else if (type === "info") {
-      snippet = '<div class="bg-teal-50 border-l-4 border-[#00695C] p-4 my-4 rounded-r-lg text-sm text-[#00695C] font-semibold"><strong>Info Penting:</strong> Catatan informasi klinis penting di sini...</div>';
+      snippet = '<div class="bg-[#EEF2FF] border-l-4 border-[#3B67FC] p-4 my-4 rounded-r-lg text-sm text-[#3B67FC] font-semibold"><strong>Info Penting:</strong> Catatan informasi klinis penting di sini...</div>';
     }
     insertHTML(snippet);
   };
@@ -516,7 +516,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
       const authorName = modalYoutubeMeta?.authorName || "YouTube";
       const thumbnailUrl = modalYoutubeMeta?.thumbnailUrl || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 
-      const embedHtml = `<div class="my-6 w-full max-w-lg bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all relative" contenteditable="false" draggable="true" data-youtube-id="${videoId}"><div class="block aspect-video w-full relative bg-[#0F172A]"><img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover opacity-90" /><div class="absolute inset-0 flex items-center justify-center bg-black/10"><div class="w-14 h-14 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-[32px] text-white">play_arrow</span></div></div><div class="absolute top-3 right-3 flex gap-2 z-20 editor-actions"><button type="button" onclick="window.editYoutubeBlock(this.closest('[contenteditable=false]'))" class="bg-white text-gray-700 hover:bg-gray-50 rounded-lg p-2 shadow-md flex items-center justify-center cursor-pointer" style="border: none; outline: none;"><span class="material-symbols-outlined text-sm">edit</span></button><button type="button" onclick="window.confirmDeleteYoutubeBlock(this.closest('[contenteditable=false]'))" class="bg-red-600 text-white hover:bg-red-700 rounded-lg p-2 shadow-md flex items-center justify-center cursor-pointer" style="border: none; outline: none;"><span class="material-symbols-outlined text-sm">delete</span></button></div></div><div class="p-4 flex gap-3 items-start bg-white"><div class="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-red-600 text-lg">smart_display</span></div><div class="min-w-0 flex-1"><h4 class="text-sm font-bold text-[#1E293B] line-clamp-2 leading-snug">${title}</h4><p class="text-xs text-[#64748B] mt-1 font-semibold">${authorName}</p><a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="text-[11px] text-[#00695C] hover:underline mt-1 block font-semibold truncate">https://www.youtube.com/watch?v=${videoId}</a></div></div><div class="editor-only-overlay absolute inset-0 bg-transparent cursor-pointer" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: transparent; z-index: 10;"></div></div>`;
+      const embedHtml = `<div class="my-6 w-full max-w-lg bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all relative" contenteditable="false" draggable="true" data-youtube-id="${videoId}"><div class="block aspect-video w-full relative bg-[#0F172A]"><img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover opacity-90" /><div class="absolute inset-0 flex items-center justify-center bg-black/10"><div class="w-14 h-14 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-[32px] text-white">play_arrow</span></div></div><div class="absolute top-3 right-3 flex gap-2 z-20 editor-actions"><button type="button" onclick="window.editYoutubeBlock(this.closest('[contenteditable=false]'))" class="bg-white text-gray-700 hover:bg-gray-50 rounded-lg p-2 shadow-md flex items-center justify-center cursor-pointer" style="border: none; outline: none;"><span class="material-symbols-outlined text-sm">edit</span></button><button type="button" onclick="window.confirmDeleteYoutubeBlock(this.closest('[contenteditable=false]'))" class="bg-red-600 text-white hover:bg-red-700 rounded-lg p-2 shadow-md flex items-center justify-center cursor-pointer" style="border: none; outline: none;"><span class="material-symbols-outlined text-sm">delete</span></button></div></div><div class="p-4 flex gap-3 items-start bg-white"><div class="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-red-600 text-lg">smart_display</span></div><div class="min-w-0 flex-1"><h4 class="text-sm font-bold text-[#1E293B] line-clamp-2 leading-snug">${title}</h4><p class="text-xs text-[#64748B] mt-1 font-semibold">${authorName}</p><a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="text-[11px] text-[#3B67FC] hover:underline mt-1 block font-semibold truncate">https://www.youtube.com/watch?v=${videoId}</a></div></div><div class="editor-only-overlay absolute inset-0 bg-transparent cursor-pointer" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: transparent; z-index: 10;"></div></div>`;
 
       if (activeYoutubeBlock) {
         // eslint-disable-next-line react-hooks/immutability
@@ -626,7 +626,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                 type="text"
                 value={youtubeUrlInput}
                 onChange={(e) => setYoutubeUrlInput(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none text-sm font-medium text-[#1E293B]"
+                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none text-sm font-medium text-[#1E293B]"
                 placeholder="https://www.youtube.com/watch?v=..."
               />
               <p className="text-[10px] text-[#64748B] font-semibold mt-1">
@@ -642,7 +642,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
 
               {/* Loading indicator */}
               {isModalYoutubeLoading && (
-                <div className="flex items-center gap-2 text-[#00695C] text-xs font-semibold py-2">
+                <div className="flex items-center gap-2 text-[#3B67FC] text-xs font-semibold py-2">
                   <LoadingSpinner size="sm" />
                   <span>Mengambil informasi video...</span>
                 </div>
@@ -686,7 +686,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                 // eslint-disable-next-line react-hooks/immutability
                 onClick={handleInsertYoutube}
                 disabled={!modalYoutubeMeta || isModalYoutubeLoading}
-                className="px-6 py-2.5 bg-[#00695C] text-white rounded-xl text-xs font-bold shadow-md shadow-[#00695C]/10 cursor-pointer hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2.5 bg-[#3B67FC] text-white rounded-xl text-xs font-bold shadow-md shadow-[#3B67FC]/10 cursor-pointer hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Sisipkan
               </button>
@@ -726,7 +726,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
           <button
             onClick={() => handleSave("Diterbitkan")}
             disabled={isSaving}
-            className="flex-1 sm:flex-initial px-8 py-2.5 rounded-full bg-[#00695C] text-white text-sm font-semibold shadow-lg shadow-[#00695C]/20 hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 text-center"
+            className="flex-1 sm:flex-initial px-8 py-2.5 rounded-full bg-[#3B67FC] text-white text-sm font-semibold shadow-lg shadow-[#3B67FC]/20 hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 text-center"
           >
             Publikasikan
           </button>
@@ -749,7 +749,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               value={fields.title}
               onChange={(e) => handleChange("title", e.target.value)}
               className={[
-                "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)]",
+                "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)]",
                 errors.title ? "border-red-500" : "",
               ].join(" ")}
               placeholder="Masukkan judul materi edukasi..."
@@ -773,7 +773,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               {/* Dropdown trigger pill */}
               <div
                 onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
-                className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] outline-none flex justify-between items-center cursor-pointer bg-white text-sm font-semibold text-[#1E293B]"
+                className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] outline-none flex justify-between items-center cursor-pointer bg-white text-sm font-semibold text-[#1E293B]"
               >
                 <span>{fields.category || "Pilih Kategori"}</span>
                 <span className="material-symbols-outlined text-[#64748B] select-none">expand_more</span>
@@ -807,13 +807,13 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                         className={[
                           "px-4 py-2.5 text-xs font-semibold cursor-pointer transition-colors flex items-center justify-between",
                           fields.category === cat
-                            ? "bg-[#F0F9F8] text-[#00695C]"
+                            ? "bg-[#EEF2FF] text-[#3B67FC]"
                             : "text-[#1E293B] hover:bg-[#F1F5F9]",
                         ].join(" ")}
                       >
                         <span>{cat}</span>
                         {fields.category === cat && (
-                          <span className="material-symbols-outlined text-[#00695C] text-sm select-none">check</span>
+                          <span className="material-symbols-outlined text-[#3B67FC] text-sm select-none">check</span>
                         )}
                       </div>
                     ))}
@@ -836,7 +836,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                         <button
                           type="button"
                           onClick={handleAddNewCategory}
-                          className="bg-[#00695C] text-white p-1.5 rounded-lg flex items-center justify-center cursor-pointer hover:opacity-90"
+                          className="bg-[#3B67FC] text-white p-1.5 rounded-lg flex items-center justify-center cursor-pointer hover:opacity-90"
                         >
                           <span className="material-symbols-outlined text-xs select-none">check</span>
                         </button>
@@ -855,7 +855,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                       <button
                         type="button"
                         onClick={() => setIsAddingNewCategory(true)}
-                        className="w-full text-left px-3 py-2 text-xs font-bold text-[#00695C] hover:bg-[#F0F9F8] rounded-lg flex items-center gap-1.5 cursor-pointer"
+                        className="w-full text-left px-3 py-2 text-xs font-bold text-[#3B67FC] hover:bg-[#EEF2FF] rounded-lg flex items-center gap-1.5 cursor-pointer"
                       >
                         <span className="material-symbols-outlined text-sm select-none">add</span>
                         <span>Tambah Kategori Baru</span>
@@ -876,7 +876,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                   type="text"
                   value={fields.createdBy}
                   onChange={(e) => handleChange("createdBy", e.target.value)}
-                  className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none text-sm font-semibold font-[family-name:var(--font-poppins)] text-[#1E293B] placeholder:text-[#64748B]/50"
+                  className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none text-sm font-semibold font-[family-name:var(--font-poppins)] text-[#1E293B] placeholder:text-[#64748B]/50"
                   placeholder="Contoh: dr. Sarah, Sp.PD"
                 />
                 <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-[#64748B] opacity-40 select-none">
@@ -896,7 +896,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                   value={fields.duration || ""}
                   onChange={(e) => handleChange("duration", parseInt(e.target.value) || 0)}
                   className={[
-                    "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none text-sm font-semibold font-[family-name:var(--font-poppins)] text-[#1E293B]",
+                    "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none text-sm font-semibold font-[family-name:var(--font-poppins)] text-[#1E293B]",
                     errors.duration ? "border-red-500" : "",
                   ].join(" ")}
                   placeholder="Contoh: 5"
@@ -920,7 +920,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider font-[family-name:var(--font-poppins)]">
                 Banner Materi <span className="text-[#94A3B8] font-normal lowercase">(opsional)</span>
               </label>
-              <span className="text-[11px] text-[#00695C] font-semibold">
+              <span className="text-[11px] text-[#3B67FC] font-semibold">
                 Ikon default otomatis jika kosong
               </span>
             </div>
@@ -944,7 +944,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                   <button
                     type="button"
                     onClick={triggerUpload}
-                    className="bg-white text-[#00695C] px-4 py-2 rounded-lg text-xs font-bold cursor-pointer hover:bg-[#F0F9F8]"
+                    className="bg-white text-[#3B67FC] px-4 py-2 rounded-lg text-xs font-bold cursor-pointer hover:bg-[#EEF2FF]"
                   >
                     Ubah Banner
                   </button>
@@ -962,10 +962,10 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                 onClick={triggerUpload}
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
-                className="border-2 border-dashed border-[#E2E8F0] hover:border-[#00695C] rounded-xl p-12 flex flex-col items-center justify-center bg-[#F1F5F9]/30 hover:bg-[#F1F5F9]/60 transition-all cursor-pointer group"
+                className="border-2 border-dashed border-[#E2E8F0] hover:border-[#3B67FC] rounded-xl p-12 flex flex-col items-center justify-center bg-[#F1F5F9]/30 hover:bg-[#F1F5F9]/60 transition-all cursor-pointer group"
               >
                 <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
-                  <span className="material-symbols-outlined text-[#00695C] text-2xl select-none">add_a_photo</span>
+                  <span className="material-symbols-outlined text-[#3B67FC] text-2xl select-none">add_a_photo</span>
                 </div>
                 <p className="text-sm text-[#1E293B] font-semibold font-[family-name:var(--font-poppins)]">
                   Klik atau seret file banner ke sini
@@ -991,7 +991,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               value={fields.shortDescription}
               onChange={(e) => handleChange("shortDescription", e.target.value.slice(0, 250))}
               className={[
-                "w-full px-5 py-4 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm resize-none font-medium font-[family-name:var(--font-poppins)] text-[#1E293B] placeholder:text-[#64748B]/50",
+                "w-full px-5 py-4 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm resize-none font-medium font-[family-name:var(--font-poppins)] text-[#1E293B] placeholder:text-[#64748B]/50",
                 errors.shortDescription ? "border-red-500" : "",
               ].join(" ")}
               placeholder="Deskripsi singkat untuk kartu materi..."
@@ -1018,7 +1018,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
             <button
               type="button"
               onClick={applyClinicalTemplate}
-              className="flex items-center gap-2 text-xs font-bold text-[#00695C] hover:bg-[#00695C]/5 px-4 py-2 rounded-lg transition-all cursor-pointer font-[family-name:var(--font-poppins)]"
+              className="flex items-center gap-2 text-xs font-bold text-[#3B67FC] hover:bg-[#3B67FC]/5 px-4 py-2 rounded-lg transition-all cursor-pointer font-[family-name:var(--font-poppins)]"
             >
               <span className="material-symbols-outlined text-sm select-none">magic_button</span>
               <span>Gunakan Template Klinis</span>
@@ -1039,7 +1039,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               <button
                 type="button"
                 onClick={() => appendSnippet("judul")}
-                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#00695C] hover:border-[#00695C] transition-all shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#3B67FC] hover:border-[#3B67FC] transition-all shadow-sm cursor-pointer"
               >
                 <span className="material-symbols-outlined text-sm select-none">title</span>
                 <span>Judul</span>
@@ -1047,7 +1047,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               <button
                 type="button"
                 onClick={() => appendSnippet("paragraf")}
-                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#00695C] hover:border-[#00695C] transition-all shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#3B67FC] hover:border-[#3B67FC] transition-all shadow-sm cursor-pointer"
               >
                 <span className="material-symbols-outlined text-sm select-none">format_align_left</span>
                 <span>Paragraf</span>
@@ -1055,7 +1055,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               <button
                 type="button"
                 onClick={() => appendSnippet("langkah")}
-                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#00695C] hover:border-[#00695C] transition-all shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#3B67FC] hover:border-[#3B67FC] transition-all shadow-sm cursor-pointer"
               >
                 <span className="material-symbols-outlined text-sm select-none">format_list_bulleted</span>
                 <span>Langkah</span>
@@ -1063,7 +1063,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               <button
                 type="button"
                 onClick={() => appendSnippet("info")}
-                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#00695C] hover:border-[#00695C] transition-all shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#3B67FC] hover:border-[#3B67FC] transition-all shadow-sm cursor-pointer"
               >
                 <span className="material-symbols-outlined text-sm select-none">warning</span>
                 <span>Info Penting</span>
@@ -1071,7 +1071,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               <button
                 type="button"
                 onClick={triggerEditorImageUpload}
-                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#00695C] hover:border-[#00695C] transition-all shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#3B67FC] hover:border-[#3B67FC] transition-all shadow-sm cursor-pointer"
               >
                 <span className="material-symbols-outlined text-sm select-none">image</span>
                 <span>Gambar</span>
@@ -1080,7 +1080,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               <button
                 type="button"
                 onClick={openYoutubeModal}
-                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#00695C] hover:border-[#00695C] transition-all shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#3B67FC] hover:border-[#3B67FC] transition-all shadow-sm cursor-pointer"
               >
                 <span className="material-symbols-outlined text-sm select-none">smart_display</span>
                 <span>YouTube</span>
@@ -1095,7 +1095,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                 onInput={handleEditorInput}
                 data-placeholder="Tulis atau gunakan template klinis untuk menyusun materi edukasi..."
                 className={[
-                  "w-full min-h-[500px] border border-[#E2E8F0] rounded-xl p-4 sm:p-8 outline-none focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] transition-all text-sm leading-relaxed font-medium font-[family-name:var(--font-poppins)] text-[#1E293B] editor-container overflow-y-auto whitespace-pre-wrap",
+                  "w-full min-h-[500px] border border-[#E2E8F0] rounded-xl p-4 sm:p-8 outline-none focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] transition-all text-sm leading-relaxed font-medium font-[family-name:var(--font-poppins)] text-[#1E293B] editor-container overflow-y-auto whitespace-pre-wrap",
                   errors.content ? "border-red-500" : "",
                 ].join(" ")}
               />
@@ -1116,7 +1116,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                   Estimasi baca: <b className="text-[#1E293B]">{fields.duration || 0} Menit</b>
                 </span>
               </div>
-              <span className="uppercase tracking-widest text-[#00695C] font-bold">
+              <span className="uppercase tracking-widest text-[#3B67FC] font-bold">
                 Status: {fields.status}
               </span>
             </div>
@@ -1143,7 +1143,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               className={[
                 "px-8 py-2 rounded-full text-xs font-bold transition-all cursor-pointer",
                 fields.status === "Draf"
-                  ? "bg-white shadow-sm text-[#00695C]"
+                  ? "bg-white shadow-sm text-[#3B67FC]"
                   : "text-[#64748B] hover:text-[#1E293B]",
               ].join(" ")}
             >
@@ -1155,7 +1155,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               className={[
                 "px-8 py-2 rounded-full text-xs font-bold transition-all cursor-pointer",
                 fields.status === "Diterbitkan"
-                  ? "bg-white shadow-sm text-[#00695C]"
+                  ? "bg-white shadow-sm text-[#3B67FC]"
                   : "text-[#64748B] hover:text-[#1E293B]",
               ].join(" ")}
             >
@@ -1175,7 +1175,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
           <button
             onClick={() => handleSave()}
             disabled={isSaving}
-            className="w-full sm:w-auto px-10 py-3 rounded-xl bg-[#00695C] text-white text-sm font-bold shadow-xl shadow-[#00695C]/25 hover:opacity-90 transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-50 text-center"
+            className="w-full sm:w-auto px-10 py-3 rounded-xl bg-[#3B67FC] text-white text-sm font-bold shadow-xl shadow-[#3B67FC]/25 hover:opacity-90 transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-50 text-center"
           >
             <span className="material-symbols-outlined text-lg select-none">send</span>
             <span>{articleId ? "Simpan Perubahan" : "Publikasikan Sekarang"}</span>

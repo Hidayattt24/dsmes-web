@@ -81,7 +81,7 @@ export function BloodSugarHistoryCard({
     switch (type) {
       case "fasting":
       case "puasa":
-        return "#00695C"; // Teal
+        return "#3B67FC"; // Teal
       case "before_meal":
       case "sebelum_makan":
         return "#0284C7"; // Light Blue
@@ -193,8 +193,8 @@ export function BloodSugarHistoryCard({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#E6F2F1] flex items-center justify-center">
-            <span className="material-symbols-outlined text-[#00695C] text-[20px]">
+          <div className="w-10 h-10 rounded-full bg-[#E8F0FF] flex items-center justify-center">
+            <span className="material-symbols-outlined text-[#3B67FC] text-[20px]">
               water_drop
             </span>
           </div>
@@ -213,14 +213,14 @@ export function BloodSugarHistoryCard({
           {/* Summary Pills */}
           {avgVal !== null && (
             <div className="hidden md:flex items-center gap-3">
-              <div className="flex flex-col items-center min-w-[80px] px-4 py-2.5 bg-[#F0F9F8] rounded-xl border border-[#00695C]/20">
-                <span className="text-[9px] font-bold text-[#00695C] uppercase tracking-widest mb-0.5">
+              <div className="flex flex-col items-center min-w-[80px] px-4 py-2.5 bg-[#EEF2FF] rounded-xl border border-[#3B67FC]/20">
+                <span className="text-[9px] font-bold text-[#3B67FC] uppercase tracking-widest mb-0.5">
                   Rata-rata
                 </span>
-                <span className="text-base font-black text-[#00695C] leading-none">
+                <span className="text-base font-black text-[#3B67FC] leading-none">
                   {avgVal}
                 </span>
-                <span className="text-[9px] font-semibold text-[#00695C]/60 mt-0.5">
+                <span className="text-[9px] font-semibold text-[#3B67FC]/60 mt-0.5">
                   mg/dL
                 </span>
               </div>
@@ -250,7 +250,7 @@ export function BloodSugarHistoryCard({
                   "px-4 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer",
                   period === p
                     ? "bg-[#0F766E] text-white shadow-md shadow-[#0F766E]/15"
-                    : "text-[#718096] hover:text-[#00695C]",
+                    : "text-[#718096] hover:text-[#3B67FC]",
                 ].join(" ")}
               >
                 {p} Hari
@@ -284,8 +284,8 @@ export function BloodSugarHistoryCard({
           >
             <defs>
               <linearGradient id="bsAreaGradient" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stopColor="#00695C" stopOpacity={0.18} />
-                <stop offset="100%" stopColor="#00695C" stopOpacity={0} />
+                <stop offset="0%" stopColor="#3B67FC" stopOpacity={0.18} />
+                <stop offset="100%" stopColor="#3B67FC" stopOpacity={0} />
               </linearGradient>
             </defs>
 
@@ -325,7 +325,7 @@ export function BloodSugarHistoryCard({
               <path
                 d={linePath}
                 fill="none"
-                stroke="#00695C"
+                stroke="#3B67FC"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -433,7 +433,7 @@ export function BloodSugarHistoryCard({
                     x={pt.x}
                     y={CHART_B + 16}
                     textAnchor="middle"
-                    fill={isHovered ? "#00695C" : "#A0AEC0"}
+                    fill={isHovered ? "#3B67FC" : "#A0AEC0"}
                     fontSize="10"
                     fontWeight={isHovered ? "bold" : "500"}
                   >
@@ -450,7 +450,7 @@ export function BloodSugarHistoryCard({
       {hasData && (
         <div className="flex flex-wrap items-center gap-4 text-xs font-semibold mb-5 bg-[#F8FAFC] p-3 rounded-xl border border-[#E2E8F0]/50">
           {[
-            { color: "#00695C", label: "Puasa" },
+            { color: "#3B67FC", label: "Puasa" },
             { color: "#0284C7", label: "Sebelum Makan" },
             { color: "#E53E3E", label: "2 Jam Sesudah Makan" },
             { color: "#8B5CF6", label: "Sebelum Tidur" },

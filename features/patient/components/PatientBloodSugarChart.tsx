@@ -150,7 +150,7 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
                 "px-6 py-2 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer",
                 selectedRange === range
                   ? "bg-[#0F766E] text-white shadow-md shadow-[#0F766E]/15"
-                  : "text-[#718096] hover:text-[#00695C]",
+                  : "text-[#718096] hover:text-[#3B67FC]",
               ].join(" ")}
             >
               {range} Hari
@@ -167,8 +167,8 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
         >
           <defs>
             <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#00695C" stopOpacity={0.15}></stop>
-              <stop offset="100%" stopColor="#00695C" stopOpacity={0}></stop>
+              <stop offset="0%" stopColor="#3B67FC" stopOpacity={0.15}></stop>
+              <stop offset="100%" stopColor="#3B67FC" stopOpacity={0}></stop>
             </linearGradient>
           </defs>
 
@@ -210,7 +210,7 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
                 <path
                   d={linePath}
                   fill="none"
-                  stroke="#00695C"
+                  stroke="#3B67FC"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="3"
@@ -228,14 +228,14 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
                       cy={pt.y}
                       fill="#ffffff"
                       r={hoveredIndex === idx ? 6 : 5}
-                      stroke={hoveredIndex === idx ? "#0F766E" : "#00695C"}
+                      stroke={hoveredIndex === idx ? "#0F766E" : "#3B67FC"}
                       strokeWidth={hoveredIndex === idx ? 3 : 2.5}
                     />
                     <text
                       x={pt.x}
                       y={pt.y - 12}
                       textAnchor="middle"
-                      fill="#00695C"
+                      fill="#3B67FC"
                       fontSize="12"
                       fontWeight="bold"
                     >
@@ -323,19 +323,19 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
       {/* Summary Footer Cards */}
       <div className="grid grid-cols-3 gap-3 pt-6 border-t border-[#E2E8F0]/30 mb-6">
         {/* Rata-Rata */}
-        <div className="flex flex-col gap-1 bg-[#F0F9F8] p-3.5 rounded-xl border border-[#00695C]/15">
+        <div className="flex flex-col gap-1 bg-[#EEF2FF] p-3.5 rounded-xl border border-[#3B67FC]/15">
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-7 h-7 rounded-full bg-[#00695C]/10 text-[#00695C] flex items-center justify-center">
+            <div className="w-7 h-7 rounded-full bg-[#3B67FC]/10 text-[#3B67FC] flex items-center justify-center">
               <span className="material-symbols-outlined text-[16px]">analytics</span>
             </div>
-            <span className="text-[10px] font-bold text-[#00695C] uppercase tracking-wider">
+            <span className="text-[10px] font-bold text-[#3B67FC] uppercase tracking-wider">
               Rata-Rata
             </span>
           </div>
-          <span className="text-lg font-black text-[#00695C]">
+          <span className="text-lg font-black text-[#3B67FC]">
             {avgBloodSugar !== null ? `${avgBloodSugar}` : "-"}
           </span>
-          <span className="text-[10px] text-[#00695C]/70 font-semibold">mg/dL • {selectedRange} Hari</span>
+          <span className="text-[10px] text-[#3B67FC]/70 font-semibold">mg/dL • {selectedRange} Hari</span>
         </div>
 
         {/* Tertinggi */}
@@ -403,7 +403,7 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
                     const timeStr = d ? d.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }) + " WIB" : (log.time || "-");
                     const timeType = log.measurement_time_type || log.measurementTimeType || "sewaktu";
                     const timeLabel = log.measurementTimeLabel || (timeType === "sebelum_makan" ? "Sebelum Makan" : timeType === "sesudah_makan" ? "Sesudah Makan" : "Sewaktu");
-                    const ptColor = timeType === "sesudah_makan" ? "#E53E3E" : timeType === "sewaktu" ? "#3182CE" : "#00695C";
+                    const ptColor = timeType === "sesudah_makan" ? "#E53E3E" : timeType === "sewaktu" ? "#3182CE" : "#3B67FC";
                     // All classification comes from the backend ClassifyBloodGlucose().
                     const statusLabel = log.classificationLabel || log.status || "Normal";
                     const isDanger = log.status === "hyperglycemia" || log.status === "hypoglycemia";

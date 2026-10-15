@@ -138,7 +138,7 @@ export function ParticipantTable({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Cari pasien..."
-            className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-2 pl-11 pr-4 text-xs focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-10"
+            className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-2 pl-11 pr-4 text-xs focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-10"
           />
         </div>
       </div>
@@ -150,7 +150,7 @@ export function ParticipantTable({
             <tr>
               <th className="py-3.5 px-6">Pasien</th>
               <th className="py-3.5 px-4">Percobaan</th>
-              <th className="py-3.5 px-4 text-center">{isPreTest ? "Skor DMSES" : "Skor Terakhir"}</th>
+              <th className="py-3.5 px-4 text-center">{isPreTest ? "Skor DSMES / DSMQR" : "Skor Terakhir"}</th>
               <th className="py-3.5 px-4 text-center">{isPreTest ? "Kategori Efikasi Diri" : "Skor Tertinggi"}</th>
               <th className="py-3.5 px-4">{isPreTest ? "Status" : "Status Terakhir"}</th>
               <th className="py-3.5 px-4">Tanggal Selesai</th>
@@ -189,16 +189,29 @@ export function ParticipantTable({
 
                       {/* Percobaan Column */}
                       <td className="py-3.5 px-4">
-                        <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-teal-50 text-[#00695C] border border-teal-200/50 whitespace-nowrap">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-[#EEF2FF] text-[#3B67FC] border border-[#8FAAFF]/50 whitespace-nowrap">
                           {group.totalAttempts}x Percobaan
                         </span>
                       </td>
 
                       {/* Skor Terakhir / DMSES Column */}
                       <td className="py-3.5 px-4 text-center">
-                        <span className="font-bold text-sm text-[#00695C]">
-                          {isPreTest ? `${group.latestScore} / 100` : `${group.latestScore}%`}
-                        </span>
+                        {isPreTest ? (
+                          <div className="flex flex-col items-center">
+                            <span className="font-bold text-xs text-[#3B67FC]">
+                              DSMES: {group.attempts[0]?.scoreDsmes ?? group.latestScore}
+                            </span>
+                            {group.attempts[0]?.scoreDsmqr !== undefined && (
+                              <span className="font-semibold text-[10px] text-amber-700">
+                                DSMQR: {group.attempts[0]?.scoreDsmqr}
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="font-bold text-sm text-[#3B67FC]">
+                            {group.latestScore}%
+                          </span>
+                        )}
                       </td>
 
                       {/* Skor Tertinggi / Kategori Column */}
@@ -247,7 +260,7 @@ export function ParticipantTable({
                           )}
                           <Link
                             href={getDetailUrl(group.patientId)}
-                            className="px-3.5 py-1.5 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#00695C] transition-all cursor-pointer shadow-sm hover:scale-[1.01]"
+                            className="px-3.5 py-1.5 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#3B67FC] transition-all cursor-pointer shadow-sm hover:scale-[1.01]"
                           >
                             Detail
                           </Link>
@@ -278,7 +291,7 @@ export function ParticipantTable({
                                     </span>
                                   </div>
                                   <div className="flex items-center gap-6">
-                                    <span className="font-bold text-[#00695C]">
+                                    <span className="font-bold text-[#3B67FC]">
                                       Skor: {attempt.score}%
                                     </span>
                                     <Badge variant={attempt.passed ? "primary" : "error"}>
@@ -289,7 +302,7 @@ export function ParticipantTable({
                                     </span>
                                     <Link
                                       href={getDetailUrl(group.patientId)}
-                                      className="text-[#00695C] hover:underline font-bold text-xs"
+                                      className="text-[#3B67FC] hover:underline font-bold text-xs"
                                     >
                                       Lihat Lembar Jawaban →
                                     </Link>
@@ -331,7 +344,7 @@ export function ParticipantTable({
                 className={[
                   "w-8 h-8 flex items-center justify-center rounded-lg font-bold transition-colors cursor-pointer",
                   currentPage === idx + 1
-                    ? "bg-[#00695C] text-white"
+                    ? "bg-[#3B67FC] text-white"
                     : "border border-[#E2E8F0] text-[#1A202C] hover:bg-slate-100",
                 ].join(" ")}
               >

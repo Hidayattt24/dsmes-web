@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import { Portal } from "@/components/ui/Portal";
 
 export type ToastType = "success" | "error" | "warning" | "info";
 
@@ -22,9 +23,9 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 const variantConfig = {
   success: {
     icon: "check_circle",
-    iconClass: "text-[#00695C]",
-    borderClass: "border-[#B2DFDB]/40",
-    bgClass: "bg-[#F0F9F8]",
+    iconClass: "text-[#3B67FC]",
+    borderClass: "border-[#A8EEFA]/40",
+    bgClass: "bg-[#EEF2FF]",
   },
   error: {
     icon: "cancel",
@@ -61,12 +62,13 @@ export function ToastProvider({ children }: { readonly children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast, hideToast }}>
       {children}
-      {/* Toast Portal Container */}
-      <div className="fixed bottom-6 right-6 z-110 flex flex-col gap-3 w-full max-w-sm pointer-events-none">
-        {toasts.map((toast) => (
-          <ToastCard key={toast.id} toast={toast} onClose={hideToast} />
-        ))}
-      </div>
+      <Portal>
+        <div className="fixed bottom-6 right-6 z-[10000] flex flex-col gap-3 w-full max-w-sm pointer-events-none">
+          {toasts.map((toast) => (
+            <ToastCard key={toast.id} toast={toast} onClose={hideToast} />
+          ))}
+        </div>
+      </Portal>
     </ToastContext.Provider>
   );
 }

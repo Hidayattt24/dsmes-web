@@ -16,7 +16,7 @@ export function StatisticCard({ card }: StatisticCardProps) {
           className={[
             "w-12 h-12 rounded-2xl flex items-center justify-center",
             isPrimary
-              ? "bg-[#F0F9F8] text-[#00695C]"
+              ? "bg-[#EEF2FF] text-[#3B67FC]"
               : "bg-[#F4F6F8] text-[#718096]",
           ].join(" ")}
         >
@@ -47,7 +47,7 @@ export function StatisticCard({ card }: StatisticCardProps) {
               className="h-full rounded-full transition-all duration-500"
               style={{
                 width: `${Math.min(Math.max(card.progressBar, 0), 100)}%`,
-                backgroundColor: isPrimary ? "#00695C" : "#F59E0B",
+                backgroundColor: isPrimary ? "#3B67FC" : "#F59E0B",
               }}
             />
           </div>

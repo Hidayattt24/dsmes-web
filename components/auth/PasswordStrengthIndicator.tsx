@@ -32,7 +32,7 @@ export function PasswordStrengthIndicator({ password }: PasswordStrengthIndicato
           key={rule.label}
           className={[
             "flex items-center gap-2 text-xs font-medium font-[family-name:var(--font-jakarta)]",
-            rule.passes ? "text-[#286b33]" : "text-[#6e7976]",
+            rule.passes ? "text-[#07CADE]" : "text-[#6e7976]",
           ].join(" ")}
         >
           <span className="material-symbols-outlined text-[14px]">

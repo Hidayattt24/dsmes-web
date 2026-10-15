@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFacility } from "../hooks/useFacility";
 import type { HealthFacility } from "@/types/facility";
 import { DataTable, type TableColumn } from "@/components/common/DataTable";
 import { Badge } from "@/components/ui/Badge";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useToast } from "@/components/ui/Toast";
+import { Portal } from "@/components/ui/Portal";
 
 export function FacilityFeature() {
   const {
@@ -29,6 +30,14 @@ export function FacilityFeature() {
 
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    if (isFormOpen) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isFormOpen]);
 
   const openCreate = () => {
     setEditing(null);
@@ -87,7 +96,7 @@ export function FacilityFeature() {
       header: "Nama Puskesmas",
       render: (row) => (
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-[#F0F9F8] rounded-full flex items-center justify-center text-[#00695C]">
+          <div className="w-9 h-9 bg-[#EEF2FF] rounded-full flex items-center justify-center text-[#3B67FC]">
             <span className="material-symbols-outlined text-[18px]">local_hospital</span>
           </div>
           <span className="text-sm font-semibold text-[#1A202C] font-[family-name:var(--font-poppins)]">
@@ -132,7 +141,7 @@ export function FacilityFeature() {
         <div className="flex items-center gap-2 justify-end">
           <button
             onClick={() => openEdit(row)}
-            className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#00695C] cursor-pointer"
+            className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#3B67FC] cursor-pointer"
             title="Edit"
           >
             <span className="material-symbols-outlined text-[18px]">edit</span>
@@ -164,14 +173,14 @@ export function FacilityFeature() {
 
         <button
           onClick={openCreate}
-          className="flex items-center gap-2 bg-[#00695C] hover:bg-[#004f45] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-md shadow-[#00695C]/10 cursor-pointer"
+          className="flex items-center gap-2 bg-[#3B67FC] hover:bg-[#001B6B] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-md shadow-[#3B67FC]/10 cursor-pointer"
         >
           <span className="material-symbols-outlined text-[18px]">add</span>
           <span>Tambah Puskesmas</span>
         </button>
       </div>
 
-      <div className="flex items-center gap-3 bg-white px-5 py-2.5 rounded-xl border border-[#E2E8F0] w-full sm:w-96 focus-within:border-[#00695C] transition-all">
+      <div className="flex items-center gap-3 bg-white px-5 py-2.5 rounded-xl border border-[#E2E8F0] w-full sm:w-96 focus-within:border-[#3B67FC] transition-all">
         <span className="material-symbols-outlined text-[#718096] text-xl">search</span>
         <input
           type="text"
@@ -194,7 +203,8 @@ export function FacilityFeature() {
       </div>
 
       {isFormOpen && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
+        <Portal>
+        <div className="fixed inset-0 z-[9000] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/40" onClick={() => setIsFormOpen(false)} />
           <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-4">
             <div className="flex items-center justify-between">
@@ -219,7 +229,7 @@ export function FacilityFeature() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Contoh: Ulee Kareng"
-                  className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
+                  className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
                 />
               </div>
               <div className="space-y-2">
@@ -231,7 +241,7 @@ export function FacilityFeature() {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Alamat puskesmas (opsional)"
-                  className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
+                  className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
                 />
               </div>
             </div>
@@ -246,13 +256,14 @@ export function FacilityFeature() {
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                className="px-8 py-2.5 rounded-full bg-[#00695C] text-white text-sm font-semibold hover:opacity-90 transition-all disabled:opacity-50 cursor-pointer"
+                className="px-8 py-2.5 rounded-full bg-[#3B67FC] text-white text-sm font-semibold hover:opacity-90 transition-all disabled:opacity-50 cursor-pointer"
               >
                 {isSaving ? "Menyimpan..." : "Simpan"}
               </button>
             </div>
           </div>
         </div>
+        </Portal>
       )}
 
       <ConfirmationModal

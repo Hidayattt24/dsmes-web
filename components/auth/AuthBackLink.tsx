@@ -18,7 +18,7 @@ export function AuthBackLink({
     <div className="mt-6 text-center font-[family-name:var(--font-jakarta)]">
       <Link
         href={href}
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3e4946] hover:text-[#004f45] transition-colors"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-[#3e4946] hover:text-[#001B6B] transition-colors"
       >
         <span className="material-symbols-outlined text-[16px]">arrow_back</span>
         {label}

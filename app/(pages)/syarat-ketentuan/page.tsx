@@ -35,7 +35,7 @@ export default function SyaratKetentuanPage() {
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/logo.png"
+                src="/logo-diba-care.png"
                 alt="Logo DIBA"
                 width={120}
                 height={40}
@@ -44,7 +44,7 @@ export default function SyaratKetentuanPage() {
               />
             </Link>
             <span className="hidden sm:inline-block h-5 w-px bg-[#CBD5E1]" />
-            <span className="hidden sm:inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-[#E6F2F1] text-[#00695C]">
+            <span className="hidden sm:inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-[#E8F0FF] text-[#3B67FC]">
               Dokumen Hukum & Riset
             </span>
           </div>
@@ -52,13 +52,13 @@ export default function SyaratKetentuanPage() {
           <div className="flex items-center gap-3">
             <Link
               href={ROUTES.KEBIJAKAN_PRIVASI}
-              className="text-xs sm:text-sm font-semibold text-[#718096] hover:text-[#00695C] transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-50"
+              className="text-xs sm:text-sm font-semibold text-[#718096] hover:text-[#3B67FC] transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-50"
             >
               ← Kebijakan Privasi
             </Link>
             <Link
               href="/login"
-              className="text-xs sm:text-sm font-bold bg-[#00695C] text-white hover:bg-[#005247] transition-all px-4 py-2 rounded-xl shadow-sm cursor-pointer"
+              className="text-xs sm:text-sm font-bold bg-[#3B67FC] text-white hover:bg-[#1A63ED] transition-all px-4 py-2 rounded-xl shadow-sm cursor-pointer"
             >
               Masuk Sistem
             </Link>
@@ -91,7 +91,7 @@ export default function SyaratKetentuanPage() {
             </Link>
             <Link
               href={ROUTES.SYARAT_KETENTUAN}
-              className="px-5 py-2 text-xs sm:text-sm font-bold rounded-lg bg-[#00695C] text-white shadow-xs"
+              className="px-5 py-2 text-xs sm:text-sm font-bold rounded-lg bg-[#3B67FC] text-white shadow-xs"
             >
               Syarat & Ketentuan
             </Link>
@@ -101,7 +101,7 @@ export default function SyaratKetentuanPage() {
         {/* Executive Summary Cards for Admin & Staff (To-the-point overview) */}
         <div className="mb-12">
           <h2 className="text-xs font-bold text-[#718096] uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span className="material-symbols-outlined text-base text-[#00695C]">warning</span>
+            <span className="material-symbols-outlined text-base text-[#3B67FC]">warning</span>
             Prinsip Kunci untuk Pengelola & Tenaga Medis
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -116,7 +116,7 @@ export default function SyaratKetentuanPage() {
             </div>
 
             <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-teal-50 text-[#00695C] flex items-center justify-center mb-3">
+              <div className="w-10 h-10 rounded-xl bg-[#EEF2FF] text-[#3B67FC] flex items-center justify-center mb-3">
                 <span className="material-symbols-outlined">verified</span>
               </div>
               <h3 className="font-bold text-sm text-[#1A202C] mb-1">Informed Consent Terpisah</h3>
@@ -150,7 +150,7 @@ export default function SyaratKetentuanPage() {
                   <a
                     key={s.id}
                     href={`#${s.id}`}
-                    className="block text-xs py-1.5 px-2.5 rounded-lg text-[#4A5568] hover:text-[#00695C] hover:bg-[#F0FDF4] transition-all font-medium truncate"
+                    className="block text-xs py-1.5 px-2.5 rounded-lg text-[#4A5568] hover:text-[#3B67FC] hover:bg-[#F0FDF4] transition-all font-medium truncate"
                   >
                     {s.title}
                   </a>
@@ -184,7 +184,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 1 */}
             <section id="tentang-diba" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">1</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">1</span>
                 Tentang DIBA
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">
@@ -229,7 +229,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 3 */}
             <section id="akun" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">3</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">3</span>
                 Akun Pengguna
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">Beberapa fitur DIBA memerlukan akun pengguna. Pengguna bertanggung jawab untuk:</p>
@@ -248,7 +248,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 4 */}
             <section id="keakuratan" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">4</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">4</span>
                 Keakuratan Data
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
@@ -262,13 +262,13 @@ export default function SyaratKetentuanPage() {
             {/* Section 5 */}
             <section id="penelitian" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">5</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">5</span>
                 Penggunaan untuk Penelitian
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
                 DIBA dapat digunakan dalam kegiatan penelitian dan evaluasi teknologi kesehatan digital. Data yang dikumpulkan melalui aplikasi dapat digunakan untuk analisis penelitian, evaluasi aplikasi, penyusunan laporan akademik, publikasi ilmiah, serta pengembangan penelitian lanjutan sesuai dengan dasar pemrosesan dan persetujuan yang berlaku.
               </p>
-              <div className="p-4 rounded-xl bg-teal-50 border border-teal-200 text-xs text-[#00695C] font-semibold leading-relaxed">
+              <div className="p-4 rounded-xl bg-[#EEF2FF] border border-[#8FAAFF] text-xs text-[#3B67FC] font-semibold leading-relaxed">
                 Penggunaan DIBA sebagai peserta penelitian dapat memerlukan proses informed consent tersendiri. Persetujuan terhadap Syarat dan Ketentuan ini TIDAK MENGGANTIKAN informed consent penelitian.
               </div>
             </section>
@@ -276,7 +276,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 6 */}
             <section id="penelitian-lanjut" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">6</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">6</span>
                 Penelitian Lanjutan dan Pengembangan Teknologi
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed">
@@ -287,7 +287,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 7 */}
             <section id="ai-ml" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">7</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">7</span>
                 Artificial Intelligence dan Machine Learning
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
@@ -301,7 +301,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 8 */}
             <section id="ketersediaan" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">8</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">8</span>
                 Ketersediaan Layanan
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">
@@ -321,7 +321,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 9 */}
             <section id="keamanan" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">9</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">9</span>
                 Keamanan Akun dan Sistem
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">
@@ -343,7 +343,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 10 */}
             <section id="haki" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">10</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">10</span>
                 Hak Kekayaan Intelektual
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
@@ -357,7 +357,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 11 */}
             <section id="larangan" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">11</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">11</span>
                 Larangan Penggunaan
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">Pengguna tidak diperbolehkan menggunakan DIBA untuk:</p>
@@ -375,7 +375,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 12 */}
             <section id="batasan-tanggung-jawab" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">12</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">12</span>
                 Batasan Tanggung Jawab
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
@@ -397,7 +397,7 @@ export default function SyaratKetentuanPage() {
             {/* Section 13 & 14 */}
             <section id="penghentian" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">13</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">13</span>
                 Penghentian atau Pembatasan Akses
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-6">
@@ -405,7 +405,7 @@ export default function SyaratKetentuanPage() {
               </p>
 
               <h2 id="perubahan" className="text-lg font-bold text-[#1A202C] mb-3 flex items-center gap-2 pt-4 border-t border-[#E2E8F0]">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">14</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">14</span>
                 Perubahan Syarat dan Ketentuan
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-4">
@@ -417,8 +417,8 @@ export default function SyaratKetentuanPage() {
             </section>
 
             {/* Acceptance Callout Box */}
-            <div className="p-6 rounded-2xl bg-[#F0FDF4] border border-[#00695C]/30 shadow-xs">
-              <h3 className="font-bold text-[#00695C] text-sm flex items-center gap-2 mb-2">
+            <div className="p-6 rounded-2xl bg-[#F0FDF4] border border-[#3B67FC]/30 shadow-xs">
+              <h3 className="font-bold text-[#3B67FC] text-sm flex items-center gap-2 mb-2">
                 <span className="material-symbols-outlined text-base">task_alt</span>
                 Pernyataan Persetujuan
               </h3>
@@ -434,12 +434,12 @@ export default function SyaratKetentuanPage() {
         {/* Global Scientific and Open Source References */}
         <section className="mt-16 pt-8 border-t border-[#E2E8F0]">
           <h2 className="text-xs font-bold text-[#718096] uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span className="material-symbols-outlined text-base text-[#00695C]">menu_book</span>
+            <span className="material-symbols-outlined text-base text-[#3B67FC]">menu_book</span>
             Kredit Dataset & Pedoman Klinis Resmi
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0]">
-              <span className="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-teal-50 text-[#00695C] mb-2">
+              <span className="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-[#EEF2FF] text-[#3B67FC] mb-2">
                 Pedoman Klinis Nasional
               </span>
               <h3 className="font-bold text-sm text-[#1A202C]">PB PERKENI (PGDM 2021)</h3>
@@ -450,7 +450,7 @@ export default function SyaratKetentuanPage() {
                 href="https://pbperkeni.or.id/wp-content/uploads/2021/11/22-10-21-Website-Pedoman-Pemantauan-Glukosa-Darah-Mandiri-Ebook.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs font-bold text-[#00695C] hover:underline inline-flex items-center gap-1"
+                className="text-xs font-bold text-[#3B67FC] hover:underline inline-flex items-center gap-1"
               >
                 Lihat E-book Pedoman PERKENI ↗
               </a>
@@ -468,7 +468,7 @@ export default function SyaratKetentuanPage() {
                 href="https://diabetes.org/about-diabetes/diagnosis"
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs font-bold text-[#00695C] hover:underline inline-flex items-center gap-1"
+                className="text-xs font-bold text-[#3B67FC] hover:underline inline-flex items-center gap-1"
               >
                 Kriteria Diagnosis ADA ↗
               </a>
@@ -486,7 +486,7 @@ export default function SyaratKetentuanPage() {
                 href="https://www.kaggle.com/datasets/fritze/informasi-nilai-gizi-indonesia"
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs font-bold text-[#00695C] hover:underline inline-flex items-center gap-1"
+                className="text-xs font-bold text-[#3B67FC] hover:underline inline-flex items-center gap-1"
               >
                 Kaggle Dataset Nutrisi ↗
               </a>

@@ -21,6 +21,7 @@ import {
   PatientEducationActivity,
   type PatientEducationSummary,
 } from "./PatientEducationActivity";
+import { PatientAppUsageCard } from "@/components/common/PatientAppUsageCard";
 import { EditPatientModal } from "./EditPatientModal";
 import { AddMeasurementModal } from "./AddMeasurementModal";
 
@@ -76,6 +77,8 @@ export function PatientDetailFeature({ patientId }: PatientDetailFeatureProps) {
     patient,
     bloodSugar,
     educationActivities,
+    appUsage,
+    appUsageError,
     isLoading,
     error,
     refetch,
@@ -171,7 +174,7 @@ export function PatientDetailFeature({ patientId }: PatientDetailFeatureProps) {
         <div className="flex items-center gap-4">
           <Link
             href="/admin/data-pasien"
-            className="flex items-center gap-2 text-[#718096] hover:text-[#00695C] transition-colors font-medium text-sm"
+            className="flex items-center gap-2 text-[#718096] hover:text-[#3B67FC] transition-colors font-medium text-sm"
           >
             <span className="material-symbols-outlined text-[20px]">
               arrow_back
@@ -199,7 +202,7 @@ export function PatientDetailFeature({ patientId }: PatientDetailFeatureProps) {
           <button
             type="button"
             onClick={() => setIsAddMeasurementOpen(true)}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#00695C] hover:bg-[#004D40] text-white text-xs font-bold rounded-lg transition-colors shadow-2xs"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#3B67FC] hover:bg-[#1A63ED] text-white text-xs font-bold rounded-lg transition-colors shadow-2xs"
           >
             <span className="material-symbols-outlined text-[16px]">
               add_circle
@@ -227,6 +230,13 @@ export function PatientDetailFeature({ patientId }: PatientDetailFeatureProps) {
         measurements={patient.measurements}
         isAdmin={true}
         onAddMeasurement={() => setIsAddMeasurementOpen(true)}
+      />
+
+      {/* App Usage Duration Card */}
+      <PatientAppUsageCard
+        totalFormatted={appUsage?.totalFormatted ?? "0 menit"}
+        dailyUsages={appUsage?.dailyUsages ?? []}
+        error={appUsageError}
       />
 
       {/* Metrics & Analytics section */}

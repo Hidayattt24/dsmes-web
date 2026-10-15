@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { recordMonitoringService } from "../services/recordMonitoringService";
+import { patientService } from "@/services/patientService";
 import type {
   PatientRecord,
   BloodSugarLog,
@@ -19,6 +20,16 @@ interface UseRecordDetailReturn {
   readonly activityLogs: ActivityLog[];
   readonly medicationLogs: MedicationLog[];
   readonly activityAnalytics: PatientActivityAnalyticsResponse | null;
+  readonly appUsage: {
+    totalSeconds: number;
+    totalFormatted: string;
+    dailyUsages: {
+      date: string;
+      totalSeconds: number;
+      totalFormatted: string;
+      sessionCount: number;
+    }[];
+  } | null;
   readonly analyticsDays: number;
   readonly setAnalyticsDays: (days: number) => void;
   readonly isAnalyticsLoading: boolean;
@@ -54,6 +65,16 @@ export function useRecordDetail(patientId: string): UseRecordDetailReturn {
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [medicationLogs, setMedicationLogs] = useState<MedicationLog[]>([]);
   const [activityAnalytics, setActivityAnalytics] = useState<PatientActivityAnalyticsResponse | null>(null);
+  const [appUsage, setAppUsage] = useState<{
+    totalSeconds: number;
+    totalFormatted: string;
+    dailyUsages: {
+      date: string;
+      totalSeconds: number;
+      totalFormatted: string;
+      sessionCount: number;
+    }[];
+  } | null>(null);
   const [analyticsDays, setAnalyticsDays] = useState<number>(7);
 
   const [mealDate, setMealDate] = useState<string>(getTodayStr());
@@ -77,12 +98,13 @@ export function useRecordDetail(patientId: string): UseRecordDetailReturn {
         return;
       }
 
-      const [bs, meals, acts, meds, analytics] = await Promise.all([
+      const [bs, meals, acts, meds, analytics, usage] = await Promise.all([
         recordMonitoringService.getBloodSugarLogs(patientId, rolePrefix),
         recordMonitoringService.getMealLogs(patientId, rolePrefix, mealDate),
         recordMonitoringService.getActivityLogs(patientId, rolePrefix, activityDate),
         recordMonitoringService.getMedicationLogs(patientId, rolePrefix, medicationDate),
         recordMonitoringService.getActivityAnalytics(patientId, rolePrefix, analyticsDays),
+        patientService.getPatientAppUsage(patientId, rolePrefix),
       ]);
 
       setPatient(p);
@@ -91,6 +113,7 @@ export function useRecordDetail(patientId: string): UseRecordDetailReturn {
       setActivityLogs(acts);
       setMedicationLogs(meds);
       setActivityAnalytics(analytics);
+      setAppUsage(usage);
     } catch {
       setError("Gagal memuat detail catatan monitoring.");
     } finally {
@@ -149,6 +172,7 @@ export function useRecordDetail(patientId: string): UseRecordDetailReturn {
     activityLogs,
     medicationLogs,
     activityAnalytics,
+    appUsage,
     analyticsDays,
     setAnalyticsDays: handleSetAnalyticsDays,
     isAnalyticsLoading,

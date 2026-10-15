@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { quizService } from "../services/quizService";
-import type { QuestionnaireRecord, QuizStats, PaginationMeta, QuizSortBy } from "../types/quiz";
+import type { QuestionnaireRecord, QuestionnaireScope, QuizStats, PaginationMeta, QuizSortBy } from "../types/quiz";
 
 interface UseQuizListReturn {
   readonly quizzes: readonly QuestionnaireRecord[];
@@ -12,12 +12,14 @@ interface UseQuizListReturn {
   readonly error: string | null;
   readonly searchQuery: string;
   readonly filterType: "Semua" | "PRE_TEST" | "POST_TEST";
+  readonly filterScope: "Semua" | QuestionnaireScope;
   readonly filterStatus: "Semua" | "Aktif" | "Draft" | "Nonaktif";
   readonly sortBy: QuizSortBy;
   readonly pagination: PaginationMeta;
   readonly rolePrefix: "admin" | "staff";
   readonly setSearchQuery: (q: string) => void;
   readonly setFilterType: (type: "Semua" | "PRE_TEST" | "POST_TEST") => void;
+  readonly setFilterScope: (scope: "Semua" | QuestionnaireScope) => void;
   readonly setFilterStatus: (status: "Semua" | "Aktif" | "Draft" | "Nonaktif") => void;
   readonly setSortBy: (sort: QuizSortBy) => void;
   readonly setPage: (p: number) => void;
@@ -36,6 +38,7 @@ export function useQuizList(): UseQuizListReturn {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState<"Semua" | "PRE_TEST" | "POST_TEST">("Semua");
+  const [filterScope, setFilterScope] = useState<"Semua" | QuestionnaireScope>("Semua");
   const [filterStatus, setFilterStatus] = useState<"Semua" | "Aktif" | "Draft" | "Nonaktif">("Semua");
   const [sortBy, setSortBy] = useState<QuizSortBy>("newest");
   const [page, setPage] = useState(1);
@@ -49,6 +52,7 @@ export function useQuizList(): UseQuizListReturn {
         limit: 10,
         search: searchQuery || undefined,
         type: filterType !== "Semua" ? filterType : undefined,
+        scope: filterScope !== "Semua" ? filterScope : undefined,
         status: filterStatus !== "Semua" ? filterStatus : undefined,
         sort_by: sortBy,
         sort_order: (sortBy === "title" ? "asc" : "desc") as "asc" | "desc",
@@ -65,7 +69,7 @@ export function useQuizList(): UseQuizListReturn {
     } finally {
       setIsLoading(false);
     }
-  }, [page, searchQuery, filterType, filterStatus, sortBy, rolePrefix]);
+  }, [page, searchQuery, filterType, filterScope, filterStatus, sortBy, rolePrefix]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -79,6 +83,11 @@ export function useQuizList(): UseQuizListReturn {
 
   const handleSetFilterType = useCallback((type: "Semua" | "PRE_TEST" | "POST_TEST") => {
     setFilterType(type);
+    setPage(1);
+  }, []);
+
+  const handleSetFilterScope = useCallback((scope: "Semua" | QuestionnaireScope) => {
+    setFilterScope(scope);
     setPage(1);
   }, []);
 
@@ -99,12 +108,14 @@ export function useQuizList(): UseQuizListReturn {
     error,
     searchQuery,
     filterType,
+    filterScope,
     filterStatus,
     sortBy,
     pagination,
     rolePrefix,
     setSearchQuery: handleSetSearchQuery,
     setFilterType: handleSetFilterType,
+    setFilterScope: handleSetFilterScope,
     setFilterStatus: handleSetFilterStatus,
     setSortBy: handleSetSortBy,
     setPage,

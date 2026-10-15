@@ -34,7 +34,7 @@ export default function KebijakanPrivasiPage() {
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/logo.png"
+                src="/logo-diba-care.png"
                 alt="Logo DIBA"
                 width={120}
                 height={40}
@@ -43,7 +43,7 @@ export default function KebijakanPrivasiPage() {
               />
             </Link>
             <span className="hidden sm:inline-block h-5 w-px bg-[#CBD5E1]" />
-            <span className="hidden sm:inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-[#E6F2F1] text-[#00695C]">
+            <span className="hidden sm:inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-[#E8F0FF] text-[#3B67FC]">
               Dokumen Hukum & Riset
             </span>
           </div>
@@ -51,13 +51,13 @@ export default function KebijakanPrivasiPage() {
           <div className="flex items-center gap-3">
             <Link
               href={ROUTES.SYARAT_KETENTUAN}
-              className="text-xs sm:text-sm font-semibold text-[#718096] hover:text-[#00695C] transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-50"
+              className="text-xs sm:text-sm font-semibold text-[#718096] hover:text-[#3B67FC] transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-50"
             >
               Syarat & Ketentuan →
             </Link>
             <Link
               href="/login"
-              className="text-xs sm:text-sm font-bold bg-[#00695C] text-white hover:bg-[#005247] transition-all px-4 py-2 rounded-xl shadow-sm cursor-pointer"
+              className="text-xs sm:text-sm font-bold bg-[#3B67FC] text-white hover:bg-[#1A63ED] transition-all px-4 py-2 rounded-xl shadow-sm cursor-pointer"
             >
               Masuk Sistem
             </Link>
@@ -69,7 +69,7 @@ export default function KebijakanPrivasiPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Hero Title & Document Badge */}
         <div className="mb-10 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E6F2F1] text-[#00695C] text-xs font-bold mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E8F0FF] text-[#3B67FC] text-xs font-bold mb-4">
             <span className="material-symbols-outlined text-sm">verified_user</span>
             Terakhir diperbarui: 05-Oktober-2026
           </div>
@@ -84,7 +84,7 @@ export default function KebijakanPrivasiPage() {
           <div className="inline-flex p-1 bg-white border border-[#E2E8F0] rounded-xl shadow-xs mt-6">
             <Link
               href={ROUTES.KEBIJAKAN_PRIVASI}
-              className="px-5 py-2 text-xs sm:text-sm font-bold rounded-lg bg-[#00695C] text-white shadow-xs"
+              className="px-5 py-2 text-xs sm:text-sm font-bold rounded-lg bg-[#3B67FC] text-white shadow-xs"
             >
               Kebijakan Privasi
             </Link>
@@ -100,12 +100,12 @@ export default function KebijakanPrivasiPage() {
         {/* Executive Summary Cards for Admin & Staff (To-the-point overview) */}
         <div className="mb-12">
           <h2 className="text-xs font-bold text-[#718096] uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span className="material-symbols-outlined text-base text-[#00695C]">summarize</span>
+            <span className="material-symbols-outlined text-base text-[#3B67FC]">summarize</span>
             Ringkasan Cepat untuk Pengelola (Admin & Staff)
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-teal-50 text-[#00695C] flex items-center justify-center mb-3">
+              <div className="w-10 h-10 rounded-xl bg-[#EEF2FF] text-[#3B67FC] flex items-center justify-center mb-3">
                 <span className="material-symbols-outlined">science</span>
               </div>
               <h3 className="font-bold text-sm text-[#1A202C] mb-1">Konteks Penelitian Akademik</h3>
@@ -149,7 +149,7 @@ export default function KebijakanPrivasiPage() {
                   <a
                     key={s.id}
                     href={`#${s.id}`}
-                    className="block text-xs py-1.5 px-2.5 rounded-lg text-[#4A5568] hover:text-[#00695C] hover:bg-[#F0FDF4] transition-all font-medium truncate"
+                    className="block text-xs py-1.5 px-2.5 rounded-lg text-[#4A5568] hover:text-[#3B67FC] hover:bg-[#F0FDF4] transition-all font-medium truncate"
                   >
                     {s.title}
                   </a>
@@ -158,7 +158,7 @@ export default function KebijakanPrivasiPage() {
 
               <hr className="my-4 border-[#E2E8F0]" />
 
-              <div className="p-3 rounded-xl bg-[#F0F9F8] border border-[#00695C]/20 text-[11px] text-[#00695C] leading-snug">
+              <div className="p-3 rounded-xl bg-[#EEF2FF] border border-[#3B67FC]/20 text-[11px] text-[#3B67FC] leading-snug">
                 <span className="font-bold block mb-1">Pemberitahuan Etika:</span>
                 Kebijakan ini tidak menggantikan lembar persetujuan (informed consent) etik penelitian klinis.
               </div>
@@ -183,7 +183,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 1 */}
             <section id="data-kumpul" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">1</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">1</span>
                 Data yang Kami Kumpulkan
               </h2>
               <p className="text-sm text-[#4A5568] mb-4">
@@ -216,7 +216,7 @@ export default function KebijakanPrivasiPage() {
                     <li>Informasi kepatuhan terhadap pengobatan atau aktivitas pengelolaan diabetes; dan</li>
                     <li>Informasi kesehatan lain yang diberikan secara sukarela melalui aplikasi.</li>
                   </ul>
-                  <div className="mt-3 p-3 rounded-lg bg-teal-50 border border-teal-200 text-xs text-[#00695C] font-medium">
+                  <div className="mt-3 p-3 rounded-lg bg-[#EEF2FF] border border-[#8FAAFF] text-xs text-[#3B67FC] font-medium">
                     Data dan informasi kesehatan merupakan data pribadi yang bersifat spesifik sehingga akan dikelola dengan perhatian khusus terhadap keamanan dan privasinya.
                   </div>
                 </div>
@@ -241,7 +241,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 2 */}
             <section id="tujuan-guna" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">2</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">2</span>
                 Tujuan Penggunaan Data
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">Data pengguna dapat digunakan untuk:</p>
@@ -265,7 +265,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 3 */}
             <section id="penelitian" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">3</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">3</span>
                 Penggunaan Data untuk Penelitian
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">
@@ -280,7 +280,7 @@ export default function KebijakanPrivasiPage() {
                 <li>Pengembangan aplikasi; dan</li>
                 <li>Kegiatan akademik atau penelitian lainnya yang relevan.</li>
               </ul>
-              <div className="p-4 rounded-xl bg-teal-50 border border-teal-200 text-xs text-[#00695C] font-medium leading-relaxed">
+              <div className="p-4 rounded-xl bg-[#EEF2FF] border border-[#8FAAFF] text-xs text-[#3B67FC] font-medium leading-relaxed">
                 Dalam publikasi atau penyampaian hasil penelitian, data akan diupayakan dalam bentuk agregat, anonim, atau melalui proses lain yang sesuai sehingga identitas pengguna tidak diungkapkan secara langsung.
               </div>
             </section>
@@ -288,7 +288,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 4 */}
             <section id="penelitian-lanjut" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">4</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">4</span>
                 Penelitian dan Pengembangan di Masa Mendatang
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">
@@ -310,7 +310,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 5 */}
             <section id="ai-ml" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">5</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">5</span>
                 Penggunaan Data untuk AI dan Machine Learning
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">
@@ -327,7 +327,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 6 */}
             <section id="tidak-diizinkan" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">6</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">6</span>
                 Penggunaan Data yang Tidak Diizinkan
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed">
@@ -338,7 +338,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 7 */}
             <section id="akses-data" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">7</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">7</span>
                 Akses terhadap Data
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed">
@@ -349,7 +349,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 8 */}
             <section id="keamanan" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">8</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">8</span>
                 Keamanan Data
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">
@@ -363,7 +363,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 9 */}
             <section id="retensi" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">9</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">9</span>
                 Penyimpanan dan Retensi Data
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-3">
@@ -377,7 +377,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 10 */}
             <section id="hak-pengguna" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">10</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">10</span>
                 Hak Pengguna
               </h2>
               <p className="text-sm text-[#4A5568] mb-3">
@@ -391,7 +391,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 11 */}
             <section id="pihak-ketiga" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">11</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">11</span>
                 Penyedia Layanan dan Pihak Ketiga
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed">
@@ -402,7 +402,7 @@ export default function KebijakanPrivasiPage() {
             {/* Section 12 & 13 */}
             <section id="perubahan" className="p-6 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs scroll-mt-24">
               <h2 className="text-lg font-bold text-[#1A202C] mb-4 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">12</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">12</span>
                 Perubahan Kebijakan Privasi
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed mb-6">
@@ -410,7 +410,7 @@ export default function KebijakanPrivasiPage() {
               </p>
 
               <h2 id="kontak" className="text-lg font-bold text-[#1A202C] mb-3 flex items-center gap-2 pt-4 border-t border-[#E2E8F0]">
-                <span className="w-7 h-7 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-black">13</span>
+                <span className="w-7 h-7 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-black">13</span>
                 Hubungi Kami
               </h2>
               <p className="text-sm text-[#4A5568] leading-relaxed">
@@ -419,8 +419,8 @@ export default function KebijakanPrivasiPage() {
             </section>
 
             {/* Research Ethics Callout Box */}
-            <div className="p-6 rounded-2xl bg-[#F0FDF4] border border-[#00695C]/30 shadow-xs">
-              <h3 className="font-bold text-[#00695C] text-sm flex items-center gap-2 mb-2">
+            <div className="p-6 rounded-2xl bg-[#F0FDF4] border border-[#3B67FC]/30 shadow-xs">
+              <h3 className="font-bold text-[#3B67FC] text-sm flex items-center gap-2 mb-2">
                 <span className="material-symbols-outlined text-base">verified</span>
                 Pemberitahuan Etika Penelitian
               </h3>
@@ -436,12 +436,12 @@ export default function KebijakanPrivasiPage() {
         {/* Global Scientific and Open Source References */}
         <section className="mt-16 pt-8 border-t border-[#E2E8F0]">
           <h2 className="text-xs font-bold text-[#718096] uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span className="material-symbols-outlined text-base text-[#00695C]">menu_book</span>
+            <span className="material-symbols-outlined text-base text-[#3B67FC]">menu_book</span>
             Kredit Dataset & Pedoman Klinis Resmi
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0]">
-              <span className="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-teal-50 text-[#00695C] mb-2">
+              <span className="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-[#EEF2FF] text-[#3B67FC] mb-2">
                 Pedoman Klinis Nasional
               </span>
               <h3 className="font-bold text-sm text-[#1A202C]">PB PERKENI (PGDM 2021)</h3>
@@ -452,7 +452,7 @@ export default function KebijakanPrivasiPage() {
                 href="https://pbperkeni.or.id/wp-content/uploads/2021/11/22-10-21-Website-Pedoman-Pemantauan-Glukosa-Darah-Mandiri-Ebook.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs font-bold text-[#00695C] hover:underline inline-flex items-center gap-1"
+                className="text-xs font-bold text-[#3B67FC] hover:underline inline-flex items-center gap-1"
               >
                 Lihat E-book Pedoman PERKENI ↗
               </a>
@@ -470,7 +470,7 @@ export default function KebijakanPrivasiPage() {
                 href="https://diabetes.org/about-diabetes/diagnosis"
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs font-bold text-[#00695C] hover:underline inline-flex items-center gap-1"
+                className="text-xs font-bold text-[#3B67FC] hover:underline inline-flex items-center gap-1"
               >
                 Kriteria Diagnosis ADA ↗
               </a>
@@ -488,7 +488,7 @@ export default function KebijakanPrivasiPage() {
                 href="https://www.kaggle.com/datasets/fritze/informasi-nilai-gizi-indonesia"
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs font-bold text-[#00695C] hover:underline inline-flex items-center gap-1"
+                className="text-xs font-bold text-[#3B67FC] hover:underline inline-flex items-center gap-1"
               >
                 Kaggle Dataset Nutrisi ↗
               </a>

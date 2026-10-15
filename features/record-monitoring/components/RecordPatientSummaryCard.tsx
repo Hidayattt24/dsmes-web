@@ -145,7 +145,7 @@ export function RecordPatientSummaryCard({ patient }: RecordPatientSummaryCardPr
 
               <div className="flex justify-between items-center text-[11px] font-semibold text-[#718096] mt-1">
                 <span>Beda: <strong className="text-[#1A202C]">{diffStr}</strong></span>
-                <span>Kepatuhan 7H: <strong className="text-[#00695C]">{Math.round(patient.weeklyCompliance ?? patient.compliance)}%</strong></span>
+                <span>Kepatuhan 7H: <strong className="text-[#3B67FC]">{Math.round(patient.weeklyCompliance ?? patient.compliance)}%</strong></span>
               </div>
               <p className="text-[11px] text-[#718096] mt-2 font-medium leading-tight">
                 {desc}

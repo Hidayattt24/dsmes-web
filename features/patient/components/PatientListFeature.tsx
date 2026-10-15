@@ -59,7 +59,7 @@ export function PatientListFeature() {
         <button
           type="button"
           onClick={() => setIsGuideOpen(true)}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#00695C] shadow-sm transition-all cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#3B67FC] shadow-sm transition-all cursor-pointer"
         >
           <span className="material-symbols-outlined text-sm">menu_book</span>
           <span>Panduan Standar</span>
@@ -86,7 +86,7 @@ export function PatientListFeature() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Cari nama pasien, dokter, atau puskesmas..."
-            className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12 font-[family-name:var(--font-poppins)]"
+            className="w-full bg-[#F4F6F8]/60 border border-[#E2E8F0] rounded-xl py-3 pl-11 pr-4 text-sm focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all font-medium text-[#1A202C] placeholder:text-[#718096] h-12 font-[family-name:var(--font-poppins)]"
           />
         </div>
 
@@ -153,7 +153,7 @@ export function PatientListFeature() {
                   className={[
                     "w-9 h-9 flex items-center justify-center rounded-lg text-xs font-bold transition-all",
                     currentPage === num
-                      ? "bg-[#00695C] text-white shadow-sm shadow-[#00695C]/20"
+                      ? "bg-[#3B67FC] text-white shadow-sm shadow-[#3B67FC]/20"
                       : "hover:bg-[#F4F6F8] text-[#718096] font-semibold",
                   ].join(" ")}
                 >

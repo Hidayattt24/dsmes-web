@@ -47,9 +47,9 @@ export function PatientGrowthChart({
             className={[
               "col-span-1 rounded-t-md transition-all duration-300",
               point.isCurrent
-                ? "bg-[#00695C]"
+                ? "bg-[#3B67FC]"
                 : point.value > 5
-                ? "bg-[#F0F9F8] hover:bg-[#00695C]/30"
+                ? "bg-[#EEF2FF] hover:bg-[#3B67FC]/30"
                 : "bg-[#F4F6F8]",
             ].join(" ")}
             style={{ height: `${Math.max(point.heightPercent, 3)}%` }}
@@ -62,7 +62,7 @@ export function PatientGrowthChart({
         {data.map((point) => (
           <span
             key={point.month}
-            className={`col-span-1 ${point.isCurrent ? "text-[#00695C]" : ""}`}
+            className={`col-span-1 ${point.isCurrent ? "text-[#3B67FC]" : ""}`}
           >
             {point.month}
           </span>

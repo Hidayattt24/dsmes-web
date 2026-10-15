@@ -13,7 +13,7 @@ export function ResetSuccessView() {
       {/* Logo */}
       <div className="mb-6 sm:mb-8">
         <Image
-          src="/logo.png"
+          src="/logo-diba-care.png"
           alt="DIBA Logo"
           width={240}
           height={80}
@@ -23,8 +23,8 @@ export function ResetSuccessView() {
       </div>
 
       {/* Success icon */}
-      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F0F9F8] flex items-center justify-center mb-5 sm:mb-6 shadow-sm">
-        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#004f45] flex items-center justify-center">
+      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#EEF2FF] flex items-center justify-center mb-5 sm:mb-6 shadow-sm">
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#001B6B] flex items-center justify-center">
           <span
             className="material-symbols-outlined text-white text-[28px] sm:text-[32px]"
             style={{ fontVariationSettings: "'FILL' 1" }}

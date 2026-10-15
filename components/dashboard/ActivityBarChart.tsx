@@ -19,7 +19,7 @@ interface ActivityBarChartProps {
 const chartConfig = {
   value: {
     label: "Pengguna Aktif",
-    color: "#00695C",
+    color: "#3B67FC",
   },
 } satisfies ChartConfig;
 
@@ -36,7 +36,7 @@ const BarWithBorderTop = (props: BarCustomProps) => {
   return (
     <Rectangle
       {...(props as React.ComponentProps<typeof Rectangle>)}
-      fill="#00695C"
+      fill="#3B67FC"
       radius={[radius, radius, 0, 0]}
     />
   );
@@ -57,7 +57,7 @@ export function ActivityBarChart({
           </p>
         </div>
         <div className="text-right">
-          <p className="text-2xl font-bold text-[#00695C]">{totalLabel}</p>
+          <p className="text-2xl font-bold text-[#3B67FC]">{totalLabel}</p>
           <span className="text-[11px] text-[#718096] font-medium">Total Interaksi</span>
         </div>
       </div>
@@ -92,7 +92,7 @@ export function ActivityBarChart({
             <ChartLegend content={<ChartLegendContent />} />
             <Bar
               dataKey="value"
-              fill="#00695C"
+              fill="#3B67FC"
               radius={[14, 14, 0, 0]}
               shape={<BarWithBorderTop />}
             />

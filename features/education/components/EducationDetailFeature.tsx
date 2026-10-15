@@ -126,13 +126,13 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
           margin-bottom: 0.4rem;
         }
         .article-reader-container blockquote,
-        .article-reader-container .bg-teal-50 {
-          background-color: #F0F9F8 !important;
-          border-left: 4px solid #00695C !important;
+        .article-reader-container .bg-[#EEF2FF] {
+          background-color: #EEF2FF !important;
+          border-left: 4px solid #3B67FC !important;
           padding: 1.15rem 1.35rem !important;
           margin: 1.5rem 0 !important;
           border-radius: 0 0.85rem 0.85rem 0 !important;
-          color: #00695C !important;
+          color: #3B67FC !important;
           font-weight: 500 !important;
         }
         .article-reader-container img {
@@ -196,7 +196,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
             {/* Title & Metadata Header */}
             <div className="space-y-4 pt-2">
               <div className="flex flex-wrap items-center gap-2.5">
-                <span className="px-3.5 py-1 bg-[#E6F4F1] text-[#00695C] text-xs font-bold rounded-full uppercase tracking-wider font-[family-name:var(--font-poppins)] inline-flex items-center gap-1.5">
+                <span className="px-3.5 py-1 bg-[#E8F0FF] text-[#3B67FC] text-xs font-bold rounded-full uppercase tracking-wider font-[family-name:var(--font-poppins)] inline-flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-sm">folder_open</span>
                   <span>{article.category}</span>
                 </span>
@@ -222,19 +222,19 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
               {/* Metadata Row */}
               <div className="flex items-center flex-wrap gap-4 sm:gap-6 py-4 border-y border-[#E2E8F0]/80 text-[#64748B] text-xs sm:text-sm font-[family-name:var(--font-poppins)] font-medium">
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[#00695C] text-[18px]">account_circle</span>
+                  <span className="material-symbols-outlined text-[#3B67FC] text-[18px]">account_circle</span>
                   <span>{article.createdBy}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[#00695C] text-[18px]">calendar_today</span>
+                  <span className="material-symbols-outlined text-[#3B67FC] text-[18px]">calendar_today</span>
                   <span>{article.createdAt}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[#00695C] text-[18px]">schedule</span>
+                  <span className="material-symbols-outlined text-[#3B67FC] text-[18px]">schedule</span>
                   <span>{article.duration} Menit Baca</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[#00695C] text-[18px]">visibility</span>
+                  <span className="material-symbols-outlined text-[#3B67FC] text-[18px]">visibility</span>
                   <span>{article.readCount.toLocaleString("id-ID")} Dilihat</span>
                 </div>
               </div>
@@ -242,7 +242,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
 
             {/* Short Description Summary (If available) */}
             {article.shortDescription && (
-              <div className="bg-[#F8FAFC] border-l-4 border-[#00695C] p-4 sm:p-5 rounded-r-xl text-sm sm:text-base text-[#334155] italic leading-relaxed font-[family-name:var(--font-poppins)]">
+              <div className="bg-[#F8FAFC] border-l-4 border-[#3B67FC] p-4 sm:p-5 rounded-r-xl text-sm sm:text-base text-[#334155] italic leading-relaxed font-[family-name:var(--font-poppins)]">
                 {article.shortDescription}
               </div>
             )}
@@ -260,16 +260,16 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 sm:py-6 border-t border-[#E2E8F0]/60">
             <button
               onClick={goBack}
-              className="flex items-center gap-2 text-[#64748B] hover:text-[#00695C] transition-all font-semibold text-sm cursor-pointer"
+              className="flex items-center gap-2 text-[#64748B] hover:text-[#3B67FC] transition-all font-semibold text-sm cursor-pointer"
             >
               <span className="material-symbols-outlined text-[20px]">arrow_back</span>
               <span>Kembali ke Daftar Manajemen</span>
             </button>
             <div className="flex gap-2.5 items-center text-[#64748B] text-xs font-medium">
-              <div className="w-2 h-2 rounded-full bg-[#00695C] animate-pulse"></div>
+              <div className="w-2 h-2 rounded-full bg-[#3B67FC] animate-pulse"></div>
               <span>
                 Terakhir diedit oleh <b className="text-[#0F172A]">{article.createdBy}</b> pada{" "}
-                <b className="text-[#00695C]">{article.updatedAt}</b>
+                <b className="text-[#3B67FC]">{article.updatedAt}</b>
               </span>
             </div>
           </div>
@@ -280,7 +280,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
           {/* Status Card */}
           <div className="bg-white border border-[#E2E8F0] rounded-2xl p-6 shadow-sm">
             <h4 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-5 font-[family-name:var(--font-poppins)] flex items-center gap-2">
-              <span className="material-symbols-outlined text-base text-[#00695C]">info</span>
+              <span className="material-symbols-outlined text-base text-[#3B67FC]">info</span>
               <span>Status Artikel</span>
             </h4>
             <div className="space-y-3.5 font-[family-name:var(--font-poppins)] text-xs sm:text-sm">
@@ -303,7 +303,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
               </div>
               <div className="flex justify-between items-start py-2 border-b border-[#E2E8F0]/60">
                 <span className="text-[#64748B] font-medium">Kategori</span>
-                <span className="text-[#00695C] font-bold text-right max-w-[140px] truncate bg-[#E6F4F1] px-2.5 py-0.5 rounded-md text-xs">
+                <span className="text-[#3B67FC] font-bold text-right max-w-[140px] truncate bg-[#E8F0FF] px-2.5 py-0.5 rounded-md text-xs">
                   {article.category}
                 </span>
               </div>
@@ -319,7 +319,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
               </div>
               <div className="flex justify-between items-start py-2">
                 <span className="text-[#64748B] font-medium">Update Terakhir</span>
-                <span className="text-[#00695C] font-bold text-right text-xs max-w-[150px] leading-tight">
+                <span className="text-[#3B67FC] font-bold text-right text-xs max-w-[150px] leading-tight">
                   {article.updatedAt}
                 </span>
               </div>
@@ -329,7 +329,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
           {/* Related Articles Card */}
           <div className="bg-white border border-[#E2E8F0] rounded-2xl p-6 shadow-sm">
             <h4 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-5 font-[family-name:var(--font-poppins)] flex items-center gap-2">
-              <span className="material-symbols-outlined text-base text-[#00695C]">auto_stories</span>
+              <span className="material-symbols-outlined text-base text-[#3B67FC]">auto_stories</span>
               <span>Artikel Terkait</span>
             </h4>
             <div className="space-y-4 font-[family-name:var(--font-poppins)]">
@@ -348,7 +348,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
                     />
                   </div>
                   <div className="flex flex-col justify-center min-w-0">
-                    <h5 className="text-xs font-bold text-[#0F172A] leading-snug group-hover:text-[#00695C] transition-colors line-clamp-2">
+                    <h5 className="text-xs font-bold text-[#0F172A] leading-snug group-hover:text-[#3B67FC] transition-colors line-clamp-2">
                       {rel.title}
                     </h5>
                     <p className="text-[11px] text-[#64748B] mt-1 font-medium">

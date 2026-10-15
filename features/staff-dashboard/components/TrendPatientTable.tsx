@@ -71,7 +71,7 @@ export function TrendPatientTable({ patients, loading, trendRange, onTrendRangeC
       render: (row) => (
         <Link
           href={`/staff/pemantauan-catatan-pasien/${row.id}`}
-          className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#00695C] transition-all cursor-pointer shadow-sm hover:scale-[1.01]"
+          className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:bg-slate-50 text-xs font-bold text-[#3B67FC] transition-all cursor-pointer shadow-sm hover:scale-[1.01]"
         >
           <span>Detail</span>
           <span className="material-symbols-outlined text-sm select-none ml-1">visibility</span>

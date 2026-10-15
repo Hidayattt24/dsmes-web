@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins, Plus_Jakarta_Sans } from "next/font/google";
 import { ToastProvider } from "@/components/ui/Toast";
 import { AuthProvider }  from "@/contexts/AuthContext";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -24,10 +25,10 @@ export const metadata: Metadata = {
     "Platform DIBA (Diabetes Behaviour & Adherence Application) untuk mendukung pengelolaan dan kepatuhan Diabetes Melitus di Aceh.",
   icons: {
     icon: [
-      { url: "/logo.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
     ],
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
 };
 
@@ -41,8 +42,6 @@ export default function RootLayout({
       className={`${poppins.variable} ${plusJakartaSans.variable} h-full`}
     >
       <head>
-        <link rel="icon" href="/logo.png" type="image/png" sizes="any" />
-        <link rel="apple-touch-icon" href="/logo.png" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           rel="stylesheet"
@@ -51,7 +50,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-full antialiased" suppressHydrationWarning>
         <AuthProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+            <SmoothScroll>{children}</SmoothScroll>
+          </ToastProvider>
         </AuthProvider>
       </body>
     </html>

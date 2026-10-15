@@ -6,6 +6,7 @@ import { QuizStatsCards } from "./QuizStatsCards";
 import { QuizFilters } from "./QuizFilters";
 import { QuizTable } from "./QuizTable";
 import { TableSkeleton } from "@/components/ui/loading/TableSkeleton";
+import { QuizListSkeleton } from "./QuizListSkeleton";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useToast } from "@/components/ui/Toast";
 import { quizService } from "../services/quizService";
@@ -23,11 +24,13 @@ export function QuizListFeature() {
     isLoading,
     searchQuery,
     filterType,
+    filterScope,
     filterStatus,
     sortBy,
     pagination,
     setSearchQuery,
     setFilterType,
+    setFilterScope,
     setFilterStatus,
     setSortBy,
     setPage,
@@ -39,6 +42,25 @@ export function QuizListFeature() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [toggleTarget, setToggleTarget] = useState<QuestionnaireRecord | null>(null);
   const [isTogglingStatus, setIsTogglingStatus] = useState(false);
+  const [pairTarget, setPairTarget] = useState<QuestionnaireRecord | null>(null);
+  const [pairOptions, setPairOptions] = useState<Awaited<ReturnType<typeof quizService.getEligiblePreTests>>>([]);
+  const [selectedPreTestId, setSelectedPreTestId] = useState("");
+  const [isPairing, setIsPairing] = useState(false);
+
+  const handlePairClick = useCallback(async (quiz: QuestionnaireRecord) => {
+    setPairTarget(quiz);
+    setSelectedPreTestId("");
+    setPairOptions(await quizService.getEligiblePreTests(quiz.scope ?? (quiz.educationId ? "EDUCATION" : "APPLICATION"), quiz.educationId, "admin"));
+  }, []);
+
+  const handlePair = useCallback(async () => {
+    if (!pairTarget || !selectedPreTestId) return;
+    setIsPairing(true);
+    const success = await quizService.pairQuestionnaire(pairTarget.id, selectedPreTestId);
+    setIsPairing(false);
+    if (success) { showToast({ type: "success", title: "Pasangan tersimpan", description: "Post-Test berhasil dihubungkan ke Pre-Test." }); setPairTarget(null); refetch(); }
+    else showToast({ type: "error", title: "Gagal", description: "Post-Test gagal dihubungkan ke Pre-Test." });
+  }, [pairTarget, selectedPreTestId, showToast, refetch]);
 
   const handleConfirmDelete = useCallback(async () => {
     if (!deleteId) return;
@@ -101,17 +123,7 @@ export function QuizListFeature() {
 
   // Full-page skeleton only on first load; later refetches skeleton the table only
   if (isLoading && !stats) {
-    return (
-      <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <div className="h-8 w-64 bg-slate-200 rounded-lg animate-pulse" />
-            <div className="h-4 w-96 bg-slate-100 rounded-lg animate-pulse mt-2" />
-          </div>
-        </div>
-        <div className="h-96 w-full bg-slate-100 rounded-2xl animate-pulse" />
-      </div>
-    );
+    return <QuizListSkeleton isStaff={isStaff} />;
   }
 
   return (
@@ -121,13 +133,13 @@ export function QuizListFeature() {
         <div>
           <h2 className="text-2xl font-bold text-[#1A202C]">Manajemen Kuesioner</h2>
           <p className="text-xs font-medium text-[#718096] mt-1">
-            Kelola instrumen evaluasi Pre-Test (DMSES) dan Post-Test materi edukasi pasien
+            Kelola pasangan pengukuran sebelum dan sesudah untuk ranah aplikasi maupun materi edukasi
           </p>
         </div>
         {!isStaff && (
           <Link
             href={`${ROUTES.MANAJEMEN_KUISIONER}/tambah`}
-            className="h-12 px-6 rounded-xl bg-[#00695C] text-white text-sm font-bold hover:bg-[#004D40] transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#00695C]/20 shrink-0"
+            className="h-12 px-6 rounded-xl bg-[#3B67FC] text-white text-sm font-bold hover:bg-[#1A63ED] transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#3B67FC]/20 shrink-0"
           >
             <span className="material-symbols-outlined text-xl select-none">add</span>
             <span>Buat Kuesioner Baru</span>
@@ -142,10 +154,12 @@ export function QuizListFeature() {
       <QuizFilters
         searchQuery={searchQuery}
         filterType={filterType}
+        filterScope={filterScope}
         filterStatus={filterStatus}
         sortBy={sortBy}
         onSearchChange={setSearchQuery}
         onTypeChange={setFilterType}
+        onScopeChange={setFilterScope}
         onStatusChange={setFilterStatus}
         onSortChange={setSortBy}
       />
@@ -160,6 +174,7 @@ export function QuizListFeature() {
           onDeleteClick={setDeleteId}
           onPageChange={setPage}
           onToggleStatusClick={(quiz) => setToggleTarget(quiz)}
+          onPairClick={handlePairClick}
         />
       )}
 
@@ -180,6 +195,23 @@ export function QuizListFeature() {
           onConfirm={handleConfirmToggleStatus}
           onCancel={() => setToggleTarget(null)}
         />
+      )}
+
+      {pairTarget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
+            <h3 className="text-base font-bold text-[#1A202C]">Hubungkan ke Pre-Test</h3>
+            <p className="mt-1 text-xs text-[#718096]">Pilih Pre-Test yang menjadi sumber pembanding.</p>
+            <select value={selectedPreTestId} onChange={(e) => setSelectedPreTestId(e.target.value)} className="mt-5 h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-[#3B67FC]">
+              <option value="">Pilih Pre-Test</option>
+              {pairOptions.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
+            </select>
+            <div className="mt-5 flex justify-end gap-2">
+              <button type="button" onClick={() => setPairTarget(null)} className="rounded-lg px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer">Batal</button>
+              <button type="button" disabled={!selectedPreTestId || isPairing} onClick={handlePair} className="rounded-lg bg-[#3B67FC] px-4 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer">{isPairing ? "Menyimpan..." : "Simpan Pasangan"}</button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Delete Confirmation Modal — admin only */}

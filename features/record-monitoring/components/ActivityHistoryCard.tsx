@@ -73,7 +73,7 @@ export function ActivityHistoryCard({ logs = [], selectedDate, onDateChange, isL
               type="date"
               value={selectedDate}
               onChange={(e) => onDateChange(e.target.value)}
-              className="text-xs font-medium border border-[#E2E8F0] rounded-lg px-2.5 py-1 bg-[#F8FAFC] text-[#4A5568] focus:outline-none focus:ring-1 focus:ring-[#00695C] cursor-pointer"
+              className="text-xs font-medium border border-[#E2E8F0] rounded-lg px-2.5 py-1 bg-[#F8FAFC] text-[#4A5568] focus:outline-none focus:ring-1 focus:ring-[#3B67FC] cursor-pointer"
             />
           </div>
         )}
@@ -83,7 +83,7 @@ export function ActivityHistoryCard({ logs = [], selectedDate, onDateChange, isL
       <div className="flex-1 w-full bg-[#F8FAFC] rounded-xl mb-4 p-4 border border-[#E2E8F0] flex flex-col justify-end">
         {isLoading ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center p-6">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#00695C] mb-2"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#3B67FC] mb-2"></div>
             <p className="text-xs text-[#718096]">Memuat catatan aktivitas...</p>
           </div>
         ) : !hasData ? (
@@ -107,14 +107,14 @@ export function ActivityHistoryCard({ logs = [], selectedDate, onDateChange, isL
 
             {chartBars.map((bar, i) => (
               <div key={i} className="flex flex-col items-center gap-1.5 z-10 h-full justify-end">
-                <span className="text-[11px] font-bold text-[#00695C]">{bar.value}m</span>
+                <span className="text-[11px] font-bold text-[#3B67FC]">{bar.value}m</span>
                 <div className="w-8 h-28 flex items-end justify-center bg-[#E2E8F0]/40 rounded-t-lg p-0.5">
                   <div 
                      style={{ height: `${bar.value > 0 ? Math.max(12, Math.min(100, Math.round((bar.value / chartScale) * 100))) : 4}%` }}
                     className={[
                       "w-full rounded-t-md transition-all duration-500 hover:opacity-90",
                       bar.value > 0
-                        ? "bg-[#00695C] shadow-md shadow-[#00695C]/20"
+                        ? "bg-[#3B67FC] shadow-md shadow-[#3B67FC]/20"
                         : "bg-[#CBD5E0]"
                     ].join(" ")}
                   />

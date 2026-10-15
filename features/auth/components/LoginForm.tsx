@@ -45,14 +45,14 @@ export function LoginForm() {
     <div className="font-[family-name:var(--font-jakarta)]">
       {/* Mobile-only hero header (desktop unchanged) */}
       <div className="md:hidden mb-7">
-        <div className="hero-gradient relative overflow-hidden rounded-3xl px-5 pt-5 pb-6 shadow-lg shadow-[#004f45]/20">
+        <div className="hero-gradient relative overflow-hidden rounded-3xl px-5 pt-5 pb-6 shadow-lg shadow-[#001B6B]/20">
           <div className="absolute inset-0 medical-grid opacity-20 pointer-events-none" />
           <div className="absolute -top-10 -right-10 w-36 h-36 bg-white/10 blur-2xl rounded-full pointer-events-none" />
 
           <div className="relative">
             <div className="inline-flex items-center bg-white rounded-2xl px-3 py-2 shadow-sm mb-5">
               <Image
-                src="/logo.png"
+                src="/logo-diba-care.png"
                 alt="DIBA Logo"
                 width={240}
                 height={80}
@@ -63,7 +63,7 @@ export function LoginForm() {
             <h1 className="text-white text-2xl font-extrabold tracking-tight mb-1.5">
               Selamat Datang 👋
             </h1>
-            <p className="text-[#94e5d5]/90 text-[13px] leading-relaxed">
+            <p className="text-[#B9F5FB]/90 text-[13px] leading-relaxed">
               Masuk untuk mengakses sistem DIBA (Diabetes Behaviour &amp; Adherence Application).
             </p>
 
@@ -137,7 +137,7 @@ export function LoginForm() {
           <label className="flex items-center gap-2 cursor-pointer group select-none">
             <input
               type="checkbox"
-              className="w-4 h-4 sm:w-5 sm:h-5 rounded border-[#bec9c5] text-[#004f45] focus:ring-[#004f45]"
+              className="w-4 h-4 sm:w-5 sm:h-5 rounded border-[#bec9c5] text-[#001B6B] focus:ring-[#001B6B]"
               {...register("rememberMe")}
             />
             <span className="text-xs sm:text-sm text-[#4A5568] group-hover:text-[#1b1c1c] transition-colors">
@@ -146,7 +146,7 @@ export function LoginForm() {
           </label>
           <Link
             href={ROUTES.LUPA_PASSWORD}
-            className="text-xs sm:text-sm font-bold text-[#004f45] hover:underline decoration-2 underline-offset-4 transition-all self-start sm:self-auto"
+            className="text-xs sm:text-sm font-bold text-[#001B6B] hover:underline decoration-2 underline-offset-4 transition-all self-start sm:self-auto"
           >
             Lupa Kata Sandi?
           </Link>

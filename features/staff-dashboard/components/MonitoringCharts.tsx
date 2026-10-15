@@ -34,7 +34,7 @@ function RangeSelector({ value, onChange }: RangeSelectorProps) {
           onClick={() => onChange(opt.value)}
           className={`flex-1 sm:flex-initial text-center px-2.5 py-1.5 sm:py-1 text-[11px] sm:text-[10px] font-bold rounded-md transition-all cursor-pointer ${
             value === opt.value
-              ? "bg-white text-[#00695C] shadow-sm"
+              ? "bg-white text-[#3B67FC] shadow-sm"
               : "text-[#718096] hover:text-[#4A5568]"
           }`}
         >
@@ -97,7 +97,7 @@ function PatientList({
                   className="w-5 h-5 rounded-full object-cover shrink-0"
                 />
               ) : (
-                <span className="w-5 h-5 rounded-full bg-[#00695C] text-white text-[9px] font-bold flex items-center justify-center shrink-0">
+                <span className="w-5 h-5 rounded-full bg-[#3B67FC] text-white text-[9px] font-bold flex items-center justify-center shrink-0">
                   {initialOf(p.name)}
                 </span>
               )}
@@ -114,7 +114,7 @@ function PatientList({
       {patients.length > 5 && (
         <Link
           href="/staff/pemantauan-catatan-pasien"
-          className="mt-2.5 inline-flex items-center gap-1 text-[11px] font-bold text-[#00695C] hover:text-[#004d40] transition-colors"
+          className="mt-2.5 inline-flex items-center gap-1 text-[11px] font-bold text-[#3B67FC] hover:text-[#1A63ED] transition-colors"
         >
           Lihat Semua ({patients.length}) <span aria-hidden>→</span>
         </Link>
@@ -296,7 +296,7 @@ export function MonitoringCharts({
 
                     <div className="w-full bg-[#F1F5F9] rounded-t-lg h-28 flex items-end overflow-hidden">
                       <div
-                        className="w-full bg-gradient-to-t from-[#00695C] to-[#10B981] rounded-t-lg hover:opacity-90 transition-all cursor-default"
+                        className="w-full bg-gradient-to-t from-[#3B67FC] to-[#10B981] rounded-t-lg hover:opacity-90 transition-all cursor-default"
                         style={{ height: `${Math.max(heightPct, 5)}%` }}
                       />
                     </div>
@@ -307,7 +307,7 @@ export function MonitoringCharts({
                     >
                       {point.level}
                     </span>
-                    <span className="text-[10px] font-extrabold text-[#00695C] mt-0.5">
+                    <span className="text-[10px] font-extrabold text-[#3B67FC] mt-0.5">
                       {pct}%
                     </span>
                   </div>

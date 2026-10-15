@@ -108,7 +108,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
           <button
             onClick={save}
             disabled={isSaving}
-            className="flex-1 sm:flex-initial px-8 py-2.5 rounded-full bg-[#00695C] text-white text-sm font-semibold shadow-lg shadow-[#00695C]/20 hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 text-center"
+            className="flex-1 sm:flex-initial px-8 py-2.5 rounded-full bg-[#3B67FC] text-white text-sm font-semibold shadow-lg shadow-[#3B67FC]/20 hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 text-center"
           >
             {isSaving ? "Menyimpan..." : "Simpan Staff"}
           </button>
@@ -135,7 +135,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                 onChange={(e) => handleChange("fullName", e.target.value)}
                 placeholder="Masukkan nama lengkap"
                 className={[
-                  "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
+                  "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
                   errors.fullName ? "border-red-500" : "",
                 ].join(" ")}
               />
@@ -155,7 +155,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                 onChange={(e) => handleChange("username", e.target.value)}
                 placeholder="Username unik"
                 className={[
-                  "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
+                  "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
                   errors.username ? "border-red-500" : "",
                 ].join(" ")}
               />
@@ -175,7 +175,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                 onChange={(e) => handleChange("email", e.target.value)}
                 placeholder="email@contoh.com"
                 className={[
-                  "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
+                  "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
                   errors.email ? "border-red-500" : "",
                 ].join(" ")}
               />
@@ -194,7 +194,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                 value={fields.whatsappNumber}
                 onChange={(e) => handleChange("whatsappNumber", e.target.value)}
                 placeholder="Contoh: 081234567890"
-                className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
+                className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
               />
             </div>
           </div>
@@ -219,14 +219,14 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                   onChange={(e) => handleChange("password", e.target.value)}
                   placeholder="Minimal 6 karakter"
                   className={[
-                    "w-full pl-5 pr-12 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
+                    "w-full pl-5 pr-12 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
                     errors.password ? "border-red-500" : "",
                   ].join(" ")}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#00695C] cursor-pointer"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#3B67FC] cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[20px]">
                     {showPassword ? "visibility_off" : "visibility"}
@@ -250,14 +250,14 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                   onChange={(e) => handleChange("confirmPassword", e.target.value)}
                   placeholder="Ulangi password"
                   className={[
-                    "w-full pl-5 pr-12 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
+                    "w-full pl-5 pr-12 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]",
                     errors.confirmPassword ? "border-red-500" : "",
                   ].join(" ")}
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#00695C] cursor-pointer"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#3B67FC] cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[20px]">
                     {showConfirmPassword ? "visibility_off" : "visibility"}
@@ -300,9 +300,9 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                       value="admin"
                       checked={fields.role === "admin"}
                       onChange={() => handleChange("role", "admin")}
-                      className="text-[#00695C] border-[#E2E8F0] focus:ring-[#00695C] w-5 h-5 cursor-pointer accent-[#00695C]"
+                      className="text-[#3B67FC] border-[#E2E8F0] focus:ring-[#3B67FC] w-5 h-5 cursor-pointer accent-[#3B67FC]"
                     />
-                    <span className="text-sm font-semibold text-[#1A202C] group-hover:text-[#00695C] transition-colors">
+                    <span className="text-sm font-semibold text-[#1A202C] group-hover:text-[#3B67FC] transition-colors">
                       Admin
                     </span>
                   </label>
@@ -313,9 +313,9 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                       value="staff"
                       checked={fields.role === "staff"}
                       onChange={() => handleChange("role", "staff")}
-                      className="text-[#00695C] border-[#E2E8F0] focus:ring-[#00695C] w-5 h-5 cursor-pointer accent-[#00695C]"
+                      className="text-[#3B67FC] border-[#E2E8F0] focus:ring-[#3B67FC] w-5 h-5 cursor-pointer accent-[#3B67FC]"
                     />
-                    <span className="text-sm font-semibold text-[#718096] group-hover:text-[#00695C] transition-colors">
+                    <span className="text-sm font-semibold text-[#718096] group-hover:text-[#3B67FC] transition-colors">
                       Staff
                     </span>
                   </label>
@@ -333,7 +333,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                 value={fields.positionTitle}
                 onChange={(e) => handleChange("positionTitle", e.target.value)}
                 placeholder="Contoh: Kepala Puskesmas"
-                className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
+                className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
               />
             </div>
 
@@ -346,7 +346,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                   </label>
                   <Link
                     href="/admin/fasilitas"
-                    className="text-xs font-semibold text-[#00695C] hover:underline flex items-center gap-1"
+                    className="text-xs font-semibold text-[#3B67FC] hover:underline flex items-center gap-1"
                   >
                     <span className="material-symbols-outlined text-[14px]">add</span>
                     Kelola Puskesmas
@@ -376,16 +376,16 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
                 value={fields.shortBio}
                 onChange={(e) => handleChange("shortBio", e.target.value)}
                 placeholder="Deskripsi singkat"
-                className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#00695C] focus:ring-1 focus:ring-[#00695C] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
+                className="w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none transition-all text-sm placeholder:text-[#64748B]/50 font-medium font-[family-name:var(--font-poppins)] text-[#1E293B]"
               />
             </div>
           </div>
         </div>
 
         {/* Info Banner Accent */}
-        <div className="flex items-start gap-3 bg-[#F0F9F8] p-5 rounded-xl border border-[#B2DFDB]/40 mt-4 select-none">
-          <span className="material-symbols-outlined text-[#00695C] text-[20px] mt-0.5 select-none">info</span>
-          <p className="text-xs text-[#00695C] font-semibold leading-relaxed">
+        <div className="flex items-start gap-3 bg-[#EEF2FF] p-5 rounded-xl border border-[#A8EEFA]/40 mt-4 select-none">
+          <span className="material-symbols-outlined text-[#3B67FC] text-[20px] mt-0.5 select-none">info</span>
+          <p className="text-xs text-[#3B67FC] font-semibold leading-relaxed">
             Staff Monitoring memiliki hak akses untuk memantau data perkembangan klinis pasien diabetes secara langsung (realtime) melalui dashboard.
           </p>
         </div>
@@ -401,7 +401,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
           <button
             onClick={save}
             disabled={isSaving}
-            className="w-full sm:w-auto px-10 py-3 rounded-xl bg-[#00695C] text-white text-sm font-bold shadow-xl shadow-[#00695C]/25 hover:opacity-90 transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-50 text-center"
+            className="w-full sm:w-auto px-10 py-3 rounded-xl bg-[#3B67FC] text-white text-sm font-bold shadow-xl shadow-[#3B67FC]/25 hover:opacity-90 transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-50 text-center"
           >
             <span className="material-symbols-outlined text-lg select-none">save</span>
             <span>{isSaving ? "Menyimpan..." : "Simpan Staff Monitoring"}</span>

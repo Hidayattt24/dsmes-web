@@ -25,13 +25,13 @@ export function AuthCard({ children }: AuthCardProps) {
         <div className="flex gap-4 sm:gap-6 items-center">
           <Link
             href={ROUTES.KEBIJAKAN_PRIVASI}
-            className="text-xs sm:text-sm text-[#4A5568] hover:text-[#004f45] transition-colors font-[family-name:var(--font-jakarta)] py-1"
+            className="text-xs sm:text-sm text-[#4A5568] hover:text-[#001B6B] transition-colors font-[family-name:var(--font-jakarta)] py-1"
           >
             Kebijakan Privasi
           </Link>
           <Link
             href={ROUTES.SYARAT_KETENTUAN}
-            className="text-xs sm:text-sm text-[#4A5568] hover:text-[#004f45] transition-colors font-[family-name:var(--font-jakarta)] py-1"
+            className="text-xs sm:text-sm text-[#4A5568] hover:text-[#001B6B] transition-colors font-[family-name:var(--font-jakarta)] py-1"
           >
             Syarat &amp; Ketentuan
           </Link>

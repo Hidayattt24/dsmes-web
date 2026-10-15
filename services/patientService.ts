@@ -151,8 +151,8 @@ export const patientService = {
         return mapBackendPatientToFrontend(res.data.data);
       }
       return null;
-    } catch {
-      return null;
+    } catch (error) {
+      throw error;
     }
   },
 
@@ -210,8 +210,8 @@ export const patientService = {
     try {
       const res = await axiosInstance.get(`/admin/patients/${id}/activities/education`);
       return res.data?.data ?? null;
-    } catch {
-      return null;
+    } catch (error) {
+      throw error;
     }
   },
 
@@ -245,5 +245,37 @@ export const patientService = {
       return mapBackendPatientToFrontend(res.data.data);
     }
     return null;
+  },
+
+  /** Fetch daily app usage duration per patient */
+  async getPatientAppUsage(id: string, rolePrefix: 'admin' | 'staff' = 'admin'): Promise<{
+    patientId: string;
+    totalSeconds: number;
+    totalFormatted: string;
+    dailyUsages: {
+      date: string;
+      totalSeconds: number;
+      totalFormatted: string;
+      sessionCount: number;
+    }[];
+  } | null> {
+    try {
+      const res = await axiosInstance.get(`/${rolePrefix}/patients/${id}/app-usage`);
+      const d = res.data?.data;
+      if (!d) return null;
+      return {
+        patientId: d.patient_id,
+        totalSeconds: d.total_seconds ?? 0,
+        totalFormatted: d.total_formatted || "0 menit",
+        dailyUsages: (d.daily_usages ?? []).map((u: Record<string, unknown>) => ({
+          date: u.date as string,
+          totalSeconds: (u.total_seconds as number) ?? 0,
+          totalFormatted: (u.total_formatted as string) || "0 menit",
+          sessionCount: (u.session_count as number) ?? 0,
+        })),
+      };
+    } catch {
+      return null;
+    }
   },
 } as const;

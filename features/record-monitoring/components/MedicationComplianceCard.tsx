@@ -28,7 +28,7 @@ export function MedicationComplianceCard({ logs = [], selectedDate, onDateChange
     <div className="bg-white rounded-2xl p-6 border border-[#E2E8F0] shadow-sm flex flex-col h-[520px] font-[family-name:var(--font-poppins)]">
       <div className="flex flex-wrap justify-between items-center gap-2 mb-4">
         <h3 className="text-base font-bold text-[#1A202C] flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#00695C]">medication</span>
+          <span className="material-symbols-outlined text-[#3B67FC]">medication</span>
           Kepatuhan Obat
         </h3>
 
@@ -39,7 +39,7 @@ export function MedicationComplianceCard({ logs = [], selectedDate, onDateChange
               type="date"
               value={selectedDate}
               onChange={(e) => onDateChange(e.target.value)}
-              className="text-xs font-medium border border-[#E2E8F0] rounded-lg px-2.5 py-1 bg-[#F8FAFC] text-[#4A5568] focus:outline-none focus:ring-1 focus:ring-[#00695C] cursor-pointer"
+              className="text-xs font-medium border border-[#E2E8F0] rounded-lg px-2.5 py-1 bg-[#F8FAFC] text-[#4A5568] focus:outline-none focus:ring-1 focus:ring-[#3B67FC] cursor-pointer"
             />
           </div>
         )}
@@ -48,7 +48,7 @@ export function MedicationComplianceCard({ logs = [], selectedDate, onDateChange
       <div className="flex-1 overflow-y-auto pr-1">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center text-center p-6 h-full min-h-[300px]">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#00695C] mb-2"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#3B67FC] mb-2"></div>
             <p className="text-xs text-[#718096]">Memuat catatan obat...</p>
           </div>
         ) : !hasData ? (
@@ -86,7 +86,7 @@ export function MedicationComplianceCard({ logs = [], selectedDate, onDateChange
                           <div className={[
                             "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0",
                             isDiminum
-                              ? "bg-[#F0F9F8] text-[#00695C]"
+                              ? "bg-[#EEF2FF] text-[#3B67FC]"
                               : isTerlewat
                               ? "bg-[#FFF5F5] text-[#C53030]"
                               : "bg-[#F4F6F8] text-[#718096]"

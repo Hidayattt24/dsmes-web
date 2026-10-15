@@ -368,7 +368,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
           <button
             type="submit"
             disabled={isSaving}
-            className="flex-1 sm:flex-none px-6 py-2.5 bg-[#00695C] hover:bg-[#004D40] text-white font-bold text-sm rounded-xl shadow-md shadow-[#00695C]/15 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+            className="flex-1 sm:flex-none px-6 py-2.5 bg-[#3B67FC] hover:bg-[#1A63ED] text-white font-bold text-sm rounded-xl shadow-md shadow-[#3B67FC]/15 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer active:scale-95"
           >
             <span className="material-symbols-outlined text-lg">save</span>
             <span>{isSaving ? "Menyimpan..." : "Simpan Survey"}</span>
@@ -380,7 +380,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
       <div className="bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-sm space-y-6">
         <div className="flex items-center justify-between border-b border-[#EDF2F7] pb-4">
           <h2 className="text-lg font-bold text-[#1A202C] flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#00695C]">settings</span>
+            <span className="material-symbols-outlined text-[#3B67FC]">settings</span>
             Informasi Umum Survey
           </h2>
           <span className="text-xs text-[#718096]">(*) Wajib diisi</span>
@@ -397,7 +397,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
               placeholder="Contoh: Evaluasi Kepuasan & Kebisaan Penggunaan Aplikasi DIBA Aceh"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-medium text-[#1A202C] focus:outline-none focus:border-[#00695C] transition-all"
+              className="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-medium text-[#1A202C] focus:outline-none focus:border-[#3B67FC] transition-all"
             />
           </div>
 
@@ -410,7 +410,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
               placeholder="Petunjuk singkat bagi responden sebelum mulai mengisi pertanyaan..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-medium text-[#1A202C] focus:outline-none focus:border-[#00695C] transition-all"
+              className="w-full px-4 py-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-medium text-[#1A202C] focus:outline-none focus:border-[#3B67FC] transition-all"
             />
           </div>
 
@@ -490,7 +490,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
           <button
             type="button"
             onClick={handleAddQuestion}
-            className="px-4 py-2.5 bg-[#E6FFFA] text-[#00695C] hover:bg-[#B2F5EA] font-bold text-xs rounded-xl transition-all flex items-center gap-2 cursor-pointer border border-[#00695C]/20"
+            className="px-4 py-2.5 bg-[#E6FFFA] text-[#3B67FC] hover:bg-[#B2F5EA] font-bold text-xs rounded-xl transition-all flex items-center gap-2 cursor-pointer border border-[#3B67FC]/20"
           >
             <span className="material-symbols-outlined text-base">add_circle</span>
             Tambah Pertanyaan
@@ -503,11 +503,11 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
         {questions.map((q, qIdx) => (
           <div
             key={qIdx}
-            className="bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-sm space-y-4 relative hover:border-[#00695C]/40 transition-all"
+            className="bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-sm space-y-4 relative hover:border-[#3B67FC]/40 transition-all"
           >
             <div className="flex justify-between items-center border-b border-[#EDF2F7] pb-3">
               <div className="flex items-center gap-3">
-                <span className="text-xs font-bold text-[#00695C] bg-[#E6FFFA] px-3 py-1 rounded-lg border border-[#00695C]/15">
+                <span className="text-xs font-bold text-[#3B67FC] bg-[#E6FFFA] px-3 py-1 rounded-lg border border-[#3B67FC]/15">
                   Pertanyaan #{qIdx + 1}
                 </span>
                 {type === "SUS" && (
@@ -562,7 +562,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
                 placeholder="Masukkan kalimat pertanyaan..."
                 value={q.question_text}
                 onChange={(e) => handleQuestionChange(qIdx, "question_text", e.target.value)}
-                className="w-full px-4 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-medium text-[#1A202C] focus:outline-none focus:border-[#00695C]"
+                className="w-full px-4 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-medium text-[#1A202C] focus:outline-none focus:border-[#3B67FC]"
               />
             </div>
 
@@ -576,7 +576,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
                 placeholder="Penjelasan konteks atau petunjuk khusus untuk item ini..."
                 value={q.description || ""}
                 onChange={(e) => handleQuestionChange(qIdx, "description", e.target.value)}
-                className="w-full px-4 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-medium text-[#1A202C] focus:outline-none focus:border-[#00695C]"
+                className="w-full px-4 py-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-sm font-medium text-[#1A202C] focus:outline-none focus:border-[#3B67FC]"
               />
             </div>
 
@@ -588,7 +588,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
               <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
                 {[0, 1, 2, 3, 4].map((lblIdx) => (
                   <div key={lblIdx} className="bg-[#F8FAFC] p-2.5 rounded-xl border border-[#E2E8F0]">
-                    <span className="text-[10px] font-bold text-[#00695C] uppercase block mb-1">
+                    <span className="text-[10px] font-bold text-[#3B67FC] uppercase block mb-1">
                       Skor {lblIdx + 1}
                     </span>
                     <input
@@ -596,7 +596,7 @@ export function SurveyFormFeature({ surveyId }: SurveyFormFeatureProps) {
                       disabled={type === "SUS"}
                       value={(q.likert_labels || DEFAULT_LIKERT_SATISFACTION)[lblIdx] || ""}
                       onChange={(e) => handleLabelChange(qIdx, lblIdx, e.target.value)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-[#E2E8F0] rounded-lg text-xs font-medium text-[#1A202C] focus:outline-none focus:border-[#00695C] disabled:bg-gray-100"
+                      className="w-full px-2.5 py-1.5 bg-white border border-[#E2E8F0] rounded-lg text-xs font-medium text-[#1A202C] focus:outline-none focus:border-[#3B67FC] disabled:bg-gray-100"
                     />
                   </div>
                 ))}

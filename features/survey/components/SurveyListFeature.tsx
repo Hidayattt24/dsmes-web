@@ -169,7 +169,7 @@ export function SurveyListFeature({ isStaff: propIsStaff }: SurveyListFeaturePro
         {!isStaff && (
           <Link
             href="/admin/survey/create"
-            className="bg-[#00695C] text-white text-sm font-bold h-12 px-6 rounded-xl flex items-center gap-2 hover:bg-[#004d43] transition-colors shadow-md shadow-[#00695C]/10 cursor-pointer active:scale-95 duration-200"
+            className="bg-[#3B67FC] text-white text-sm font-bold h-12 px-6 rounded-xl flex items-center gap-2 hover:bg-[#1A63ED] transition-colors shadow-md shadow-[#3B67FC]/10 cursor-pointer active:scale-95 duration-200"
           >
             <span className="material-symbols-outlined text-lg select-none">add</span>
             <span>Buat Survey Baru</span>

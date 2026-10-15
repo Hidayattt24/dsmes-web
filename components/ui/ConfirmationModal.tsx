@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Button } from "./Button";
+import { Portal } from "./Portal";
 
 type ModalVariant = "danger" | "warning" | "success" | "info";
 
@@ -32,9 +33,9 @@ const variantConfig = {
   },
   success: {
     icon: "check_circle",
-    iconClass: "text-[#00695C]",
-    iconBg: "bg-[#F0F9F8] border border-[#B2DFDB]/20",
-    confirmClass: "bg-[#00695C] hover:bg-[#004f45] text-white shadow-sm hover:scale-[1.01] active:scale-[0.99]",
+    iconClass: "text-[#3B67FC]",
+    iconBg: "bg-[#EEF2FF] border border-[#A8EEFA]/20",
+    confirmClass: "bg-[#3B67FC] hover:bg-[#001B6B] text-white shadow-sm hover:scale-[1.01] active:scale-[0.99]",
   },
   info: {
     icon: "info",
@@ -71,20 +72,20 @@ export function ConfirmationModal({
 
   // Handle body scroll locking
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
     if (open) {
       document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [open]);
 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
+    <Portal>
+    <div className="fixed inset-0 z-[9000] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 ease-out"
@@ -154,5 +155,6 @@ export function ConfirmationModal({
         </div>
       </div>
     </div>
+    </Portal>
   );
 }

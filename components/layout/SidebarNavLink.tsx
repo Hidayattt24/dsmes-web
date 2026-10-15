@@ -23,8 +23,8 @@ export function SidebarNavLink({ item }: SidebarNavLinkProps) {
         "flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200",
         "font-[family-name:var(--font-poppins)] text-[15px]",
         isActive
-          ? "text-[#00695C] font-semibold bg-[#F0F9F8]"
-          : "text-[#718096] hover:text-[#00695C] hover:bg-[#F4F6F8]",
+          ? "text-[#3B67FC] font-semibold bg-[#EEF2FF]"
+          : "text-[#718096] hover:text-[#3B67FC] hover:bg-[#F4F6F8]",
       ].join(" ")}
     >
       <span className="material-symbols-outlined text-[22px]">{item.icon}</span>

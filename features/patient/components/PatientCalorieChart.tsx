@@ -124,7 +124,7 @@ export function PatientCalorieChart({ data = [], patient }: PatientCalorieChartP
                 "px-4 py-1.5 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer",
                 selectedRange === range
                   ? "bg-[#0F766E] text-white shadow-sm shadow-[#0F766E]/15"
-                  : "text-[#718096] hover:text-[#00695C]",
+                  : "text-[#718096] hover:text-[#3B67FC]",
               ].join(" ")}
             >
               {range} Hari
@@ -243,7 +243,7 @@ export function PatientCalorieChart({ data = [], patient }: PatientCalorieChartP
           <p className="text-[10px] uppercase font-bold tracking-widest text-[#718096] mb-1">
             Tercapai
           </p>
-          <p className="font-bold text-sm text-[#00695C]">
+          <p className="font-bold text-sm text-[#3B67FC]">
             {compliancePercent !== null ? `${compliancePercent}%` : <span className="text-[#A0AEC0]">-</span>}
           </p>
         </div>

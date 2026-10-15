@@ -20,7 +20,7 @@ export function PatientStatistics({ stats }: PatientStatisticsProps) {
       {/* Total Pasien */}
       <div className="premium-card p-7 hover:-translate-y-1 transition-transform duration-300">
         <div className="flex items-center justify-between mb-6">
-          <span className="w-10 h-10 rounded-full bg-[#F0F9F8] text-[#00695C] flex items-center justify-center">
+          <span className="w-10 h-10 rounded-full bg-[#EEF2FF] text-[#3B67FC] flex items-center justify-center">
             <span className="material-symbols-outlined text-[20px]">group</span>
           </span>
         </div>
@@ -32,13 +32,13 @@ export function PatientStatistics({ stats }: PatientStatisticsProps) {
         </p>
       </div>
 
-      {/* Pasien Aktif Hari Ini */}
+      {/* Login Hari Ini */}
       <div className="premium-card p-7 hover:-translate-y-1 transition-transform duration-300">
         <div className="flex items-center justify-between mb-6">
-          <span className="w-10 h-10 rounded-full bg-[#F0F9F8] text-[#00695C] flex items-center justify-center">
+          <span className="w-10 h-10 rounded-full bg-[#EEF2FF] text-[#3B67FC] flex items-center justify-center">
             <span className="material-symbols-outlined text-[20px]">person_check</span>
           </span>
-          <span className="text-[10px] font-bold text-[#00695C] bg-[#F0F9F8] px-2 py-0.5 rounded-full uppercase border border-[#B2DFDB]">
+          <span className="text-[10px] font-bold text-[#3B67FC] bg-[#EEF2FF] px-2 py-0.5 rounded-full uppercase border border-[#A8EEFA]">
             Hari Ini
           </span>
         </div>
@@ -50,7 +50,7 @@ export function PatientStatistics({ stats }: PatientStatisticsProps) {
         </p>
         <div className="w-full bg-[#F4F6F8] h-1.5 rounded-full mt-4 overflow-hidden">
           <div 
-            className="bg-[#00695C] h-full rounded-full transition-all duration-500" 
+            className="bg-[#3B67FC] h-full rounded-full transition-all duration-500" 
             style={{ width: `${activePercent}%` }}
           />
         </div>

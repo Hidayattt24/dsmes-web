@@ -34,7 +34,7 @@ export function FoodFilters({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Cari nama makanan, merk, atau barcode..."
-          className="w-full pl-10 pr-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] placeholder-[#718096] focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C] focus:bg-white transition-all font-[family-name:var(--font-poppins)]"
+          className="w-full pl-10 pr-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] placeholder-[#718096] focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC] focus:bg-white transition-all font-[family-name:var(--font-poppins)]"
         />
       </div>
 

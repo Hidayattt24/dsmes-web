@@ -10,6 +10,17 @@ interface UsePatientDetailReturn {
   readonly meals: Record<string, unknown>[];
   readonly activities: Record<string, unknown>[];
   readonly educationActivities: unknown;
+  readonly appUsage: {
+    totalSeconds: number;
+    totalFormatted: string;
+    dailyUsages: {
+      date: string;
+      totalSeconds: number;
+      totalFormatted: string;
+      sessionCount: number;
+    }[];
+  } | null;
+  readonly appUsageError: string | null;
   readonly isLoading: boolean;
   readonly error: string | null;
   readonly refetch: () => void;
@@ -21,6 +32,8 @@ export function usePatientDetail(id: string): UsePatientDetailReturn {
   const [meals, setMeals] = useState<Record<string, unknown>[]>([]);
   const [activities, setActivities] = useState<Record<string, unknown>[]>([]);
   const [educationActivities, setEducationActivities] = useState<unknown>(null);
+  const [appUsage, setAppUsage] = useState<UsePatientDetailReturn["appUsage"]>(null);
+  const [appUsageError, setAppUsageError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -41,6 +54,13 @@ export function usePatientDetail(id: string): UsePatientDetailReturn {
         setMeals(mealsData);
         setActivities(actData);
         setEducationActivities(eduActData);
+        try {
+          setAppUsageError(null);
+          setAppUsage(await patientService.getPatientAppUsage(id, "admin"));
+        } catch {
+          setAppUsage(null);
+          setAppUsageError("Gagal memuat durasi penggunaan aplikasi.");
+        }
       } else {
         setError("Pasien tidak ditemukan.");
       }
@@ -65,6 +85,8 @@ export function usePatientDetail(id: string): UsePatientDetailReturn {
     meals,
     activities,
     educationActivities,
+    appUsage,
+    appUsageError,
     isLoading,
     error,
     refetch: fetchPatient,

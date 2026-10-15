@@ -48,7 +48,7 @@ export function RecordMonitoringStats({ stats }: RecordMonitoringStatsProps) {
 
       {/* Aktivitas */}
       <div className="premium-card p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 group">
-        <div className="w-12 h-12 rounded-full bg-[#F0F9F8] text-[#00695C] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+        <div className="w-12 h-12 rounded-full bg-[#EEF2FF] text-[#3B67FC] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
           <span className="material-symbols-outlined text-2xl">directions_run</span>
         </div>
         <div>

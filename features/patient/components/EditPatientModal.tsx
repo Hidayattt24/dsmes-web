@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import type { Patient } from "@/types/patient";
 import { Select } from "@/components/ui/Select";
+import { Portal } from "@/components/ui/Portal";
 
 interface EditPatientModalProps {
   readonly isOpen: boolean;
@@ -51,13 +52,12 @@ export function EditPatientModal({
 
   // Lock body scrollbar when modal opens to eliminate scrollbar track right margin gap
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
     if (isOpen) {
       document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [isOpen]);
 
@@ -79,7 +79,8 @@ export function EditPatientModal({
   };
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen z-[9999] flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 overflow-y-auto font-[family-name:var(--font-poppins)]">
+    <Portal>
+    <div className="fixed top-0 left-0 w-screen h-screen z-[9000] flex items-center justify-center bg-slate-900/60 backdrop-blur-md p-4 overflow-y-auto font-[family-name:var(--font-poppins)]">
       <div className="bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-100 my-auto">
         <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
           <div>
@@ -104,7 +105,7 @@ export function EditPatientModal({
                 type="text"
                 value={formData.full_name}
                 onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-[#00695C]/20 focus:border-[#00695C] transition-all"
+                className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-[#3B67FC]/20 focus:border-[#3B67FC] transition-all"
                 required
               />
             </div>
@@ -117,7 +118,7 @@ export function EditPatientModal({
                 {facilityOptions.map((option) => (
                   <label
                     key={option.value}
-                    className="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-xs text-slate-700 cursor-pointer hover:border-[#00695C]"
+                    className="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-xs text-slate-700 cursor-pointer hover:border-[#3B67FC]"
                   >
                     <input
                       type="checkbox"
@@ -129,7 +130,7 @@ export function EditPatientModal({
                             : current.filter((value) => value !== option.value),
                         )
                       }
-                      className="h-4 w-4 accent-[#00695C]"
+                      className="h-4 w-4 accent-[#3B67FC]"
                     />
                     {option.label}
                   </label>
@@ -140,7 +141,7 @@ export function EditPatientModal({
                 value={otherFacility}
                 onChange={(e) => setOtherFacility(e.target.value)}
                 placeholder="Lainnya (tuliskan fasilitas kesehatan)"
-                className="mt-2 w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-[#00695C]/20 focus:border-[#00695C] transition-all"
+                className="mt-2 w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-[#3B67FC]/20 focus:border-[#3B67FC] transition-all"
               />
             </div>
 
@@ -151,7 +152,7 @@ export function EditPatientModal({
                 type="text"
                 value={formData.whatsapp_number}
                 onChange={(e) => setFormData({ ...formData, whatsapp_number: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-[#00695C]/20 focus:border-[#00695C] transition-all"
+                className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-[#3B67FC]/20 focus:border-[#3B67FC] transition-all"
                 required
               />
             </div>
@@ -173,7 +174,7 @@ export function EditPatientModal({
                 rows={2}
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-[#00695C]/20 focus:border-[#00695C] transition-all"
+                className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-[#3B67FC]/20 focus:border-[#3B67FC] transition-all"
               />
             </div>
           </div>
@@ -189,7 +190,7 @@ export function EditPatientModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 bg-[#00695C] hover:bg-[#004D40] text-white text-xs font-bold rounded-xl shadow-sm transition-colors disabled:opacity-50"
+              className="px-5 py-2.5 bg-[#3B67FC] hover:bg-[#1A63ED] text-white text-xs font-bold rounded-xl shadow-sm transition-colors disabled:opacity-50"
             >
               {isSubmitting ? "Simpan..." : "Simpan Perubahan"}
             </button>
@@ -197,5 +198,6 @@ export function EditPatientModal({
         </form>
       </div>
     </div>
+    </Portal>
   );
 }

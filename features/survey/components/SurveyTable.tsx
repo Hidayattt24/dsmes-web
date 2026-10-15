@@ -30,7 +30,7 @@ export function SurveyTable({
             Instrumen Kepuasan Pengguna & System Usability Scale (SUS)
           </p>
         </div>
-        <span className="text-xs font-semibold text-[#00695C] bg-[#F0F9F8] px-3 py-1.5 rounded-full border border-[#00695C]/15">
+        <span className="text-xs font-semibold text-[#3B67FC] bg-[#EEF2FF] px-3 py-1.5 rounded-full border border-[#3B67FC]/15">
           Total: {total} Survey
         </span>
       </div>
@@ -70,7 +70,7 @@ export function SurveyTable({
                     <td className="py-4 px-6">
                       <Link
                         href={`${basePath}/${survey.id}`}
-                        className="font-bold text-[#00695C] hover:underline block max-w-md line-clamp-1"
+                        className="font-bold text-[#3B67FC] hover:underline block max-w-md line-clamp-1"
                       >
                         {survey.title}
                       </Link>
@@ -101,7 +101,7 @@ export function SurveyTable({
                     </td>
 
                     {/* Jumlah Responden */}
-                    <td className="py-4 px-6 text-center font-bold text-[#00695C]">
+                    <td className="py-4 px-6 text-center font-bold text-[#3B67FC]">
                       {survey.response_count} Peserta
                     </td>
 
@@ -130,7 +130,7 @@ export function SurveyTable({
                         {/* Detail */}
                         <Link
                           href={`${basePath}/${survey.id}`}
-                          className="p-2 hover:text-[#00695C] hover:bg-[#00695C]/10 rounded-lg transition-colors flex items-center"
+                          className="p-2 hover:text-[#3B67FC] hover:bg-[#3B67FC]/10 rounded-lg transition-colors flex items-center"
                           title="Lihat Detail & Pertanyaan"
                         >
                           <span className="material-symbols-outlined text-[20px] select-none">

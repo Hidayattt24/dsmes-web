@@ -46,11 +46,11 @@ export function PatientEducationActivity({ data }: PatientEducationActivityProps
 
       {/* Stats Summary cards */}
       <div className="grid grid-cols-2 gap-4 mb-8">
-        <div className="bg-[#00695C]/5 p-4 rounded-xl border border-[#00695C]/10 text-center">
-          <p className="text-[10px] uppercase font-bold text-[#00695C] tracking-widest mb-1">
+        <div className="bg-[#3B67FC]/5 p-4 rounded-xl border border-[#3B67FC]/10 text-center">
+          <p className="text-[10px] uppercase font-bold text-[#3B67FC] tracking-widest mb-1">
             Modul Selesai
           </p>
-          <p className="text-2xl font-bold text-[#00695C]">
+          <p className="text-2xl font-bold text-[#3B67FC]">
             {completedCount} <span className="text-xs font-normal text-[#718096]">/ {totalArticles}</span>
           </p>
         </div>
@@ -73,7 +73,7 @@ export function PatientEducationActivity({ data }: PatientEducationActivityProps
         <div className="relative ml-2">
           {recentActivities.length > 0 ? (
             <div className="relative space-y-8">
-              <div className="absolute left-2.5 top-2.5 bottom-2.5 w-0.5 bg-[#00695C]/20 z-0"></div>
+              <div className="absolute left-2.5 top-2.5 bottom-2.5 w-0.5 bg-[#3B67FC]/20 z-0"></div>
 
               {recentActivities.map((item, idx) => {
                 const activityDate = item.last_activity_at
@@ -86,7 +86,7 @@ export function PatientEducationActivity({ data }: PatientEducationActivityProps
                   : "";
                 return (
                   <div key={item.article_id || idx} className="relative flex items-start gap-6 z-10">
-                    <div className={`w-5 h-5 rounded-full border-4 border-white shadow-sm flex-shrink-0 mt-0.5 ${item.completed ? 'bg-[#00695C]' : 'bg-[#E2E8F0]'}`}></div>
+                    <div className={`w-5 h-5 rounded-full border-4 border-white shadow-sm flex-shrink-0 mt-0.5 ${item.completed ? 'bg-[#3B67FC]' : 'bg-[#E2E8F0]'}`}></div>
                     <div>
                       <p className="font-semibold text-sm text-[#1A202C]">
                         {item.article_title || "Artikel"}

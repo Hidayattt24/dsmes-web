@@ -54,13 +54,13 @@ export function VerifyOtpForm() {
                 type="button"
                 onClick={handleResend}
                 disabled={isResending}
-                className="font-semibold text-[#004f45] hover:underline disabled:opacity-50"
+                className="font-semibold text-[#001B6B] hover:underline disabled:opacity-50"
               >
                 {isResending ? "Mengirim..." : "Kirim Ulang"}
               </button>
             ) : (
               <span className="font-medium text-[#718096]">
-                Kirim ulang dalam <span className="font-semibold text-[#004f45]">{seconds}s</span>
+                Kirim ulang dalam <span className="font-semibold text-[#001B6B]">{seconds}s</span>
               </span>
             )}
           </div>

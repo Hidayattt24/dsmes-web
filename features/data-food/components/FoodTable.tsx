@@ -133,7 +133,7 @@ export function FoodTable({
               <tr key={food.id} className="hover:bg-[#F8FAFC] transition-colors">
                 <td className="py-4 px-5 font-medium text-[#1A202C]">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#E6F4F1] text-[#00695C] flex items-center justify-center font-bold text-sm shrink-0 select-none">
+                    <div className="w-10 h-10 rounded-xl bg-[#E8F0FF] text-[#3B67FC] flex items-center justify-center font-bold text-sm shrink-0 select-none">
                       {food.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -176,7 +176,7 @@ export function FoodTable({
                       : "Per 100g"}
                   </span>
                 </td>
-                <td className="py-4 px-5 text-right font-extrabold text-[#00695C]">
+                <td className="py-4 px-5 text-right font-extrabold text-[#3B67FC]">
                   {food.energy_kcal} kcal
                 </td>
                 <td className="py-4 px-5 text-right">
@@ -233,7 +233,7 @@ export function FoodTable({
                     <button
                       onClick={() => onViewDetail(food)}
                       title="Lihat Detail Nutrisi"
-                      className="w-9 h-9 rounded-lg border border-[#E2E8F0] bg-white text-[#4A5568] hover:text-[#00695C] hover:bg-[#F0F9F8] hover:border-[#00695C] transition-all flex items-center justify-center cursor-pointer"
+                      className="w-9 h-9 rounded-lg border border-[#E2E8F0] bg-white text-[#4A5568] hover:text-[#3B67FC] hover:bg-[#EEF2FF] hover:border-[#3B67FC] transition-all flex items-center justify-center cursor-pointer"
                     >
                       <span className="material-symbols-outlined text-lg select-none">visibility</span>
                     </button>
@@ -289,7 +289,7 @@ export function FoodTable({
                   onClick={() => onPageChange(Number(p))}
                   className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
                     page === p
-                      ? "bg-[#00695C] text-white shadow-xs"
+                      ? "bg-[#3B67FC] text-white shadow-xs"
                       : "bg-white border border-[#E2E8F0] text-[#4A5568] hover:bg-[#EDF2F7]"
                   }`}
                 >

@@ -92,7 +92,7 @@ export function PatientTable({ patients, loading }: PatientTableProps) {
       render: (row) => (
         <Link
           href={`/admin/data-pasien/${row.id}`}
-          className="text-[11px] font-bold text-[#00695C] hover:underline underline-offset-4 uppercase tracking-widest"
+          className="text-[11px] font-bold text-[#3B67FC] hover:underline underline-offset-4 uppercase tracking-widest"
         >
           Detail
         </Link>

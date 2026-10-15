@@ -42,7 +42,7 @@ function SortToolbar({ sortBy, sortOrder, onSort }: {
             onClick={() => onSort?.(s.key)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               isActive
-                ? "bg-[#00695C] text-white shadow-sm"
+                ? "bg-[#3B67FC] text-white shadow-sm"
                 : "bg-white text-[#4A5568] border border-[#E2E8F0] hover:bg-[#F4F6F8]"
             }`}
           >
@@ -94,7 +94,7 @@ function PaginationBar({ pagination, onPageChange }: {
             className={[
               "w-9 h-9 flex items-center justify-center rounded-lg text-xs font-bold transition-all",
               page === number
-                ? "bg-[#00695C] text-white shadow-sm shadow-[#00695C]/20"
+                ? "bg-[#3B67FC] text-white shadow-sm shadow-[#3B67FC]/20"
                 : "hover:bg-[#F4F6F8] text-[#718096] font-semibold",
             ].join(" ")}
           >
@@ -164,7 +164,7 @@ export function RecordMonitoringTable({
                 {value}
               </span>
               {typeLabel && value !== "-" && (
-                <span className="text-[11px] font-semibold text-[#00695C] bg-[#E6F2F1] px-2 py-0.5 rounded-md">
+                <span className="text-[11px] font-semibold text-[#3B67FC] bg-[#E8F0FF] px-2 py-0.5 rounded-md">
                   {typeLabel}
                 </span>
               )}
@@ -244,7 +244,7 @@ export function RecordMonitoringTable({
       render: (row) => (
         <Link
           href={pathname.startsWith("/staff") ? `/staff/pemantauan-catatan-pasien/${row.id}` : `/admin/pemantauan-catatan-pasien/${row.id}`}
-          className="text-[#00695C] hover:text-[#004d43] font-semibold text-sm transition-colors inline-flex items-center gap-1 hover:underline"
+          className="text-[#3B67FC] hover:text-[#1A63ED] font-semibold text-sm transition-colors inline-flex items-center gap-1 hover:underline"
         >
           Lihat
           <span className="material-symbols-outlined text-[16px]">chevron_right</span>

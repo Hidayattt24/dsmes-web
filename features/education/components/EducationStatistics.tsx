@@ -13,7 +13,7 @@ export function EducationStatistics({ stats }: EducationStatisticsProps) {
       value: stats?.totalEducation ?? 0,
       suffix: " Artikel",
       icon: "library_books",
-      color: "bg-[#F0F9F8] text-[#00695C]",
+      color: "bg-[#EEF2FF] text-[#3B67FC]",
     },
     {
       label: "Kategori",

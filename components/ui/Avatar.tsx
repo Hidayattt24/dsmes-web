@@ -33,7 +33,7 @@ export function Avatar({
         <img src={src} alt={name} className="h-full w-full object-cover" />
       ) : (
         <div
-          className="flex items-center justify-center w-full h-full bg-[#F0F9F8] text-[#00695C] font-bold select-none"
+          className="flex items-center justify-center w-full h-full bg-[#EEF2FF] text-[#3B67FC] font-bold select-none"
           style={{ fontSize: size * 0.38 }}
         >
           {getInitials(name)}

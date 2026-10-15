@@ -10,12 +10,16 @@ import type {
   QuestionItem,
   QuestionChoice,
   QuestionnaireFormFields,
+  EligiblePreTest,
+  QuestionnairePair,
+  QuestionnaireComparisonRow,
 } from "../types/quiz";
 import { axiosInstance } from "@/lib/axios";
 
 interface ApiChoiceResponse {
   readonly id: string;
   readonly option_text: string;
+  readonly score_value?: number;
   readonly is_correct: boolean;
   readonly display_order: number;
 }
@@ -34,6 +38,7 @@ interface ApiCategoryResponse {
   readonly title: string;
   readonly description?: string;
   readonly display_order: number;
+  readonly instrument_category?: "PRE_TEST" | "DSMQR" | "DSMES";
   readonly questions: readonly ApiQuestionResponse[];
 }
 
@@ -41,6 +46,7 @@ interface ApiQuestionnaireResponse {
   readonly id: string;
   readonly title: string;
   readonly type: "PRE_TEST" | "POST_TEST";
+  readonly scope?: "APPLICATION" | "EDUCATION";
   readonly description?: string;
   readonly education_id?: string;
   readonly education_title?: string;
@@ -54,6 +60,10 @@ interface ApiQuestionnaireResponse {
   readonly created_by: string;
   readonly created_at: string;
   readonly updated_at: string;
+  readonly source_pre_test_id?: string;
+  readonly is_linked_to_pre_test?: boolean;
+  readonly paired_questionnaire_id?: string;
+  readonly paired_questionnaire_title?: string;
 }
 
 interface ApiQuestionnaireDetailResponse extends ApiQuestionnaireResponse {
@@ -70,15 +80,23 @@ interface ApiParticipantResponse {
   readonly score: number;
   readonly passed: boolean;
   readonly duration: string;
+  readonly self_efficacy_category?: string;
+  readonly score_dsmes?: number;
+  readonly score_dsmqr?: number;
+  readonly dsmqr_category?: string;
+  readonly score_pre_test?: number;
 }
 
 interface ApiParticipantDetailResponse {
   readonly participant: ApiParticipantResponse;
   readonly quiz_title: string;
+  readonly type: string;
+  readonly scope: string;
   readonly question_analysis: readonly {
     readonly id: string;
     readonly question_number: number;
     readonly question_text: string;
+    readonly instrument_category?: string;
     readonly patient_answer: string;
     readonly correct_answer: string;
     readonly is_correct: boolean;
@@ -100,6 +118,7 @@ function mapQuestionnaireFromApi(api: ApiQuestionnaireDetailResponse): Questionn
     title: cat.title,
     description: cat.description,
     displayOrder: cat.display_order,
+    instrumentCategory: cat.instrument_category,
     questions: (cat.questions ?? []).map((q): QuestionItem => ({
       id: q.id,
       questionText: q.question_text,
@@ -109,6 +128,7 @@ function mapQuestionnaireFromApi(api: ApiQuestionnaireDetailResponse): Questionn
       choices: (q.choices ?? []).map((c): QuestionChoice => ({
         id: c.id,
         optionText: c.option_text,
+        scoreValue: c.score_value,
         isCorrect: c.is_correct,
         displayOrder: c.display_order,
       })),
@@ -119,6 +139,7 @@ function mapQuestionnaireFromApi(api: ApiQuestionnaireDetailResponse): Questionn
     id: api.id,
     title: api.title,
     type: api.type,
+    scope: api.scope,
     description: api.description,
     educationId: api.education_id,
     educationTitle: api.education_title,
@@ -132,6 +153,10 @@ function mapQuestionnaireFromApi(api: ApiQuestionnaireDetailResponse): Questionn
     createdBy: api.created_by ?? "-",
     createdAt: api.created_at,
     updatedAt: api.updated_at,
+    sourcePreTestId: api.source_pre_test_id,
+    isLinkedToPreTest: api.is_linked_to_pre_test,
+    pairedQuestionnaireId: api.paired_questionnaire_id,
+    pairedQuestionnaireTitle: api.paired_questionnaire_title,
     categories,
   };
 }
@@ -141,6 +166,7 @@ function mapQuestionnaireListItemFromApi(api: ApiQuestionnaireResponse): Questio
     id: api.id,
     title: api.title,
     type: api.type,
+    scope: api.scope,
     description: api.description,
     educationId: api.education_id,
     educationTitle: api.education_title,
@@ -154,6 +180,10 @@ function mapQuestionnaireListItemFromApi(api: ApiQuestionnaireResponse): Questio
     createdBy: api.created_by ?? "-",
     createdAt: api.created_at,
     updatedAt: api.updated_at,
+    sourcePreTestId: api.source_pre_test_id,
+    isLinkedToPreTest: api.is_linked_to_pre_test,
+    pairedQuestionnaireId: api.paired_questionnaire_id,
+    pairedQuestionnaireTitle: api.paired_questionnaire_title,
   };
 }
 
@@ -175,6 +205,11 @@ function mapParticipantFromApi(api: ApiParticipantResponse): QuizParticipant {
     score: api.score,
     passed: api.passed,
     duration: api.duration,
+    selfEfficacyCategory: api.self_efficacy_category,
+    scoreDsmes: api.score_dsmes,
+    scoreDsmqr: api.score_dsmqr,
+    dsmqrCategory: api.dsmqr_category,
+    scorePreTest: api.score_pre_test,
   };
 }
 
@@ -185,6 +220,7 @@ function mapQuestionAnalysisFromApi(
     id: qa.id,
     questionNumber: qa.question_number,
     questionText: qa.question_text,
+    instrumentCategory: qa.instrument_category,
     patientAnswer: qa.patient_answer,
     correctAnswer: qa.correct_answer,
     isCorrect: qa.is_correct,
@@ -193,18 +229,24 @@ function mapQuestionAnalysisFromApi(
 }
 
 function formatQuestionnairePayload(fields: QuestionnaireFormFields) {
+  const isEducationScope = fields.scope === "EDUCATION";
+
   return {
     title: fields.title.trim(),
     type: fields.type,
+    scope: fields.scope,
     description: fields.description ? fields.description.trim() : "",
-    education_id: fields.type === "POST_TEST" && fields.educationId ? fields.educationId : null,
-    passing_score: fields.type === "POST_TEST" && fields.passingScore ? Number(fields.passingScore) : null,
-    difficulty: fields.type === "POST_TEST" && fields.difficulty ? fields.difficulty : null,
+    education_id: isEducationScope && fields.educationId ? fields.educationId : null,
+    passing_score: isEducationScope && fields.type === "POST_TEST" && fields.passingScore ? Number(fields.passingScore) : null,
+    difficulty: isEducationScope && fields.type === "POST_TEST" && fields.difficulty ? fields.difficulty : null,
     status: fields.status ? fields.status.toLowerCase() : "aktif",
+    source_pre_test_id: fields.type === "POST_TEST" ? fields.sourcePreTestId : undefined,
+    copy_questions_from_pre_test: fields.type === "POST_TEST" ? fields.copyQuestionsFromPreTest : undefined,
     categories: fields.categories.map((cat, catIdx) => ({
       ...(cat.id ? { id: cat.id } : {}),
       title: cat.title.trim(),
       description: cat.description ? cat.description.trim() : "",
+      instrument_category: cat.instrumentCategory || "PRE_TEST",
       display_order: catIdx + 1,
       questions: cat.questions.map((q, qIdx) => ({
         ...(q.id ? { id: q.id } : {}),
@@ -215,6 +257,7 @@ function formatQuestionnairePayload(fields: QuestionnaireFormFields) {
         choices: q.choices.map((c, cIdx) => ({
           ...(c.id ? { id: c.id } : {}),
           option_text: c.optionText.trim(),
+          score_value: c.scoreValue,
           is_correct: c.isCorrect,
           display_order: cIdx + 1,
         })),
@@ -235,6 +278,7 @@ export const quizService = {
         limit: params.limit ?? 10,
         search: params.search || undefined,
         type: params.type || undefined,
+        scope: params.scope || undefined,
         status: params.status || undefined,
         sort_by: params.sort_by || undefined,
         sort_order: params.sort_order || undefined,
@@ -254,6 +298,96 @@ export const quizService = {
       const res = await axiosInstance.get(`/${rolePrefix}/quiz/${id}`);
       const data: ApiQuestionnaireDetailResponse = res.data.data;
       return mapQuestionnaireFromApi(data);
+    } catch {
+      return null;
+    }
+  },
+
+  /** Get pre-tests available for pairing with a post-test. */
+  async getEligiblePreTests(
+    scope: "APPLICATION" | "EDUCATION",
+    educationId?: string,
+    rolePrefix: "admin" | "staff" = "admin"
+  ): Promise<EligiblePreTest[]> {
+    const res = await axiosInstance.get(`/${rolePrefix}/quiz/eligible-pre-tests`, {
+      params: { scope, education_id: educationId || undefined },
+    });
+    const items: ApiQuestionnaireResponse[] = res.data.data ?? [];
+    return items.map((item) => ({
+      id: item.id,
+      title: item.title,
+      scope: item.scope ?? scope,
+      educationId: item.education_id,
+      educationTitle: item.education_title,
+      questionCount: item.question_count ?? 0,
+      status: item.status as EligiblePreTest["status"],
+    }));
+  },
+
+  async pairQuestionnaire(postTestId: string, sourcePreTestId: string, rolePrefix: "admin" | "staff" = "admin"): Promise<boolean> {
+    try {
+      await axiosInstance.patch(`/${rolePrefix}/quiz/${postTestId}/pair`, { source_pre_test_id: sourcePreTestId });
+      return true;
+    } catch {
+      return false;
+    }
+  },
+
+  /** Get linked pre/post questionnaires. Missing planned endpoint returns null. */
+  async getQuizPair(
+    id: string,
+    rolePrefix: "admin" | "staff" = "admin"
+  ): Promise<QuestionnairePair | null> {
+    try {
+      const res = await axiosInstance.get(`/${rolePrefix}/quiz/${id}/pair`);
+      const data = res.data.data as {
+        pre_test?: ApiQuestionnaireDetailResponse;
+        post_test?: ApiQuestionnaireDetailResponse;
+      };
+      if (!data?.pre_test || !data?.post_test) return null;
+      return {
+        preTest: mapQuestionnaireFromApi(data.pre_test),
+        postTest: mapQuestionnaireFromApi(data.post_test),
+      };
+    } catch {
+      return null;
+    }
+  },
+
+  /** Get patient pre/post comparison. Missing planned endpoint returns null. */
+  async getQuizComparison(
+    id: string,
+    rolePrefix: "admin" | "staff" = "admin"
+  ): Promise<QuestionnaireComparisonRow[] | null> {
+    try {
+      const res = await axiosInstance.get(`/${rolePrefix}/quiz/${id}/comparison`);
+      const items = (res.data.data?.items ?? res.data.data ?? []) as Array<{
+        patient_id: string;
+        patient_name: string;
+        pre_test_score?: number | null;
+        post_test_score?: number | null;
+        change?: number | null;
+        score_change?: number | null;
+        status?: string;
+        pre_attempt?: { score?: number; score_dsmes?: number; score_dsmqr?: number };
+        post_attempt?: { score?: number; score_dsmes?: number; score_dsmqr?: number };
+        dsmes_change?: number | null;
+        dsmqr_change?: number | null;
+      }>;
+      return items.map((item) => ({
+        patientId: item.patient_id,
+        patientName: item.patient_name,
+        preTestScore: item.pre_test_score ?? item.pre_attempt?.score ?? null,
+        postTestScore: item.post_test_score ?? item.post_attempt?.score ?? null,
+        change: item.change ?? item.score_change ?? null,
+        status: item.status,
+        preDsmes: item.pre_attempt?.score_dsmes ?? null,
+        postDsmes: item.post_attempt?.score_dsmes ?? null,
+        dsmesChange: item.dsmes_change ?? null,
+        preDsmqr: item.pre_attempt?.score_dsmqr ?? null,
+        postDsmqr: item.post_attempt?.score_dsmqr ?? null,
+        dsmqrChange: item.dsmqr_change ?? null,
+      }));
     } catch {
       return null;
     }
@@ -298,41 +432,10 @@ export const quizService = {
   /** Toggle quiz status between Aktif and Draft */
   async toggleQuizStatus(quizId: string, currentStatus: string): Promise<boolean> {
     try {
-      const detail = await this.getQuizById(quizId, "admin");
-      if (!detail) return false;
-
       const newStatus = currentStatus === "Aktif" ? "Draft" : "Aktif";
-
-      const payload: QuestionnaireFormFields = {
-        title: detail.title,
-        type: detail.type,
-        description: detail.description ?? "",
-        educationId: detail.educationId ?? "",
-        passingScore: detail.passingScore ?? 75,
-        difficulty: detail.difficulty ?? "Sedang",
-        status: newStatus,
-        categories: (detail.categories ?? []).map((c) => ({
-          id: c.id,
-          title: c.title,
-          description: c.description ?? "",
-          displayOrder: c.displayOrder,
-          questions: c.questions.map((q) => ({
-            id: q.id,
-            questionText: q.questionText,
-            questionImageUrl: q.questionImageUrl,
-            explanation: q.explanation ?? "",
-            displayOrder: q.displayOrder,
-            choices: q.choices.map((ch) => ({
-              id: ch.id,
-              optionText: ch.optionText,
-              isCorrect: ch.isCorrect,
-              displayOrder: ch.displayOrder,
-            })),
-          })),
-        })),
-      };
-
-      await this.updateQuiz(quizId, payload);
+      await axiosInstance.patch(`/admin/quiz/${quizId}/status`, {
+        status: newStatus.toLowerCase(),
+      });
       return true;
     } catch {
       return false;
@@ -371,10 +474,12 @@ export const quizService = {
       );
       const data: ApiParticipantDetailResponse = res.data.data;
 
-      return {
-        participant: mapParticipantFromApi(data.participant),
-        quizTitle: data.quiz_title,
-        questionAnalysis: data.question_analysis.map(mapQuestionAnalysisFromApi),
+  return {
+    participant: mapParticipantFromApi(data.participant),
+    quizTitle: data.quiz_title,
+    type: data.type,
+    scope: data.scope,
+    questionAnalysis: data.question_analysis.map(mapQuestionAnalysisFromApi),
       };
     } catch {
       return null;

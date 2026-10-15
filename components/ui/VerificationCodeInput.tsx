@@ -79,7 +79,7 @@ export function VerificationCodeInput({
               "w-12 h-14 rounded-xl border text-center text-xl font-bold",
               "text-[#1b1c1c] bg-[#f5f3f3]",
               "transition-all duration-200 outline-none",
-              "focus:bg-white focus:ring-2 focus:ring-[#004f45]/20 focus:border-[#004f45]",
+              "focus:bg-white focus:ring-2 focus:ring-[#001B6B]/20 focus:border-[#001B6B]",
               "caret-transparent",
               error
                 ? "border-[#C53030] focus:ring-[#C53030]/20 focus:border-[#C53030]"

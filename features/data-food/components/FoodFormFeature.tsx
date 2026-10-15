@@ -266,7 +266,7 @@ export function FoodFormFeature({ foodId }: Props) {
             <button
               type="button"
               onClick={handleAddItem}
-              className="h-11 px-5 rounded-xl border border-[#00695C] bg-[#F0F9F8] text-[#00695C] hover:bg-[#00695C] hover:text-white text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm shrink-0"
+              className="h-11 px-5 rounded-xl border border-[#3B67FC] bg-[#EEF2FF] text-[#3B67FC] hover:bg-[#3B67FC] hover:text-white text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm shrink-0"
             >
               <span className="material-symbols-outlined text-lg select-none">add</span>
               <span>Tambah Baris Makanan</span>
@@ -292,7 +292,7 @@ export function FoodFormFeature({ foodId }: Props) {
                 className="flex items-center gap-3 cursor-pointer select-none flex-1 min-w-0"
                 onClick={() => handleToggleExpand(index)}
               >
-                <div className="w-8 h-8 rounded-xl bg-[#00695C] text-white flex items-center justify-center font-bold text-xs shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-[#3B67FC] text-white flex items-center justify-center font-bold text-xs shrink-0">
                   #{index + 1}
                 </div>
                 <div className="truncate">
@@ -338,7 +338,7 @@ export function FoodFormFeature({ foodId }: Props) {
                 {/* Section 1: Informasi Dasar */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 border-b border-[#E2E8F0] pb-2">
-                    <span className="material-symbols-outlined text-[#00695C] text-lg select-none">
+                    <span className="material-symbols-outlined text-[#3B67FC] text-lg select-none">
                       restaurant
                     </span>
                     <h5 className="text-xs font-bold text-[#1A202C] uppercase tracking-wider">
@@ -359,7 +359,7 @@ export function FoodFormFeature({ foodId }: Props) {
                           handleItemChange(index, "name", e.target.value)
                         }
                         placeholder="Contoh: Nasi Goreng Spesial / Ayam Geprek"
-                        className="w-full px-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C] focus:bg-white transition-all font-[family-name:var(--font-poppins)]"
+                        className="w-full px-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC] focus:bg-white transition-all font-[family-name:var(--font-poppins)]"
                       />
                     </div>
 
@@ -375,7 +375,7 @@ export function FoodFormFeature({ foodId }: Props) {
                           handleItemChange(index, "manufacturer", e.target.value)
                         }
                         placeholder="Contoh: Indofood / Masakan Rumah"
-                        className="w-full px-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C] focus:bg-white transition-all font-[family-name:var(--font-poppins)]"
+                        className="w-full px-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC] focus:bg-white transition-all font-[family-name:var(--font-poppins)]"
                       />
                     </div>
                   </div>
@@ -393,7 +393,7 @@ export function FoodFormFeature({ foodId }: Props) {
                           handleItemChange(index, "serving_size", e.target.value)
                         }
                         placeholder="Contoh: 100 g / 1 sachet (75g) / 1 porsi"
-                        className="w-full px-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C] focus:bg-white transition-all font-[family-name:var(--font-poppins)]"
+                        className="w-full px-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC] focus:bg-white transition-all font-[family-name:var(--font-poppins)]"
                       />
                     </div>
 
@@ -448,7 +448,7 @@ export function FoodFormFeature({ foodId }: Props) {
                           handleItemChange(index, "barcode", e.target.value)
                         }
                         placeholder="8991234567890"
-                        className="w-full px-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C] focus:bg-white transition-all"
+                        className="w-full px-4 h-12 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC] focus:bg-white transition-all"
                       />
                     </div>
 
@@ -466,7 +466,7 @@ export function FoodFormFeature({ foodId }: Props) {
                 {/* Section 2: Energi & Makronutrisi Utama */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 border-b border-[#E2E8F0] pb-2">
-                    <span className="material-symbols-outlined text-[#00695C] text-lg select-none">
+                    <span className="material-symbols-outlined text-[#3B67FC] text-lg select-none">
                       local_fire_department
                     </span>
                     <h5 className="text-xs font-bold text-[#1A202C] uppercase tracking-wider">
@@ -475,8 +475,8 @@ export function FoodFormFeature({ foodId }: Props) {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="p-3.5 rounded-xl bg-[#F0F9F8] border border-[#00695C]/20">
-                      <label className="block text-xs font-bold text-[#00695C] uppercase mb-1">
+                    <div className="p-3.5 rounded-xl bg-[#EEF2FF] border border-[#3B67FC]/20">
+                      <label className="block text-xs font-bold text-[#3B67FC] uppercase mb-1">
                         Energi (kcal)
                       </label>
                       <input
@@ -487,7 +487,7 @@ export function FoodFormFeature({ foodId }: Props) {
                         onChange={(e) =>
                           handleItemChange(index, "energy_kcal", e.target.value)
                         }
-                        className="w-full px-3 py-2 rounded-lg border border-[#E2E8F0] bg-white text-base font-bold text-[#00695C] font-mono focus:outline-none focus:ring-2 focus:ring-[#00695C]"
+                        className="w-full px-3 py-2 rounded-lg border border-[#E2E8F0] bg-white text-base font-bold text-[#3B67FC] font-mono focus:outline-none focus:ring-2 focus:ring-[#3B67FC]"
                       />
                     </div>
 
@@ -544,7 +544,7 @@ export function FoodFormFeature({ foodId }: Props) {
                 {/* Section 3: Rincian Nutrisi Tambahan */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 border-b border-[#E2E8F0] pb-2">
-                    <span className="material-symbols-outlined text-[#00695C] text-lg select-none">
+                    <span className="material-symbols-outlined text-[#3B67FC] text-lg select-none">
                       nutrition
                     </span>
                     <h5 className="text-xs font-bold text-[#1A202C] uppercase tracking-wider">
@@ -565,7 +565,7 @@ export function FoodFormFeature({ foodId }: Props) {
                         onChange={(e) =>
                           handleItemChange(index, "sugar_g", e.target.value)
                         }
-                        className="w-full px-3.5 h-11 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm font-semibold text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C]"
+                        className="w-full px-3.5 h-11 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm font-semibold text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC]"
                       />
                     </div>
 
@@ -581,7 +581,7 @@ export function FoodFormFeature({ foodId }: Props) {
                         onChange={(e) =>
                           handleItemChange(index, "sodium_mg", e.target.value)
                         }
-                        className="w-full px-3.5 h-11 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm font-semibold text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C]"
+                        className="w-full px-3.5 h-11 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm font-semibold text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC]"
                       />
                     </div>
 
@@ -597,7 +597,7 @@ export function FoodFormFeature({ foodId }: Props) {
                         onChange={(e) =>
                           handleItemChange(index, "fiber_g", e.target.value)
                         }
-                        className="w-full px-3.5 h-11 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm font-semibold text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C]"
+                        className="w-full px-3.5 h-11 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm font-semibold text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC]"
                       />
                     </div>
 
@@ -613,7 +613,7 @@ export function FoodFormFeature({ foodId }: Props) {
                         onChange={(e) =>
                           handleItemChange(index, "saturated_fat_g", e.target.value)
                         }
-                        className="w-full px-3.5 h-11 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm font-semibold text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#00695C] focus:border-[#00695C]"
+                        className="w-full px-3.5 h-11 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-sm font-semibold text-[#1A202C] font-mono focus:outline-none focus:ring-1 focus:ring-[#3B67FC] focus:border-[#3B67FC]"
                       />
                     </div>
                   </div>
@@ -629,7 +629,7 @@ export function FoodFormFeature({ foodId }: Props) {
             <button
               type="button"
               onClick={handleAddItem}
-              className="w-full py-4 border-2 border-dashed border-[#00695C]/30 bg-[#F0F9F8]/50 hover:bg-[#F0F9F8] rounded-2xl text-[#00695C] text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-4 border-2 border-dashed border-[#3B67FC]/30 bg-[#EEF2FF]/50 hover:bg-[#EEF2FF] rounded-2xl text-[#3B67FC] text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <span className="material-symbols-outlined text-xl select-none">add_circle</span>
               <span>+ Tambah Baris Makanan Lainnya</span>
@@ -649,7 +649,7 @@ export function FoodFormFeature({ foodId }: Props) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="h-12 px-8 rounded-xl bg-[#00695C] text-white text-sm font-bold hover:bg-[#004D40] transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#00695C]/20 disabled:opacity-50"
+            className="h-12 px-8 rounded-xl bg-[#3B67FC] text-white text-sm font-bold hover:bg-[#1A63ED] transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#3B67FC]/20 disabled:opacity-50"
           >
             {isSubmitting && (
               <span className="material-symbols-outlined text-lg animate-spin select-none">

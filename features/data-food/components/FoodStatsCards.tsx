@@ -13,8 +13,8 @@ export function FoodStatsCards({ stats }: Props) {
       title: "Total Makanan",
       value: stats?.total_foods?.toLocaleString("id-ID") ?? "0",
       icon: "restaurant",
-      bgColor: "bg-teal-50 border-teal-100",
-      iconColor: "text-[#00695C]",
+      bgColor: "bg-[#EEF2FF] border-[#AFC2FF]",
+      iconColor: "text-[#3B67FC]",
     },
     {
       title: "Diimpor Hari Ini",

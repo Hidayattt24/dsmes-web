@@ -22,7 +22,7 @@ const columns: TableColumn<TopArticle>[] = [
             </div>
           )}
         </div>
-        <span className="text-sm font-semibold text-[#1A202C] group-hover:text-[#00695C] transition-colors">
+        <span className="text-sm font-semibold text-[#1A202C] group-hover:text-[#3B67FC] transition-colors">
           {row.title}
         </span>
       </div>
@@ -50,7 +50,7 @@ const columns: TableColumn<TopArticle>[] = [
       <Link
         href={ROUTES.MANAJEMEN_EDUKASI}
         aria-label="Lihat artikel"
-        className="material-symbols-outlined text-[#718096] group-hover:text-[#00695C] transition-colors"
+        className="material-symbols-outlined text-[#718096] group-hover:text-[#3B67FC] transition-colors"
       >
         visibility
       </Link>
@@ -73,7 +73,7 @@ export function TopArticlesTable({ articles, loading }: TopArticlesTableProps) {
         </h3>
         <Link
           href={ROUTES.MANAJEMEN_EDUKASI}
-          className="bg-[#00695C] text-white px-6 py-2.5 rounded-xl font-bold text-xs hover:bg-[#004f45] transition-all shadow-sm uppercase tracking-widest font-[family-name:var(--font-poppins)]"
+          className="bg-[#3B67FC] text-white px-6 py-2.5 rounded-xl font-bold text-xs hover:bg-[#001B6B] transition-all shadow-sm uppercase tracking-widest font-[family-name:var(--font-poppins)]"
         >
           Kelola Artikel
         </Link>

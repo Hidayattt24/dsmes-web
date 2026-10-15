@@ -26,6 +26,8 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
   const {
     quiz,
     participants,
+    pair,
+    comparison,
     isLoading,
     error,
     searchQuery,
@@ -38,6 +40,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
   );
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [selectedStage, setSelectedStage] = useState<"PRE_TEST" | "POST_TEST" | null>(null);
 
   const handleConfirmDelete = async () => {
     if (!quiz) return;
@@ -78,9 +81,17 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
     );
   }
 
+  const effectiveStage = selectedStage ?? quiz.type;
+  const displayedQuiz = pair
+    ? effectiveStage === "PRE_TEST" ? pair.preTest : pair.postTest
+    : quiz;
   const totalQuestions =
-    quiz.categories?.reduce((acc, cat) => acc + cat.questions.length, 0) ??
-    quiz.questionCount;
+    displayedQuiz.categories?.reduce((acc, cat) => acc + cat.questions.length, 0) ??
+    displayedQuiz.questionCount;
+
+  const isApplication = displayedQuiz.scope
+    ? displayedQuiz.scope === "APPLICATION"
+    : displayedQuiz.type === "PRE_TEST";
 
   return (
     <div className="space-y-6 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
@@ -103,7 +114,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
               className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase border ${
                 quiz.type === "PRE_TEST"
                   ? "bg-purple-50 text-purple-700 border-purple-200"
-                  : "bg-teal-50 text-teal-700 border-teal-200"
+                  : "bg-[#EEF2FF] text-[#1A63ED] border-[#8FAAFF]"
               }`}
             >
               {quiz.type === "PRE_TEST"
@@ -156,7 +167,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
           onClick={() => setActiveTab("questions")}
           className={`px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer ${
             activeTab === "questions"
-              ? "bg-[#00695C] text-white shadow-sm"
+              ? "bg-[#3B67FC] text-white shadow-sm"
               : "bg-white text-[#4A5568] hover:bg-slate-100 border border-[#E2E8F0]"
           }`}
         >
@@ -168,7 +179,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
           onClick={() => setActiveTab("results")}
           className={`px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 cursor-pointer ${
             activeTab === "results"
-              ? "bg-[#00695C] text-white shadow-sm"
+              ? "bg-[#3B67FC] text-white shadow-sm"
               : "bg-white text-[#4A5568] hover:bg-slate-100 border border-[#E2E8F0]"
           }`}
         >
@@ -178,6 +189,23 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
           <span>Hasil & Progres Pasien ({participants.length})</span>
         </button>
       </div>
+
+      {pair && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-[#A8EEFA] bg-[#EEF2FF] p-4">
+          <div>
+            <p className="text-xs font-bold text-[#3B67FC]">Pasangan Pre-Test / Post-Test</p>
+            <p className="text-[11px] text-[#718096] mt-0.5">Pilih tahap untuk melihat soal dan metadata kuesioner.</p>
+          </div>
+          <div className="inline-grid grid-cols-2 rounded-xl border border-[#61DDEB] bg-white p-1">
+            <button type="button" onClick={() => setSelectedStage("PRE_TEST")} className={`px-4 py-2 rounded-lg text-xs font-bold ${effectiveStage === "PRE_TEST" ? "bg-[#3B67FC] text-white" : "text-[#4A5568]"}`}>
+              Sebelum
+            </button>
+            <button type="button" onClick={() => setSelectedStage("POST_TEST")} className={`px-4 py-2 rounded-lg text-xs font-bold ${effectiveStage === "POST_TEST" ? "bg-[#3B67FC] text-white" : "text-[#4A5568]"}`}>
+              Sesudah
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* TAB 1: DAFTAR SOAL & KATEGORI */}
       {activeTab === "questions" && (
@@ -189,16 +217,16 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                 Tipe Kuesioner
               </span>
               <span className="font-bold text-[#1A202C]">
-                {quiz.type === "PRE_TEST" ? "Pre-Test" : "Post-Test"}
+                {displayedQuiz.type === "PRE_TEST" ? "Pre-Test" : "Post-Test"}
               </span>
             </div>
-            {quiz.type === "PRE_TEST" ? (
+            {isApplication ? (
               <>
                 <div>
                   <span className="text-[#718096] block font-semibold mb-0.5">
                     Instrumen
                   </span>
-                  <span className="font-bold text-[#00695C]">
+                  <span className="font-bold text-[#3B67FC]">
                     DMSES (Diabetes Self-Efficacy)
                   </span>
                 </div>
@@ -225,8 +253,8 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                   <span className="text-[#718096] block font-semibold mb-0.5">
                     Edukasi Terkait
                   </span>
-                  <span className="font-bold text-[#00695C]">
-                    {quiz.educationTitle || "-"}
+                  <span className="font-bold text-[#3B67FC]">
+                    {displayedQuiz.educationTitle || "-"}
                   </span>
                 </div>
                 <div>
@@ -234,7 +262,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                     Batas Kelulusan
                   </span>
                   <span className="font-bold text-[#1A202C]">
-                    {quiz.passingScore}%
+                    {displayedQuiz.passingScore}%
                   </span>
                 </div>
                 <div>
@@ -242,7 +270,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                     Tingkat Kesulitan
                   </span>
                   <span className="font-bold text-amber-700">
-                    {quiz.difficulty || "Sedang"}
+                    {displayedQuiz.difficulty || "Sedang"}
                   </span>
                 </div>
               </>
@@ -250,7 +278,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
           </div>
 
           {/* Categories & Questions List */}
-          {!quiz.categories || quiz.categories.length === 0 ? (
+          {!displayedQuiz.categories || displayedQuiz.categories.length === 0 ? (
             <div className="bg-white p-12 rounded-2xl border border-[#E2E8F0] text-center text-[#718096]">
               <span className="material-symbols-outlined text-4xl text-gray-300 mb-2">
                 find_in_page
@@ -260,13 +288,13 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
               </p>
             </div>
           ) : (
-            quiz.categories.map((cat, catIdx) => {
-              const questionsBefore = (quiz.categories ?? [])
+            displayedQuiz.categories.map((cat, catIdx) => {
+              const questionsBefore = (displayedQuiz.categories ?? [])
                 .slice(0, catIdx)
                 .reduce((sum, c) => sum + (c.questions?.length ?? 0), 0);
 
               const displayCatTitle =
-                quiz.type === "PRE_TEST"
+                displayedQuiz.type === "PRE_TEST"
                   ? cat.title === "Soal Post-Test" || !cat.title
                     ? "Pertanyaan Pre-Test DMSES"
                     : cat.title
@@ -275,7 +303,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                   : cat.title;
 
               const displayCatDesc =
-                quiz.type === "PRE_TEST"
+                displayedQuiz.type === "PRE_TEST"
                   ? cat.description ||
                     "Kuesioner Efikasi Diri Manajemen Diabetes (Skala Keyakinan 1–5)"
                   : cat.description;
@@ -289,7 +317,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                   <div className="bg-gradient-to-r from-[#F8FAFC] to-[#F1F5F9] px-6 py-4 border-b border-[#E2E8F0] flex items-center justify-between">
                     <div>
                       <h3 className="font-bold text-sm text-[#1A202C] flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-lg bg-[#00695C] text-white flex items-center justify-center text-xs font-bold">
+                        <span className="w-6 h-6 rounded-lg bg-[#3B67FC] text-white flex items-center justify-center text-xs font-bold">
                           {catIdx + 1}
                         </span>
                         {displayCatTitle}
@@ -300,7 +328,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                         </p>
                       )}
                     </div>
-                    <span className="text-xs font-semibold text-[#00695C] bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
+                    <span className="text-xs font-semibold text-[#3B67FC] bg-[#EEF2FF] px-3 py-1 rounded-full border border-[#AFC2FF]">
                       {cat.questions.length} Pertanyaan
                     </span>
                   </div>
@@ -309,6 +337,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                   <div className="divide-y divide-[#E2E8F0]/60 p-6 space-y-6">
                     {cat.questions.map((q, qIdx) => {
                       const absoluteQuestionNum = questionsBefore + qIdx + 1;
+                      const isEducationQuiz = displayedQuiz.scope === "EDUCATION";
                       return (
                         <div
                           key={q.id || qIdx}
@@ -316,7 +345,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                         >
                           {/* Question Header */}
                           <div className="flex items-start gap-3">
-                            <span className="text-xs font-bold text-[#00695C] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100 shrink-0">
+                            <span className="text-xs font-bold text-[#3B67FC] bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100 shrink-0">
                               Soal #{absoluteQuestionNum}
                             </span>
                             <div className="flex-1">
@@ -344,7 +373,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                               <div
                                 key={choice.id || cIdx}
                                 className={`p-3 rounded-xl border text-xs flex items-center justify-between transition-all ${
-                                  quiz.type === "POST_TEST" && choice.isCorrect
+                                   isEducationQuiz && choice.isCorrect
                                     ? "bg-emerald-50/80 border-emerald-300 text-emerald-950 font-medium"
                                     : "bg-[#F8FAFC] border-[#E2E8F0] text-[#4A5568]"
                                 }`}
@@ -352,7 +381,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                                 <span className="flex items-center gap-2">
                                   <span
                                     className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                                      quiz.type === "POST_TEST" && choice.isCorrect
+                                       isEducationQuiz && choice.isCorrect
                                         ? "bg-emerald-600 text-white"
                                         : "bg-slate-200 text-slate-700"
                                     }`}
@@ -361,7 +390,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                                   </span>
                                   <span>{choice.optionText}</span>
                                 </span>
-                                {quiz.type === "POST_TEST" && choice.isCorrect && (
+                                 {isEducationQuiz && choice.isCorrect && (
                                   <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md flex items-center gap-1">
                                     <span className="material-symbols-outlined text-[12px]">
                                       check_circle
@@ -403,10 +432,50 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
       {/* TAB 2: HASIL & PROGRES PASIEN */}
       {activeTab === "results" && (
         <div className="space-y-8">
+          {comparison && (
+            <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm overflow-hidden">
+              <div className="p-5 border-b border-[#E2E8F0]">
+                <h3 className="text-sm font-bold text-[#1A202C]">Perbandingan Hasil Pre-Test / Post-Test</h3>
+                <p className="text-xs text-[#718096] mt-1">Perubahan skor pasien pada pasangan kuesioner ini.</p>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#F8FAFC] text-[#718096] uppercase tracking-wider">
+                    {isApplication ? (
+                      <tr><th className="px-5 py-3">Pasien</th><th className="px-5 py-3 text-center">DSMQR Pre / Post</th><th className="px-5 py-3 text-center">Perubahan DSMQR</th><th className="px-5 py-3 text-center">DSMES Pre / Post</th><th className="px-5 py-3 text-center">Perubahan DSMES</th><th className="px-5 py-3">Status</th></tr>
+                    ) : (
+                      <tr><th className="px-5 py-3">Pasien</th><th className="px-5 py-3 text-center">Pre-Test</th><th className="px-5 py-3 text-center">Post-Test</th><th className="px-5 py-3 text-center">Perubahan</th><th className="px-5 py-3">Status</th></tr>
+                    )}
+                  </thead>
+                  <tbody className="divide-y divide-[#E2E8F0]">
+                    {comparison.length === 0 ? (
+                      <tr><td colSpan={isApplication ? 6 : 5} className="px-5 py-8 text-center text-[#718096]">Belum ada hasil pasangan untuk dibandingkan.</td></tr>
+                    ) : comparison.map((row) => (
+                      <tr key={row.patientId}>
+                        <td className="px-5 py-3 font-bold text-[#1A202C]">{row.patientName}</td>
+                        {isApplication ? <>
+                          <td className="px-5 py-3 text-center">{row.preDsmqr ?? "-"} / {row.postDsmqr ?? "-"}</td>
+                          <td className={`px-5 py-3 text-center font-bold ${(row.dsmqrChange ?? 0) > 0 ? "text-emerald-700" : "text-[#718096]"}`}>{row.dsmqrChange == null ? "-" : `${row.dsmqrChange > 0 ? "+" : ""}${row.dsmqrChange}`}</td>
+                          <td className="px-5 py-3 text-center">{row.preDsmes ?? "-"} / {row.postDsmes ?? "-"}</td>
+                          <td className={`px-5 py-3 text-center font-bold ${(row.dsmesChange ?? 0) > 0 ? "text-emerald-700" : "text-[#718096]"}`}>{row.dsmesChange == null ? "-" : `${row.dsmesChange > 0 ? "+" : ""}${row.dsmesChange}`}</td>
+                        </> : <>
+                          <td className="px-5 py-3 text-center">{row.preTestScore ?? "-"}</td>
+                          <td className="px-5 py-3 text-center">{row.postTestScore ?? "-"}</td>
+                          <td className={`px-5 py-3 text-center font-bold ${(row.change ?? 0) > 0 ? "text-emerald-700" : (row.change ?? 0) < 0 ? "text-red-600" : "text-[#718096]"}`}>{row.change == null ? "-" : `${row.change > 0 ? "+" : ""}${row.change}`}</td>
+                        </>}
+                        <td className="px-5 py-3 text-[#4A5568]">{row.status || "-"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
           {/* DMSES Interpretation Information Banner (Pre-Test Only) */}
-          {quiz.type === "PRE_TEST" && (
-            <div className="bg-gradient-to-br from-[#F0F9F8] via-white to-[#E6F2F1]/50 p-6 rounded-2xl border border-[#00695C]/20 shadow-sm space-y-3">
-              <div className="flex items-center gap-2.5 text-[#00695C]">
+          {isApplication && (
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <div className="bg-gradient-to-br from-[#EEF2FF] via-white to-[#E8F0FF]/50 p-6 rounded-2xl border border-[#3B67FC]/20 shadow-sm space-y-3">
+              <div className="flex items-center gap-2.5 text-[#3B67FC]">
                 <span className="material-symbols-outlined text-xl select-none">
                   psychology
                 </span>
@@ -419,7 +488,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                 pertanyaan (Skor Minimal = 20, Skor Maksimal = 100).
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
-                <div className="bg-white p-3 rounded-xl border border-teal-100 text-center shadow-2xs">
+                <div className="bg-white p-3 rounded-xl border border-[#AFC2FF] text-center shadow-2xs">
                   <span className="block text-xs font-bold text-slate-700">
                     20 – 40
                   </span>
@@ -427,7 +496,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                     Low Self-Efficacy
                   </span>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-teal-100 text-center shadow-2xs">
+                <div className="bg-white p-3 rounded-xl border border-[#AFC2FF] text-center shadow-2xs">
                   <span className="block text-xs font-bold text-slate-700">
                     41 – 60
                   </span>
@@ -435,15 +504,15 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                     Moderate Self-Efficacy
                   </span>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-teal-100 text-center shadow-2xs">
+                <div className="bg-white p-3 rounded-xl border border-[#AFC2FF] text-center shadow-2xs">
                   <span className="block text-xs font-bold text-slate-700">
                     61 – 80
                   </span>
-                  <span className="text-[11px] font-semibold text-teal-700">
+                  <span className="text-[11px] font-semibold text-[#1A63ED]">
                     Good Self-Efficacy
                   </span>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-teal-100 text-center shadow-2xs">
+                <div className="bg-white p-3 rounded-xl border border-[#AFC2FF] text-center shadow-2xs">
                   <span className="block text-xs font-bold text-slate-700">
                     81 – 100
                   </span>
@@ -457,6 +526,29 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
                 besar dalam pengelolaan mandiri diabetes.
               </p>
             </div>
+            <div className="bg-gradient-to-br from-[#FFF8F1] via-white to-[#FDEBD8]/50 p-6 rounded-2xl border border-amber-300/40 shadow-sm space-y-3">
+              <div className="flex items-center gap-2.5 text-amber-700">
+                <span className="material-symbols-outlined text-xl select-none">
+                  fact_check
+                </span>
+                <h3 className="text-sm font-bold uppercase tracking-wider">
+                  Interpretasi Skor DSMQR
+                </h3>
+              </div>
+              <p className="text-xs text-[#4A5568] leading-relaxed">
+                <strong>Skor Total DSMQR</strong> = Penjumlahan bobot seluruh
+                pilihan jawaban pada kategori DSMQR.
+              </p>
+              <div className="bg-white p-4 rounded-xl border border-amber-100 text-center text-xs text-[#718096] shadow-2xs">
+                Rentang batas skor DSMQR belum ditetapkan. Kategori akan
+                tampil di sini setelah rentang diberikan.
+              </div>
+              <p className="text-[11px] italic text-[#718096] pt-1">
+                *Dibandingkan antara skor Pre-Test dan Post-Test untuk melihat
+                perkembangan pasien.
+              </p>
+            </div>
+          </div>
           )}
 
           {/* Summary Stat Cards */}
@@ -468,7 +560,7 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
             participants={participants}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
-            isPreTest={quiz.type === "PRE_TEST"}
+            isPreTest={isApplication}
           />
         </div>
       )}

@@ -62,7 +62,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-[#F0F9F8] text-[#00695C] text-xs font-bold font-[family-name:var(--font-poppins)]">
+            <div className="w-full h-full flex items-center justify-center bg-[#EEF2FF] text-[#3B67FC] text-xs font-bold font-[family-name:var(--font-poppins)]">
               DIBA
             </div>
           )}
@@ -77,7 +77,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
         <div className="max-w-md">
           <Link
             href={isStaff ? `/staff/manajemen-edukasi/${row.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
-            className="font-bold text-[#1A202C] hover:text-[#0F766E] transition-all text-sm block truncate font-[family-name:var(--font-poppins)]"
+            className="font-bold text-[#1A202C] hover:text-[#3B67FC] transition-all text-sm block truncate font-[family-name:var(--font-poppins)]"
           >
             {row.title}
           </Link>
@@ -135,7 +135,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
           {/* Progress Link */}
           <Link
             href={isStaff ? `/staff/manajemen-edukasi/${row.id}/progress` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/progress`}
-            className="inline-flex items-center gap-1 px-3 py-1.5 border border-[#E2E8F0] rounded-lg hover:bg-[#F0F9F8] hover:border-[#00695C]/30 transition-all text-[#718096] hover:text-[#00695C] text-xs font-bold"
+            className="inline-flex items-center gap-1 px-3 py-1.5 border border-[#E2E8F0] rounded-lg hover:bg-[#EEF2FF] hover:border-[#3B67FC]/30 transition-all text-[#718096] hover:text-[#3B67FC] text-xs font-bold"
             title="Lihat Progress Peserta"
           >
             <span className="material-symbols-outlined text-[16px]">monitoring</span>
@@ -144,7 +144,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
           {/* Detail Link */}
           <Link
             href={isStaff ? `/staff/manajemen-edukasi/${row.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
-            className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#0F766E]"
+             className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#3B67FC]"
             title="Lihat Detail"
           >
             <span className="material-symbols-outlined text-[18px]">visibility</span>
@@ -154,7 +154,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
               {/* Edit Link */}
               <Link
                 href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/edit`}
-                className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#0F766E]"
+                 className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#3B67FC]"
                 title="Edit"
               >
                 <span className="material-symbols-outlined text-[18px]">edit</span>
@@ -213,7 +213,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-[#F0F9F8] text-[#00695C] text-xs font-bold">
+                    <div className="w-full h-full flex items-center justify-center bg-[#EEF2FF] text-[#3B67FC] text-xs font-bold">
                       DIBA
                     </div>
                   )}
@@ -221,7 +221,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 mb-1">
-                    <span className="text-[11px] font-semibold text-[#00695C] truncate">
+                    <span className="text-[11px] font-semibold text-[#3B67FC] truncate">
                       {row.category}
                     </span>
                     <Badge variant={row.status === "Diterbitkan" ? "primary" : "muted"}>
@@ -230,7 +230,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
                   </div>
                   <Link
                     href={isStaff ? `/staff/manajemen-edukasi/${row.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
-                    className="font-bold text-[#1A202C] text-sm hover:text-[#0F766E] transition-all line-clamp-2 leading-snug"
+                     className="font-bold text-[#1A202C] text-sm hover:text-[#3B67FC] transition-all line-clamp-2 leading-snug"
                   >
                     {row.title}
                   </Link>
@@ -254,7 +254,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
               <div className="flex items-center justify-between gap-2 border-t border-[#E2E8F0]/60 pt-2.5">
                 <Link
                   href={isStaff ? `/staff/manajemen-edukasi/${row.id}/progress` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/progress`}
-                  className="flex-1 inline-flex items-center justify-center gap-1 py-2 px-3 border border-[#E2E8F0] rounded-xl hover:bg-[#F0F9F8] text-[#00695C] text-xs font-bold transition-all"
+                  className="flex-1 inline-flex items-center justify-center gap-1 py-2 px-3 border border-[#E2E8F0] rounded-xl hover:bg-[#EEF2FF] text-[#3B67FC] text-xs font-bold transition-all"
                   title="Lihat Progress Peserta"
                 >
                   <span className="material-symbols-outlined text-[16px]">monitoring</span>
@@ -262,7 +262,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
                 </Link>
                 <Link
                   href={isStaff ? `/staff/manajemen-edukasi/${row.id}` : `${ROUTES.MANAJEMEN_EDUKASI}/${row.id}`}
-                  className="w-9 h-9 flex items-center justify-center border border-[#E2E8F0] rounded-xl text-[#718096] hover:text-[#0F766E] hover:bg-[#F4F6F8] transition-all"
+                   className="w-9 h-9 flex items-center justify-center border border-[#E2E8F0] rounded-xl text-[#718096] hover:text-[#3B67FC] hover:bg-[#F4F6F8] transition-all"
                   title="Lihat Detail"
                 >
                   <span className="material-symbols-outlined text-[18px]">visibility</span>
@@ -271,7 +271,7 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
                   <>
                     <Link
                       href={`${ROUTES.MANAJEMEN_EDUKASI}/${row.id}/edit`}
-                      className="w-9 h-9 flex items-center justify-center border border-[#E2E8F0] rounded-xl text-[#718096] hover:text-[#0F766E] hover:bg-[#F4F6F8] transition-all"
+                       className="w-9 h-9 flex items-center justify-center border border-[#E2E8F0] rounded-xl text-[#718096] hover:text-[#3B67FC] hover:bg-[#F4F6F8] transition-all"
                       title="Edit"
                     >
                       <span className="material-symbols-outlined text-[18px]">edit</span>

@@ -56,12 +56,12 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               "w-full h-14 rounded-xl border text-sm font-medium",
               "bg-[#f5f3f3] text-[#1b1c1c] placeholder:text-[#6e7976]",
               "transition-all duration-200 outline-none",
-              "focus:bg-white focus:ring-2 focus:ring-[#004f45]/20",
+              "focus:bg-white focus:ring-2 focus:ring-[#001B6B]/20",
               leftIcon  ? "pl-12" : "pl-4",
               rightSlot ? "pr-12" : "pr-4",
               error
                 ? "border-[#C53030] focus:border-[#C53030] focus:ring-[#C53030]/20"
-                : "border-[#bec9c5] focus:border-[#004f45]",
+                : "border-[#bec9c5] focus:border-[#001B6B]",
               disabled ? "opacity-50 cursor-not-allowed" : "",
               className,
             ].join(" ")}

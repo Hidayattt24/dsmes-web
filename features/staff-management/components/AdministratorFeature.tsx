@@ -153,7 +153,7 @@ export function AdministratorFeature() {
         <div className="flex items-center gap-2 justify-end">
           <Link
             href={`/admin/administrator/${row.id}/edit`}
-            className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#00695C]"
+            className="w-8 h-8 flex items-center justify-center border border-[#E2E8F0] rounded-lg hover:bg-[#F4F6F8] transition-all text-[#718096] hover:text-[#3B67FC]"
             title="Edit"
           >
             <span className="material-symbols-outlined text-[18px]">edit</span>
@@ -186,7 +186,7 @@ export function AdministratorFeature() {
 
         <Link
           href="/admin/administrator/tambah"
-          className="flex items-center gap-2 bg-[#00695C] hover:bg-[#004f45] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-md shadow-[#00695C]/10 cursor-pointer"
+          className="flex items-center gap-2 bg-[#3B67FC] hover:bg-[#001B6B] text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-md shadow-[#3B67FC]/10 cursor-pointer"
         >
           <span className="material-symbols-outlined text-[18px]">add</span>
           <span>Tambah Staff Monitoring</span>
@@ -196,7 +196,7 @@ export function AdministratorFeature() {
       {/* Summary Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="premium-card p-6 flex items-center gap-4">
-          <div className="w-12 h-12 bg-[#F0F9F8] rounded-full flex items-center justify-center text-[#00695C]">
+          <div className="w-12 h-12 bg-[#EEF2FF] rounded-full flex items-center justify-center text-[#3B67FC]">
             <span className="material-symbols-outlined text-2xl">groups</span>
           </div>
           <div>
@@ -210,7 +210,7 @@ export function AdministratorFeature() {
         </div>
 
         <div className="premium-card p-6 flex items-center gap-4">
-          <div className="w-12 h-12 bg-[#F0F9F8] rounded-full flex items-center justify-center text-[#00695C]">
+          <div className="w-12 h-12 bg-[#EEF2FF] rounded-full flex items-center justify-center text-[#3B67FC]">
             <span className="material-symbols-outlined text-2xl">person_check</span>
           </div>
           <div className="flex-1">
@@ -223,7 +223,7 @@ export function AdministratorFeature() {
               </span>
               <div className="h-1.5 w-24 bg-[#F4F6F8] rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-[#00695C] rounded-full" 
+                  className="h-full bg-[#3B67FC] rounded-full" 
                   style={{ width: `${(activeCount / (totalCount || 1)) * 100}%` }}
                 />
               </div>
@@ -235,7 +235,7 @@ export function AdministratorFeature() {
       {/* Search and Filters Bar */}
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
         {/* Search Input */}
-        <div className="flex items-center gap-3 bg-white px-5 py-2.5 rounded-xl border border-[#E2E8F0] w-full sm:w-96 focus-within:border-[#00695C] transition-all">
+        <div className="flex items-center gap-3 bg-white px-5 py-2.5 rounded-xl border border-[#E2E8F0] w-full sm:w-96 focus-within:border-[#3B67FC] transition-all">
           <span className="material-symbols-outlined text-[#718096] text-xl">search</span>
           <input
             type="text"
@@ -288,7 +288,7 @@ export function AdministratorFeature() {
               onClick={() => setPage(p)}
               className={`w-10 h-10 rounded-lg text-sm font-semibold cursor-pointer ${
                 p === page
-                  ? "bg-[#00695C] text-white"
+                  ? "bg-[#3B67FC] text-white"
                   : "border border-[#E2E8F0] text-[#1A202C] hover:bg-[#F4F6F8]"
               }`}
             >

@@ -23,7 +23,7 @@ export function PatientMeasurementHistoryCard({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-8 h-8 rounded-full bg-[#00695C]/10 text-[#00695C] flex items-center justify-center">
+            <span className="w-8 h-8 rounded-full bg-[#3B67FC]/10 text-[#3B67FC] flex items-center justify-center">
               <span className="material-symbols-outlined text-[18px]">history</span>
             </span>
             <h3 className="font-bold text-lg text-[#1A202C]">
@@ -39,7 +39,7 @@ export function PatientMeasurementHistoryCard({
           <button
             type="button"
             onClick={onAddMeasurement}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#00695C] hover:bg-[#004D40] text-white text-xs font-bold rounded-lg transition-colors shadow-sm self-start sm:self-auto"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#3B67FC] hover:bg-[#1A63ED] text-white text-xs font-bold rounded-lg transition-colors shadow-sm self-start sm:self-auto"
           >
             <span className="material-symbols-outlined text-[16px]">add_circle</span>
             Catat Pengukuran Baru
@@ -79,11 +79,11 @@ export function PatientMeasurementHistoryCard({
                   {/* Timeline Dot */}
                   <div
                     className={`absolute -left-[30px] top-1.5 w-4 h-4 rounded-full border-2 border-white shadow-sm flex items-center justify-center ${
-                      isLatest ? "bg-[#00695C] ring-4 ring-[#00695C]/15" : "bg-slate-400"
+                      isLatest ? "bg-[#3B67FC] ring-4 ring-[#3B67FC]/15" : "bg-slate-400"
                     }`}
                   />
 
-                  <div className="bg-[#F8FAFC] border border-slate-200/80 rounded-xl p-5 hover:border-[#00695C]/30 transition-all duration-200">
+                  <div className="bg-[#F8FAFC] border border-slate-200/80 rounded-xl p-5 hover:border-[#3B67FC]/30 transition-all duration-200">
                     {/* Card Header: Timestamp & Audit Trail */}
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2.5 border-b border-slate-200/60">
                       <div className="flex items-center gap-2">
@@ -103,8 +103,8 @@ export function PatientMeasurementHistoryCard({
                         <span
                           className={`text-[10px] font-bold px-2.5 py-0.5 rounded-md border uppercase ${
                             isRoleAdmin
-                              ? "bg-[#00695C]/10 text-[#00695C] border-[#00695C]/20"
-                              : "bg-[#286b33]/10 text-[#286b33] border-[#286b33]/20"
+                              ? "bg-[#3B67FC]/10 text-[#3B67FC] border-[#3B67FC]/20"
+                              : "bg-[#07CADE]/10 text-[#07CADE] border-[#07CADE]/20"
                           }`}
                         >
                           {isRoleAdmin ? "Admin" : "Pasien"} ({item.recordedByName})
@@ -162,7 +162,7 @@ export function PatientMeasurementHistoryCard({
                           <span className="text-[10px] text-slate-400 font-normal ml-0.5">mg/dL</span>
                         </span>
                         {item.bloodSugar && (
-                          <span className="text-[10px] text-[#00695C] block mt-0.5 font-semibold">
+                          <span className="text-[10px] text-[#3B67FC] block mt-0.5 font-semibold">
                             {item.bloodSugarTimeType === "fasting" || item.bloodSugarTimeType === "puasa" ? "Puasa" :
                              item.bloodSugarTimeType === "before_meal" || item.bloodSugarTimeType === "sebelum_makan" ? "Sebelum Makan" :
                              item.bloodSugarTimeType === "after_meal" || item.bloodSugarTimeType === "sesudah_makan" ? "2 Jam Sesudah Makan" :
@@ -216,7 +216,7 @@ export function PatientMeasurementHistoryCard({
               <button
                 type="button"
                 onClick={() => setIsExpanded((prev) => !prev)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-[#00695C] font-semibold text-xs rounded-xl transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-[#3B67FC] font-semibold text-xs rounded-xl transition-all cursor-pointer"
               >
                 <span>
                   {isExpanded

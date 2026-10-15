@@ -11,7 +11,7 @@ export function AccountInfoForm({ fields, onChange }: AccountInfoFormProps) {
   return (
     <div className="premium-card p-8 bg-white font-[family-name:var(--font-poppins)]">
       <h2 className="text-lg font-bold text-[#1A202C] mb-8 flex items-center gap-2 select-none">
-        <span className="material-symbols-outlined text-[#00695C]">person</span>
+        <span className="material-symbols-outlined text-[#3B67FC]">person</span>
         <span>Informasi Akun</span>
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
@@ -21,7 +21,7 @@ export function AccountInfoForm({ fields, onChange }: AccountInfoFormProps) {
             Nama Lengkap
           </label>
           <input
-            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
+            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#3B67FC] focus:bg-white focus:ring-1 focus:ring-[#3B67FC] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
             type="text"
             value={fields.name}
             onChange={(e) => onChange("name", e.target.value)}
@@ -34,7 +34,7 @@ export function AccountInfoForm({ fields, onChange }: AccountInfoFormProps) {
             Username
           </label>
           <input
-            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
+            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#3B67FC] focus:bg-white focus:ring-1 focus:ring-[#3B67FC] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
             type="text"
             value={fields.username}
             onChange={(e) => onChange("username", e.target.value)}
@@ -47,7 +47,7 @@ export function AccountInfoForm({ fields, onChange }: AccountInfoFormProps) {
             Email
           </label>
           <input
-            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
+            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#3B67FC] focus:bg-white focus:ring-1 focus:ring-[#3B67FC] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
             type="email"
             value={fields.email}
             onChange={(e) => onChange("email", e.target.value)}
@@ -60,7 +60,7 @@ export function AccountInfoForm({ fields, onChange }: AccountInfoFormProps) {
             Nomor WhatsApp
           </label>
           <input
-            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
+            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#3B67FC] focus:bg-white focus:ring-1 focus:ring-[#3B67FC] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
             type="text"
             value={fields.whatsapp}
             onChange={(e) => onChange("whatsapp", e.target.value)}
@@ -73,7 +73,7 @@ export function AccountInfoForm({ fields, onChange }: AccountInfoFormProps) {
             Jabatan
           </label>
           <input
-            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
+            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#3B67FC] focus:bg-white focus:ring-1 focus:ring-[#3B67FC] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all"
             type="text"
             value={fields.jabatan}
             onChange={(e) => onChange("jabatan", e.target.value)}
@@ -103,7 +103,7 @@ export function AccountInfoForm({ fields, onChange }: AccountInfoFormProps) {
             Bio Singkat
           </label>
           <textarea
-            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#00695C] focus:bg-white focus:ring-1 focus:ring-[#00695C] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all min-h-[100px] resize-none"
+            className="w-full bg-[#F4F6F8] border border-transparent focus:border-[#3B67FC] focus:bg-white focus:ring-1 focus:ring-[#3B67FC] rounded-xl px-5 py-3.5 text-sm font-semibold text-[#1A202C] outline-none transition-all min-h-[100px] resize-none"
             rows={3}
             value={fields.bio}
             onChange={(e) => onChange("bio", e.target.value)}
