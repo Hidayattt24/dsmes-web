@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { usePatients } from "../hooks/usePatients";
 import { PatientStatistics } from "./PatientStatistics";
 import { PatientTable } from "./PatientTable";
@@ -21,6 +23,7 @@ const genderOptions = [
 ] as const;
 
 export function PatientListFeature() {
+  const pageRef = useRef<HTMLDivElement>(null);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const {
     patients,
@@ -43,10 +46,29 @@ export function PatientListFeature() {
   // Create page numbers to display
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      gsap.fromTo(
+        "[data-page-section]",
+        { autoAlpha: 0, y: 14 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.35,
+          stagger: 0.06,
+          ease: "power2.out",
+        },
+      );
+    },
+    { scope: pageRef },
+  );
+
   return (
-    <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
+    <div ref={pageRef} className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
       {/* Title Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div data-page-section className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-[#1A202C] tracking-tight">
             Data Pasien
@@ -72,10 +94,10 @@ export function PatientListFeature() {
       />
 
       {/* Patient Statistics Bento Grid */}
-      <PatientStatistics stats={stats} />
+      <div data-page-section><PatientStatistics stats={stats} /></div>
 
       {/* Filter and Search Action bar */}
-      <div className="premium-card p-5 flex flex-col md:flex-row gap-4 items-center w-full">
+      <div data-page-section className="premium-card p-5 flex flex-col md:flex-row gap-4 items-center w-full">
         {/* Search */}
         <div className="flex-1 w-full relative">
           <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#718096] select-none text-xl">
@@ -115,7 +137,7 @@ export function PatientListFeature() {
       </div>
 
       {/* Patients Data Grid Card */}
-      <div className="premium-card overflow-hidden">
+      <div data-page-section className="premium-card overflow-hidden">
         <PatientTable patients={patients} loading={isLoading} />
 
         {/* Pagination bar */}

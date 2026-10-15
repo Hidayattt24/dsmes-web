@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { useRecordMonitoring } from "../hooks/useRecordMonitoring";
 import { RecordMonitoringStats } from "./RecordMonitoringStats";
 import { RecordMonitoringFilters } from "./RecordMonitoringFilters";
@@ -12,6 +14,7 @@ import { IncreasingTrendTable } from "./IncreasingTrendTable";
 import { MedicalGuideInfoModal } from "@/components/common/MedicalGuideInfoModal";
 
 export function RecordMonitoringFeature() {
+  const pageRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isStaff = pathname.startsWith("/staff");
 
@@ -53,9 +56,28 @@ export function RecordMonitoringFeature() {
     return bs ? latest > bs * 1.1 : false;
   });
 
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      gsap.fromTo(
+        "[data-page-section]",
+        { autoAlpha: 0, y: 14 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.35,
+          stagger: 0.06,
+          ease: "power2.out",
+        },
+      );
+    },
+    { scope: pageRef },
+  );
+
   return (
-    <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div ref={pageRef} className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
+      <div data-page-section className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-[#1A202C] tracking-tight">
             Monitoring Record Pasien
@@ -80,21 +102,23 @@ export function RecordMonitoringFeature() {
         onClose={() => setIsGuideOpen(false)}
       />
 
-      <RecordMonitoringStats stats={stats} />
+      <div data-page-section><RecordMonitoringStats stats={stats} /></div>
 
-      <RecordMonitoringFilters
-        searchQuery={searchQuery}
-        complianceFilter={complianceFilter}
-        riskFilter={riskFilter}
-        genderFilter={genderFilter}
-        onSearchChange={setSearchQuery}
-        onComplianceChange={setComplianceFilter}
-        onRiskChange={setRiskFilter}
-        onGenderChange={setGenderFilter}
-      />
+      <div data-page-section>
+        <RecordMonitoringFilters
+          searchQuery={searchQuery}
+          complianceFilter={complianceFilter}
+          riskFilter={riskFilter}
+          genderFilter={genderFilter}
+          onSearchChange={setSearchQuery}
+          onComplianceChange={setComplianceFilter}
+          onRiskChange={setRiskFilter}
+          onGenderChange={setGenderFilter}
+        />
+      </div>
 
       {isStaff && (
-        <MonitoringTabs
+        <div data-page-section><MonitoringTabs
           activeTab={activeTab}
           onTabChange={setActiveTab}
           tabs={
@@ -119,10 +143,10 @@ export function RecordMonitoringFeature() {
               },
             ] as const
           }
-        />
+        /></div>
       )}
 
-      <div className="premium-card overflow-hidden">
+      <div data-page-section className="premium-card overflow-hidden">
         {isStaff ? (
           <>
             {activeTab === "semua" && (
