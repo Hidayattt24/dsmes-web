@@ -13,10 +13,7 @@ export function SmoothScroll({ children }: { readonly children: React.ReactNode 
   const wrapper = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const nativeScroll =
-    pathname.startsWith("/admin/data-pasien") ||
-    pathname.startsWith("/admin/pemantauan-catatan-pasien") ||
-    pathname.startsWith("/staff/pemantauan-catatan-pasien");
+  const nativeScroll = pathname.startsWith("/admin/dashboard");
 
   useGSAP(
     () => {

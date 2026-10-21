@@ -35,17 +35,31 @@ export function BloodSugarHistoryCard({
   };
 
   const limitDays = parseInt(period, 10);
-  const cutoffDate = new Date();
+  const sortedLogs = [...logs].sort(
+    (a, b) => getParsedDate(b).getTime() - getParsedDate(a).getTime(),
+  );
+
+  const now = new Date();
+  const latestLogDate = sortedLogs.length > 0 ? getParsedDate(sortedLogs[0]) : now;
+
+  // Use now as reference if latest log is recent (within 35 days); otherwise anchor to latest log date for historical/demo data
+  const referenceDate =
+    now.getTime() - latestLogDate.getTime() <= 35 * 24 * 60 * 60 * 1000 &&
+    now >= latestLogDate
+      ? now
+      : latestLogDate;
+
+  const cutoffDate = new Date(referenceDate);
   cutoffDate.setDate(cutoffDate.getDate() - limitDays);
+  cutoffDate.setHours(0, 0, 0, 0);
 
-  const dateFiltered = logs.filter((log) => getParsedDate(log) >= cutoffDate);
-  const chartSourceLogs = dateFiltered.length > 0 ? dateFiltered : logs;
-  const hasData = logs.length > 0;
+  const filteredLogs = sortedLogs.filter(
+    (log) => getParsedDate(log) >= cutoffDate,
+  );
+  const hasData = filteredLogs.length > 0;
 
-  // Sort newest first (kiri baru ke kanan lama), take top 7 for chart
-  const chartLogs = [...chartSourceLogs]
-    .sort((a, b) => getParsedDate(b).getTime() - getParsedDate(a).getTime())
-    .slice(0, 7);
+  // Sort newest first, take up to limitDays for chart
+  const chartLogs = filteredLogs.slice(0, limitDays);
 
   const N = chartLogs.length;
 
@@ -249,7 +263,7 @@ export function BloodSugarHistoryCard({
                 className={[
                   "px-4 py-1.5 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer",
                   period === p
-                    ? "bg-[#0F766E] text-white shadow-md shadow-[#0F766E]/15"
+                    ? "bg-[#3B67FC] text-white shadow-md shadow-[#3B67FC]/20"
                     : "text-[#718096] hover:text-[#3B67FC]",
                 ].join(" ")}
               >
@@ -270,10 +284,12 @@ export function BloodSugarHistoryCard({
               </span>
             </div>
             <p className="font-semibold text-sm text-[#4A5568]">
-              Belum Ada Catatan Gula Darah
+              Belum Ada Catatan Gula Darah ({period} Hari)
             </p>
             <p className="text-xs text-[#718096] mt-1">
-              Data grafik riwayat gula darah pasien akan muncul di sini.
+              {logs.length === 0
+                ? "Data grafik riwayat gula darah pasien akan muncul di sini."
+                : `Tidak ada data tercatat dalam rentang ${period} hari terakhir.`}
             </p>
           </div>
         ) : (
@@ -429,16 +445,18 @@ export function BloodSugarHistoryCard({
                   )}
 
                   {/* X-axis date label */}
-                  <text
-                    x={pt.x}
-                    y={CHART_B + 16}
-                    textAnchor="middle"
-                    fill={isHovered ? "#3B67FC" : "#A0AEC0"}
-                    fontSize="10"
-                    fontWeight={isHovered ? "bold" : "500"}
-                  >
-                    {pt.date?.split(" ").slice(0, 2).join(" ")}
-                  </text>
+                  {(N <= 10 || idx % Math.ceil(N / 7) === 0 || idx === N - 1 || isHovered) && (
+                    <text
+                      x={pt.x}
+                      y={CHART_B + 16}
+                      textAnchor="middle"
+                      fill={isHovered ? "#3B67FC" : "#A0AEC0"}
+                      fontSize="10"
+                      fontWeight={isHovered ? "bold" : "500"}
+                    >
+                      {pt.date?.split(" ").slice(0, 2).join(" ")}
+                    </text>
+                  )}
                 </g>
               );
             })}
@@ -497,16 +515,13 @@ export function BloodSugarHistoryCard({
                   colSpan={5}
                   className="py-6 text-center text-xs text-[#718096]"
                 >
-                  Tidak ada catatan riwayat gula darah.
+                  {logs.length === 0
+                    ? "Tidak ada catatan riwayat gula darah."
+                    : `Tidak ada catatan riwayat gula darah dalam rentang ${period} hari terakhir.`}
                 </td>
               </tr>
             ) : (
-              [...logs]
-                .sort(
-                  (a, b) =>
-                    getParsedDate(b).getTime() - getParsedDate(a).getTime(),
-                )
-                .map((log, idx) => {
+              filteredLogs.map((log, idx) => {
                   const status = getGlucoseStatus(log);
                   const ptColor = getPointColor(log.measurementTimeType);
                   return (

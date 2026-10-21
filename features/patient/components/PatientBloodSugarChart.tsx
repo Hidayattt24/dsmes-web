@@ -149,7 +149,7 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
               className={[
                 "px-6 py-2 text-xs font-bold rounded-full transition-all duration-200 cursor-pointer",
                 selectedRange === range
-                  ? "bg-[#0F766E] text-white shadow-md shadow-[#0F766E]/15"
+                  ? "bg-[#3B67FC] text-white shadow-md shadow-[#3B67FC]/20"
                   : "text-[#718096] hover:text-[#3B67FC]",
               ].join(" ")}
             >
@@ -228,7 +228,7 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
                       cy={pt.y}
                       fill="#ffffff"
                       r={hoveredIndex === idx ? 6 : 5}
-                      stroke={hoveredIndex === idx ? "#0F766E" : "#3B67FC"}
+                      stroke={hoveredIndex === idx ? "#3B67FC" : "#3B67FC"}
                       strokeWidth={hoveredIndex === idx ? 3 : 2.5}
                     />
                     <text
@@ -257,19 +257,19 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
                       y1="75"
                       x2={active.x}
                       y2="225"
-                      stroke="#0F766E"
+                      stroke="#3B67FC"
                       strokeWidth="1.5"
                       strokeDasharray="3,3"
                     />
 
-                    <circle cx={active.x} cy={active.y} r="8" fill="#0F766E" fillOpacity="0.2" />
+                    <circle cx={active.x} cy={active.y} r="8" fill="#3B67FC" fillOpacity="0.2" />
 
                     <g transform={`translate(${active.x - 70}, ${ry})`}>
                       <rect
                         width="140"
                         height="36"
                         rx="18"
-                        fill="#0F766E"
+                        fill="#3B67FC"
                         className="shadow-xl"
                       />
                       <text
@@ -308,7 +308,7 @@ export function PatientBloodSugarChart({ data = [], bloodSugarLogs = [] }: Patie
               <text
                 x={pt.x}
                 y="275"
-                fill={hoveredIndex === idx ? "#0F766E" : "#A0AEC0"}
+                fill={hoveredIndex === idx ? "#3B67FC" : "#A0AEC0"}
                 fontSize="12"
                 fontWeight={hoveredIndex === idx ? "bold" : "500"}
                 textAnchor="middle"

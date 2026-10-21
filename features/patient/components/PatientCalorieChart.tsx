@@ -123,7 +123,7 @@ export function PatientCalorieChart({ data = [], patient }: PatientCalorieChartP
               className={[
                 "px-4 py-1.5 text-[10px] font-bold rounded-full transition-all duration-200 cursor-pointer",
                 selectedRange === range
-                  ? "bg-[#0F766E] text-white shadow-sm shadow-[#0F766E]/15"
+                  ? "bg-[#3B67FC] text-white shadow-sm shadow-[#3B67FC]/20"
                   : "text-[#718096] hover:text-[#3B67FC]",
               ].join(" ")}
             >
