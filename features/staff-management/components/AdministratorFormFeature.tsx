@@ -187,7 +187,7 @@ export function AdministratorFormFeature({ adminId }: AdministratorFormFeaturePr
             {/* WhatsApp */}
             <div className="space-y-2 md:col-span-2">
               <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider block">
-                Nomor WhatsApp
+                Nomor WhatsApp <span className="text-red-500">*</span>
               </label>
               <input
                 type="tel"
