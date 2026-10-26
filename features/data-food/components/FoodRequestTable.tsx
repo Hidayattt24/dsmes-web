@@ -65,6 +65,7 @@ export function FoodRequestTable() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchRequests();
     fetchStats();
   }, [fetchRequests, fetchStats]);
@@ -268,7 +269,7 @@ export function FoodRequestTable() {
                             )}
                             {req.notes && (
                               <span className="text-[11px] text-[#718096] italic truncate max-w-xs">
-                                "{req.notes}"
+                                &ldquo;{req.notes}&rdquo;
                               </span>
                             )}
                           </div>

@@ -37,6 +37,7 @@ export function FoodRequestReviewModal({
 
   useEffect(() => {
     if (request) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         name: request.name,
         manufacturer: "",
@@ -137,7 +138,7 @@ export function FoodRequestReviewModal({
             {request.notes && (
               <div className="pt-2 border-t border-[#E2E8F0] text-xs">
                 <span className="text-[#718096]">Catatan Pasien: </span>
-                <span className="text-[#1A202C] italic">"{request.notes}"</span>
+                <span className="text-[#1A202C] italic">&ldquo;{request.notes}&rdquo;</span>
               </div>
             )}
           </div>

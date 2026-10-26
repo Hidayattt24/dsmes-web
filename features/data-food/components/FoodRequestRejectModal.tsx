@@ -74,7 +74,7 @@ export function FoodRequestRejectModal({
           )}
 
           <p className="text-sm text-[#4A5568]">
-            Anda akan menolak pengajuan makanan <strong className="text-[#1A202C]">"{request.name}"</strong> yang diajukan oleh <span className="font-semibold">{request.patient_name || "Pasien"}</span>.
+            Anda akan menolak pengajuan makanan <strong className="text-[#1A202C]">&ldquo;{request.name}&rdquo;</strong> yang diajukan oleh <span className="font-semibold">{request.patient_name || "Pasien"}</span>.
           </p>
 
           <div>
