@@ -7,6 +7,10 @@ import type {
   ExcelImportPreviewResponse,
   ExcelImportConfirmResponse,
   FoodStats,
+  FoodRequest,
+  FoodRequestStats,
+  FoodRequestListParams,
+  ApproveFoodProposalDTO,
 } from "@/features/data-food/types/food";
 
 export const foodService = {
@@ -71,4 +75,33 @@ export const foodService = {
     const res = await axiosInstance.get("/admin/foods/stats");
     return res.data.data;
   },
+
+  getFoodRequests: async (params?: FoodRequestListParams) => {
+    const res = await axiosInstance.get("/admin/food-requests", { params });
+    const meta = res.data.meta || res.data.pagination || {};
+    return {
+      data: (res.data.data as FoodRequest[]) || [],
+      pagination: {
+        total_items: meta.total ?? meta.total_items ?? res.data.data?.length ?? 0,
+        current_page: meta.page ?? meta.current_page ?? params?.page ?? 1,
+        per_page: meta.per_page ?? params?.limit ?? 20,
+        total_pages: meta.total_pages ?? 1,
+      },
+    };
+  },
+
+  getFoodRequestStats: async (): Promise<FoodRequestStats> => {
+    const res = await axiosInstance.get("/admin/food-requests/stats");
+    return res.data.data;
+  },
+
+  approveFoodRequest: async (id: string, data: ApproveFoodProposalDTO): Promise<FoodMaster> => {
+    const res = await axiosInstance.post(`/admin/food-requests/${id}/approve`, data);
+    return res.data.data;
+  },
+
+  rejectFoodRequest: async (id: string, reason: string): Promise<void> => {
+    await axiosInstance.post(`/admin/food-requests/${id}/reject`, { reason });
+  },
 };
+

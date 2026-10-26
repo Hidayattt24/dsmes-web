@@ -109,3 +109,59 @@ export interface FoodStats {
   total_manufacturers: number;
   active_foods: number;
 }
+
+export interface FoodRequest {
+  id: string;
+  patient_id: string;
+  patient_name?: string;
+  patient_phone?: string;
+  name: string;
+  serving_size: string;
+  estimated_calories: number;
+  meal_type: string;
+  notes: string;
+  image_url?: string;
+  status: 'pending' | 'approved' | 'rejected';
+  admin_notes?: string;
+  reviewed_by?: string;
+  reviewer_name?: string;
+  reviewed_at?: string;
+  approved_food_id?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FoodRequestStats {
+  total: number;
+  pending: number;
+  approved: number;
+  rejected: number;
+}
+
+export interface FoodRequestListParams {
+  q?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+  sort_order?: 'asc' | 'desc';
+}
+
+export interface ApproveFoodProposalDTO {
+  name: string;
+  manufacturer?: string;
+  serving_size: string;
+  energy_kcal: number;
+  protein_g: number;
+  carbohydrate_g: number;
+  fat_g: number;
+  sugar_g?: number;
+  sodium_mg?: number;
+  fiber_g?: number;
+  nutrition_basis?: 'PER_100G' | 'PER_SERVING' | 'PER_PACKAGE' | 'UNVERIFIED';
+  admin_notes?: string;
+}
+
+export interface RejectFoodProposalDTO {
+  reason: string;
+}
+

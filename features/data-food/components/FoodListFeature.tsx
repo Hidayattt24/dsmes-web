@@ -6,6 +6,7 @@ import { ROUTES } from "@/constants/routes";
 import { FoodStatsCards } from "@/features/data-food/components/FoodStatsCards";
 import { FoodFilters } from "@/features/data-food/components/FoodFilters";
 import { FoodTable } from "@/features/data-food/components/FoodTable";
+import { FoodRequestTable } from "@/features/data-food/components/FoodRequestTable";
 import { FoodImportModal } from "@/features/data-food/components/FoodImportModal";
 import { FoodDetailModal } from "@/features/data-food/components/FoodDetailModal";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
@@ -21,6 +22,9 @@ import type {
 
 export function FoodListFeature() {
   const { showToast } = useToast();
+
+  const [activeTab, setActiveTab] = useState<"master" | "requests">("master");
+  const [pendingRequestsCount, setPendingRequestsCount] = useState<number>(0);
 
   const [foods, setFoods] = useState<FoodMaster[]>([]);
   const [stats, setStats] = useState<FoodStats | null>(null);
@@ -75,11 +79,21 @@ export function FoodListFeature() {
     }
   }, []);
 
+  const fetchRequestStats = useCallback(async () => {
+    try {
+      const data = await foodService.getFoodRequestStats();
+      setPendingRequestsCount(data.pending || 0);
+    } catch {
+      // non-critical
+    }
+  }, []);
+
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchFoods();
     fetchStats();
-  }, [fetchFoods, fetchStats]);
+    fetchRequestStats();
+  }, [fetchFoods, fetchStats, fetchRequestStats]);
+
 
   const handleConfirmDelete = async () => {
     if (!deleteTarget) return;
@@ -198,70 +212,116 @@ export function FoodListFeature() {
   };
 
   return (
-    <div className="space-y-8 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
+    <div className="space-y-6 max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)]">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#E2E8F0] pb-4">
         <div>
           <h2 className="text-2xl font-bold text-[#1A202C]">Data Makanan</h2>
           <p className="text-xs font-medium text-[#718096] mt-1">
-            Kelola master data makanan, nilai gizi, serta takaran nutrisi terintegrasi DIBA
+            Kelola master data makanan, nilai gizi, serta usulan penambahan makanan dari pasien
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
-          <button
-            onClick={() => handleExport("xlsx")}
-            className="h-12 px-5 rounded-xl border border-[#E2E8F0] bg-white text-[#4A5568] hover:bg-[#F8FAFC] text-sm font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm"
-          >
-            <span className="material-symbols-outlined text-xl select-none">download</span>
-            <span>Ekspor Excel</span>
-          </button>
-          <button
-            onClick={() => setIsImportOpen(true)}
-            className="h-12 px-5 rounded-xl border border-[#3B67FC] bg-[#EEF2FF] text-[#3B67FC] hover:bg-[#3B67FC] hover:text-white text-sm font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm"
-          >
-            <span className="material-symbols-outlined text-xl select-none">file_upload</span>
-            <span>Impor Excel</span>
-          </button>
-          <Link
-            href={`${ROUTES.DATA_MAKANAN}/tambah`}
-            className="h-12 px-6 rounded-xl bg-[#3B67FC] text-white text-sm font-bold hover:bg-[#1A63ED] transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#3B67FC]/20"
-          >
-            <span className="material-symbols-outlined text-xl select-none">add</span>
-            <span>Buat Makanan Baru</span>
-          </Link>
-        </div>
+        {activeTab === "master" && (
+          <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+            <button
+              onClick={() => handleExport("xlsx")}
+              className="h-11 px-4 rounded-xl border border-[#E2E8F0] bg-white text-[#4A5568] hover:bg-[#F8FAFC] text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-xs"
+            >
+              <span className="material-symbols-outlined text-lg select-none">download</span>
+              <span>Ekspor Excel</span>
+            </button>
+            <button
+              onClick={() => setIsImportOpen(true)}
+              className="h-11 px-4 rounded-xl border border-[#3B67FC] bg-[#EEF2FF] text-[#3B67FC] hover:bg-[#3B67FC] hover:text-white text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-xs"
+            >
+              <span className="material-symbols-outlined text-lg select-none">file_upload</span>
+              <span>Impor Excel</span>
+            </button>
+            <Link
+              href={`${ROUTES.DATA_MAKANAN}/tambah`}
+              className="h-11 px-5 rounded-xl bg-[#3B67FC] text-white text-xs font-bold hover:bg-[#1A63ED] transition-all flex items-center gap-2 cursor-pointer shadow-xs shadow-[#3B67FC]/20"
+            >
+              <span className="material-symbols-outlined text-lg select-none">add</span>
+              <span>Buat Makanan Baru</span>
+            </Link>
+          </div>
+        )}
       </div>
 
-      {/* Stats Cards */}
-      <FoodStatsCards stats={stats} />
+      {/* Modern Tab Navigation */}
+      <div className="flex items-center gap-3 border-b border-[#E2E8F0] pt-1">
+        <button
+          onClick={() => setActiveTab("master")}
+          className={`pb-3 px-3 text-sm font-bold flex items-center gap-2 border-b-2 transition-all cursor-pointer ${
+            activeTab === "master"
+              ? "border-[#3B67FC] text-[#3B67FC]"
+              : "border-transparent text-[#718096] hover:text-[#1A202C]"
+          }`}
+        >
+          <span className="material-symbols-outlined text-xl select-none">restaurant_menu</span>
+          <span>Database Makanan</span>
+        </button>
 
-      {/* Filters */}
-      <FoodFilters
-        searchQuery={searchQuery}
-        statusFilter={statusFilter}
-        onSearchChange={(q) => {
-          setSearchQuery(q);
-          setPage(1);
-        }}
-        onStatusChange={(status) => {
-          setStatusFilter(status);
-          setPage(1);
-        }}
-      />
+        <button
+          onClick={() => {
+            setActiveTab("requests");
+            fetchRequestStats();
+          }}
+          className={`pb-3 px-3 text-sm font-bold flex items-center gap-2 border-b-2 transition-all cursor-pointer ${
+            activeTab === "requests"
+              ? "border-[#3B67FC] text-[#3B67FC]"
+              : "border-transparent text-[#718096] hover:text-[#1A202C]"
+          }`}
+        >
+          <span className="material-symbols-outlined text-xl select-none">pending_actions</span>
+          <span>Permintaan Makanan Baru</span>
+          {pendingRequestsCount > 0 && (
+            <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200 animate-pulse">
+              {pendingRequestsCount} Menunggu
+            </span>
+          )}
+        </button>
+      </div>
 
-      {/* Data Table */}
-      <FoodTable
-        foods={foods}
-        loading={loading}
-        page={page}
-        totalPages={totalPages}
-        totalItems={totalItems}
-        onPageChange={setPage}
-        onViewDetail={setDetailFood}
-        onDeleteClick={setDeleteTarget}
-        onToggleStatus={handleToggleStatus}
-      />
+      {/* Tab 1: Master Foods */}
+      {activeTab === "master" ? (
+        <div className="space-y-6">
+          {/* Stats Cards */}
+          <FoodStatsCards stats={stats} />
+
+          {/* Filters */}
+          <FoodFilters
+            searchQuery={searchQuery}
+            statusFilter={statusFilter}
+            onSearchChange={(q) => {
+              setSearchQuery(q);
+              setPage(1);
+            }}
+            onStatusChange={(status) => {
+              setStatusFilter(status);
+              setPage(1);
+            }}
+          />
+
+          {/* Data Table */}
+          <FoodTable
+            foods={foods}
+            loading={loading}
+            page={page}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            onPageChange={setPage}
+            onViewDetail={setDetailFood}
+            onDeleteClick={setDeleteTarget}
+            onToggleStatus={handleToggleStatus}
+          />
+        </div>
+      ) : (
+        /* Tab 2: User Food Requests */
+        <FoodRequestTable />
+      )}
+
 
       {/* Detail Modal */}
       <FoodDetailModal
