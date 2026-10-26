@@ -4,9 +4,10 @@ import { useEducationForm } from "../hooks/useEducationForm";
 import type { FormFields } from "../hooks/useEducationForm";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { FormLoader } from "@/components/ui/loading";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { BackButton } from "@/components/common/BackButton";
+import { ErrorState } from "@/components/common/ErrorState";
 import { ROUTES } from "@/constants/routes";
 import { useToast } from "@/components/ui/Toast";
 import { createPortal } from "react-dom";
@@ -21,10 +22,13 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
     fields,
     isLoading,
     isSaving,
+    loadError,
+    loadedArticleId,
     errors,
     handleChange: baseHandleChange,
     save,
     cancel,
+    retryLoad,
   } = useEducationForm(articleId);
 
   const [isDirty, setIsDirty] = useState(false);
@@ -311,23 +315,31 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
   const editorImageInputRef = useRef<HTMLInputElement>(null);
-  const isContentInitializedRef = useRef(false);
+  const initializedEditorKeyRef = useRef<string | null>(null);
 
-  // Reset content initialization flag if editing a different article
-  useEffect(() => {
-    isContentInitializedRef.current = false;
-  }, [articleId]);
-
-  // Sync initial content from DB (strictly ONCE when loading finishes)
-  useEffect(() => {
-    if (!isLoading && editorRef.current && !isContentInitializedRef.current) {
-      editorRef.current.innerHTML = fields.content || "";
-      isContentInitializedRef.current = true;
+  // Initialize the uncontrolled editor once for the loaded article. Updating
+  // innerHTML on every state change would reset the user's caret while typing.
+  useLayoutEffect(() => {
+    const editorKey = articleId ?? "__create__";
+    const isReady = articleId ? loadedArticleId === articleId : true;
+    if (
+      !isReady ||
+      !editorRef.current ||
+      initializedEditorKeyRef.current === editorKey
+    ) {
+      return;
     }
-  }, [isLoading, fields.content]);
+
+    editorRef.current.innerHTML = fields.content || "";
+    initializedEditorKeyRef.current = editorKey;
+  }, [articleId, loadedArticleId, fields.content]);
 
   if (isLoading) {
     return <FormLoader />;
+  }
+
+  if (loadError) {
+    return <ErrorState message={loadError} onRetry={retryLoad} />;
   }
 
   const triggerUpload = () => {
@@ -971,7 +983,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                   Klik atau seret file banner ke sini
                 </p>
                 <p className="text-[11px] text-[#64748B] mt-1 font-[family-name:var(--font-poppins)]">
-                  Format PNG, JPG (Maks. 5MB, Rekomendasi 16:9)
+                  Format PNG, JPG, WEBP (Maks. 1MB, Rekomendasi 16:9)
                 </p>
               </div>
             )}

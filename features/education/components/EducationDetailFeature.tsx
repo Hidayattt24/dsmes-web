@@ -13,6 +13,7 @@ import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 import { useToast } from "@/components/ui/Toast";
 
 import { DetailPageLoader } from "@/components/ui/loading";
+import { EducationBanner } from "./EducationBanner";
 
 interface EducationDetailFeatureProps {
   readonly articleId: string;
@@ -67,9 +68,6 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
   if (error || !article) {
     return <ErrorState message={error ?? "Artikel tidak ditemukan."} onRetry={refetch} />;
   }
-
-  const fallbackCover =
-    "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop";
 
   return (
     <section className="max-w-[1600px] mx-auto w-full font-[family-name:var(--font-poppins)] p-4 sm:p-6 space-y-6 sm:space-y-8">
@@ -185,11 +183,10 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
           <div className="bg-white border border-[#E2E8F0] rounded-2xl p-5 sm:p-8 lg:p-10 shadow-sm space-y-6 sm:space-y-8">
             {/* Hero Cover Image */}
             <div className="relative aspect-[16/9] w-full max-h-[420px] rounded-2xl overflow-hidden group border border-[#E2E8F0] bg-slate-100 shadow-sm">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={article.thumbnail || fallbackCover}
+              <EducationBanner
+                src={article.thumbnail}
                 alt={article.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                showEmptyLabel
               />
             </div>
 
@@ -340,12 +337,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
                   className="flex gap-3.5 p-2 rounded-xl hover:bg-[#F8FAFC] transition-all group border border-transparent hover:border-[#E2E8F0]"
                 >
                   <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border border-[#E2E8F0] bg-slate-100">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={rel.thumbnail || fallbackCover}
-                      alt={rel.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                    <EducationBanner src={rel.thumbnail} alt={rel.title} variant="thumbnail" />
                   </div>
                   <div className="flex flex-col justify-center min-w-0">
                     <h5 className="text-xs font-bold text-[#0F172A] leading-snug group-hover:text-[#3B67FC] transition-colors line-clamp-2">

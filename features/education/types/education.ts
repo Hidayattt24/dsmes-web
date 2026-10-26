@@ -1,3 +1,19 @@
+export interface EducationSectionStep {
+  readonly id: string;
+  readonly stepOrder: number;
+  readonly stepText: string;
+}
+
+export interface EducationSection {
+  readonly id: string;
+  readonly sectionOrder: number;
+  readonly sectionTitle: string;
+  readonly sectionType: "paragraf" | "langkah" | "info_penting";
+  readonly contentText: string;
+  readonly imageUrl: string;
+  readonly steps: readonly EducationSectionStep[];
+}
+
 export interface EducationArticle {
   readonly id: string;
   readonly title: string;
@@ -13,6 +29,7 @@ export interface EducationArticle {
   readonly createdAt: string;
   readonly updatedAt: string;
   readonly readCount: number;
+  readonly sections: readonly EducationSection[];
 }
 
 export interface EducationStats {

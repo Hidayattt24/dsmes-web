@@ -33,38 +33,60 @@ export function useEducationForm(articleId?: string) {
     thumbnail: "",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(Boolean(articleId));
   const [isSaving, setIsSaving] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [loadedArticleId, setLoadedArticleId] = useState<string | null>(null);
   const [errors, setErrors] = useState<Partial<Record<keyof FormFields, string>>>({});
 
   useEffect(() => {
     if (!articleId) return;
 
+    let cancelled = false;
+
     const loadArticle = async () => {
       setIsLoading(true);
+      setLoadError(null);
+      setLoadedArticleId(null);
       try {
         const art = await educationService.getArticleById(articleId);
-        if (art) {
-          setFields({
-            title: art.title,
-            category: art.category,
-            createdBy: art.createdBy || "Tim Medis DIBA",
-            shortDescription: art.shortDescription,
-            content: art.content,
-            youtubeLink: art.youtubeLink ?? "",
-            duration: art.duration,
-            status: art.status,
-            thumbnail: art.thumbnail,
-          });
+        if (cancelled) return;
+        if (!art) {
+          setLoadError("Materi edukasi tidak ditemukan.");
+          return;
         }
-      } catch {
-        // Handle error if needed
+        setFields({
+          title: art.title,
+          category: art.category,
+          createdBy: art.createdBy || "Tim Medis DIBA",
+          shortDescription: art.shortDescription,
+          content: art.content,
+          youtubeLink: art.youtubeLink ?? "",
+          duration: art.duration,
+          status: art.status,
+          thumbnail: art.thumbnail,
+        });
+        setLoadedArticleId(articleId);
+      } catch (error: unknown) {
+        if (cancelled) return;
+        const err = error as { response?: { status?: number } };
+        setLoadError(
+          err.response?.status === 404
+            ? "Materi edukasi tidak ditemukan."
+            : err.response?.status === 401 || err.response?.status === 403
+              ? "Anda tidak memiliki akses ke materi edukasi ini."
+              : "Data edukasi gagal dimuat. Silakan coba lagi."
+        );
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
 
     loadArticle();
+
+    return () => {
+      cancelled = true;
+    };
   }, [articleId]);
 
   const handleChange = (key: keyof FormFields, val: string | number) => {
@@ -75,6 +97,8 @@ export function useEducationForm(articleId?: string) {
   const validate = (targetFields: FormFields): boolean => {
     const newErrors: Partial<Record<keyof FormFields, string>> = {};
     if (!targetFields.title.trim()) newErrors.title = "Judul edukasi wajib diisi.";
+    if (!targetFields.shortDescription.trim())
+      newErrors.shortDescription = "Ringkasan singkat wajib diisi.";
     if (!targetFields.content.trim()) newErrors.content = "Konten edukasi wajib diisi.";
     if (targetFields.duration <= 0) newErrors.duration = "Durasi membaca harus lebih dari 0 menit.";
 
@@ -95,6 +119,15 @@ export function useEducationForm(articleId?: string) {
     forcedStatus?: "Diterbitkan" | "Draf",
     overrideFields?: Partial<FormFields>
   ): Promise<boolean> => {
+    if (articleId && loadedArticleId !== articleId) {
+      showToast({
+        type: "error",
+        title: "Data Belum Siap",
+        description: "Tunggu sampai materi edukasi selesai dimuat.",
+      });
+      return false;
+    }
+
     const currentFields: FormFields = {
       ...fields,
       ...overrideFields,
@@ -105,13 +138,10 @@ export function useEducationForm(articleId?: string) {
 
     setIsSaving(true);
     try {
-      const autoSummary = currentFields.shortDescription.trim() ||
-        currentFields.content.replace(/<[^>]*>/g, "").slice(0, 160).trim();
-
       await educationService.saveArticle({
         id: articleId,
         ...currentFields,
-        shortDescription: autoSummary,
+        shortDescription: currentFields.shortDescription.trim(),
       });
       showToast({
         type: "success",
@@ -139,9 +169,12 @@ export function useEducationForm(articleId?: string) {
     fields,
     isLoading,
     isSaving,
+    loadError,
+    loadedArticleId,
     errors,
     handleChange,
     save,
     cancel: () => router.push(ROUTES.MANAJEMEN_EDUKASI),
+    retryLoad: () => window.location.reload(),
   };
 }

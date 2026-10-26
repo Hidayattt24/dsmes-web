@@ -1,5 +1,6 @@
-import type { EducationArticle, EducationStats, EducationProgressItem, EducationProgressAnalytics, AdminArticleReviewsData } from "../types/education";
+import type { EducationArticle, EducationStats, EducationProgressItem, EducationProgressAnalytics, AdminArticleReviewsData, EducationSection } from "../types/education";
 import { axiosInstance } from "@/lib/axios";
+import { resolveEditorContent } from "../utils/educationContent";
 
 const formatDateSafe = (dateStr: unknown, includeTime = false): string => {
   if (!dateStr || typeof dateStr !== "string") return "Hari ini";
@@ -21,12 +22,37 @@ const mapArticleFromBackend = (data: Record<string, unknown>): EducationArticle 
   const createdAtFormatted = formatDateSafe(data.created_at);
   const updatedAtFormatted = formatDateSafe(data.updated_at || data.created_at, true);
 
+  const sections: EducationSection[] = Array.isArray(data.sections)
+    ? data.sections.map((raw) => {
+        const section = raw as Record<string, unknown>;
+        return {
+          id: String(section.id ?? ""),
+          sectionOrder: Number(section.section_order ?? 0),
+          sectionTitle: String(section.section_title ?? ""),
+          sectionType: (section.section_type as EducationSection["sectionType"]) || "paragraf",
+          contentText: String(section.content_text ?? ""),
+          imageUrl: String(section.image_url ?? ""),
+          steps: Array.isArray(section.steps)
+            ? section.steps.map((rawStep) => {
+                const step = rawStep as Record<string, unknown>;
+                return {
+                  id: String(step.id ?? ""),
+                  stepOrder: Number(step.step_order ?? 0),
+                  stepText: String(step.step_text ?? ""),
+                };
+              })
+            : [],
+        };
+      })
+    : [];
+  const rawContent = typeof data.content === "string" ? data.content : "";
+
   return {
     id: data.id as string,
     title: data.title as string,
     category: (data.category_name as string) || "Umum & DSMES",
-    shortDescription: (data.summary as string) || "",
-    content: (data.content as string) || "",
+    shortDescription: typeof data.summary === "string" ? data.summary : "",
+    content: resolveEditorContent(rawContent, sections),
     duration: (data.estimated_read_minutes as number) || 5,
     youtubeLink: (data.youtube_link as string) || "",
     thumbnail: (data.banner_image_url as string) || "",
@@ -35,6 +61,7 @@ const mapArticleFromBackend = (data: Record<string, unknown>): EducationArticle 
     createdAt: createdAtFormatted,
     updatedAt: updatedAtFormatted,
     readCount: (data.read_count as number) || 0,
+    sections,
   };
 };
 
@@ -59,15 +86,8 @@ export const educationService = {
 
   /** Get single article by ID */
   async getArticleById(id: string, rolePrefix: "admin" | "staff" = "admin"): Promise<EducationArticle | null> {
-    try {
-      const res = await axiosInstance.get(`/${rolePrefix}/education/articles/${id}`);
-      if (res.data?.data) {
-        return mapArticleFromBackend(res.data.data);
-      }
-      return null;
-    } catch {
-      return null;
-    }
+    const res = await axiosInstance.get(`/${rolePrefix}/education/articles/${id}`);
+    return res.data?.data ? mapArticleFromBackend(res.data.data) : null;
   },
 
   /** Save (Create or Update) */
