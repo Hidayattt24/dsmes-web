@@ -20,8 +20,9 @@ export interface EducationArticle {
   readonly category: string;
   readonly shortDescription: string;
   readonly content: string;
-  readonly duration: number; // Reading duration in minutes
+  readonly duration: number; // Reading duration in seconds
   readonly youtubeLink?: string;
+  readonly audioUrl?: string;
   readonly thumbnail: string;
   readonly coverImage?: string;
   readonly status: "Diterbitkan" | "Draf";
@@ -57,10 +58,17 @@ export interface EducationProgressItem {
   readonly video_finished_at: string | null;
   readonly video_watch_duration: number; // seconds
   readonly video_last_timestamp: number; // seconds
+  // Audio listening
+  readonly audio_listened: boolean;
+  readonly audio_listened_at: string | null;
+  readonly audio_started_at: string | null;
+  readonly audio_finished_at: string | null;
+  readonly audio_listen_duration: number; // seconds
+  readonly audio_last_timestamp: number; // seconds
   // Completion
   readonly completed: boolean;
   readonly completed_at: string | null;
-  readonly completion_source: "ARTICLE" | "VIDEO" | ""; // which media led to completion
+  readonly completion_source: "ARTICLE" | "VIDEO" | "AUDIO" | ""; // which media led to completion
   readonly last_activity_at: string | null;
 }
 
@@ -69,6 +77,7 @@ export interface EducationProgressAnalytics {
   readonly completed_count: number;
   readonly read_article_count: number;
   readonly watched_video_count: number;
+  readonly listened_audio_count: number;
   readonly read_and_video_count: number;
   readonly not_started_count: number;
 }

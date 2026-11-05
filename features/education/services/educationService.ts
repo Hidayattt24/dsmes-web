@@ -53,8 +53,9 @@ const mapArticleFromBackend = (data: Record<string, unknown>): EducationArticle 
     category: (data.category_name as string) || "Umum & DSMES",
     shortDescription: typeof data.summary === "string" ? data.summary : "",
     content: resolveEditorContent(rawContent, sections),
-    duration: (data.estimated_read_minutes as number) || 5,
+    duration: (data.estimated_read_seconds as number) ?? ((data.estimated_read_minutes as number) ? (data.estimated_read_minutes as number) * 60 : 60),
     youtubeLink: (data.youtube_link as string) || "",
+    audioUrl: (data.audio_url as string) || "",
     thumbnail: (data.banner_image_url as string) || "",
     status: (data.status as string) === "publikasi" ? "Diterbitkan" : "Draf",
     createdBy: (data.author_name as string) || "Admin DSMES",
@@ -95,12 +96,14 @@ export const educationService = {
     const payload = {
       title: article.title,
       category_name: article.category,
-      estimated_read_minutes: article.duration,
+      estimated_read_seconds: article.duration || 60,
+      estimated_read_minutes: Math.ceil((article.duration || 60) / 60),
       author_name: article.createdBy || "-",
       banner_image_url: article.thumbnail,
       summary: article.shortDescription,
       content: article.content,
       youtube_link: article.youtubeLink,
+      audio_url: article.audioUrl || "",
       status: article.status === "Diterbitkan" ? "publikasi" : "draft",
     };
 
@@ -115,6 +118,16 @@ export const educationService = {
       const data = res.data?.data;
       return mapArticleFromBackend(data);
     }
+  },
+
+  /** Upload audio file */
+  async uploadAudio(file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append("audio", file);
+    const res = await axiosInstance.post("/admin/education/upload-audio", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return (res.data?.data?.url as string) || "";
   },
 
   /** Delete article */
@@ -159,6 +172,12 @@ export const educationService = {
       video_finished_at: r.video_finished_at ?? null,
       video_watch_duration: r.video_watch_duration ?? 0,
       video_last_timestamp: r.video_last_timestamp ?? 0,
+      audio_listened: r.audio_listened ?? false,
+      audio_listened_at: r.audio_listened_at ?? null,
+      audio_started_at: r.audio_started_at ?? null,
+      audio_finished_at: r.audio_finished_at ?? null,
+      audio_listen_duration: r.audio_listen_duration ?? 0,
+      audio_last_timestamp: r.audio_last_timestamp ?? 0,
       completed: r.completed ?? false,
       completed_at: r.completed_at ?? null,
       completion_source: r.completion_source ?? "",
@@ -175,6 +194,7 @@ export const educationService = {
       completed_count: data.completed_count || 0,
       read_article_count: data.read_article_count || 0,
       watched_video_count: data.watched_video_count || 0,
+      listened_audio_count: data.listened_audio_count || 0,
       read_and_video_count: data.read_and_video_count || 0,
       not_started_count: data.not_started_count || 0,
     };

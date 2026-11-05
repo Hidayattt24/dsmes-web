@@ -108,14 +108,15 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
     { label: "Selesai", value: analytics?.completed_count ?? 0, icon: "check_circle", color: "#166534", bg: "#F0FDF4" },
     { label: "Baca Artikel", value: analytics?.read_article_count ?? 0, icon: "menu_book", color: "#2B6CB0", bg: "#EBF8FF" },
     { label: "Tonton Video", value: analytics?.watched_video_count ?? 0, icon: "play_circle", color: "#B45309", bg: "#FFFBEB" },
-    { label: "Baca + Video", value: analytics?.read_and_video_count ?? 0, icon: "done_all", color: "#6B21A8", bg: "#FAF5FF" },
+    { label: "Dengar Audio", value: analytics?.listened_audio_count ?? 0, icon: "headphones", color: "#3B67FC", bg: "#EEF2FF" },
     { label: "Belum Mulai", value: analytics?.not_started_count ?? 0, icon: "radio_button_unchecked", color: "#9CA3AF", bg: "#F9FAFB" },
   ];
 
   // Compute preferred media stats
   const articleOnlyCount = progress.filter((p) => p.completion_source === "ARTICLE").length;
   const videoOnlyCount = progress.filter((p) => p.completion_source === "VIDEO").length;
-  const bothCount = progress.filter((p) => p.article_read && p.youtube_watched).length;
+  const audioOnlyCount = progress.filter((p) => p.completion_source === "AUDIO").length;
+  const multiCount = progress.filter((p) => [p.article_read, p.youtube_watched, p.audio_listened].filter(Boolean).length >= 2).length;
 
   const totalReviews = reviewsData?.total_reviews ?? 0;
   const avgRating = reviewsData?.average_rating ?? 0;
@@ -147,7 +148,7 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
       <div className="premium-card p-6">
         <h3 className="text-base font-bold text-[#1A202C] mb-1">Preferensi Media Pembelajaran</h3>
         <p className="text-xs text-[#718096] mb-4">Media yang paling sering digunakan pasien untuk menyelesaikan materi ini.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="flex items-center gap-4 p-4 rounded-xl bg-[#EBF8FF] border border-[#BEE3F8]">
             <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
               <span className="material-symbols-outlined text-[20px] text-[#2B6CB0]">menu_book</span>
@@ -168,13 +169,23 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
               <p className="text-[11px] text-[#718096]">pasien</p>
             </div>
           </div>
-          <div className="flex items-center gap-4 p-4 rounded-xl bg-[#FAF5FF] border border-[#DDD6FE]">
+          <div className="flex items-center gap-4 p-4 rounded-xl bg-[#EEF2FF] border border-[#C7D2FE]">
             <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
-              <span className="material-symbols-outlined text-[20px] text-[#6B21A8]">done_all</span>
+              <span className="material-symbols-outlined text-[20px] text-[#3B67FC]">headphones</span>
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B21A8] mb-0.5">Baca + Tonton Video</p>
-              <p className="text-xl font-bold text-[#1A202C]">{bothCount}</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#3B67FC] mb-0.5">Selesai via Audio</p>
+              <p className="text-xl font-bold text-[#1A202C]">{audioOnlyCount}</p>
+              <p className="text-[11px] text-[#718096]">pasien</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 p-4 rounded-xl bg-[#F0FDF4] border border-[#BBF7D0]">
+            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
+              <span className="material-symbols-outlined text-[20px] text-[#166534]">done_all</span>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#166534] mb-0.5">Multi-Media (≥2)</p>
+              <p className="text-xl font-bold text-[#1A202C]">{multiCount}</p>
               <p className="text-[11px] text-[#718096]">pasien</p>
             </div>
           </div>
@@ -304,6 +315,7 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
                 <th className="py-3.5 px-5 border-b border-[#E2E8F0]">Nama Pasien</th>
                 <th className="py-3.5 px-5 border-b border-[#E2E8F0] text-center">Baca Artikel</th>
                 <th className="py-3.5 px-5 border-b border-[#E2E8F0] text-center">Tonton Video</th>
+                <th className="py-3.5 px-5 border-b border-[#E2E8F0] text-center">Dengar Audio</th>
                 <th className="py-3.5 px-5 border-b border-[#E2E8F0] text-center">Status</th>
                 <th className="py-3.5 px-5 border-b border-[#E2E8F0] text-center">Media Selesai</th>
                 <th className="py-3.5 px-5 border-b border-[#E2E8F0]">Aktivitas Terakhir</th>
@@ -312,7 +324,7 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
             <tbody className="text-xs font-medium divide-y divide-[#E2E8F0]/40 bg-white">
               {progress.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-sm text-[#718096]">
+                  <td colSpan={7} className="py-12 text-center text-sm text-[#718096]">
                     Belum ada peserta yang berinteraksi dengan materi ini.
                   </td>
                 </tr>
@@ -348,6 +360,19 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
                       )}
                     </td>
 
+                    {/* Audio Listened */}
+                    <td className="py-3.5 px-5 text-center">
+                      {item.audio_listened ? (
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#EEF2FF] text-[#3B67FC]">
+                          <span className="material-symbols-outlined text-[16px]">check</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#F9FAFB] text-[#D1D5DB]">
+                          <span className="material-symbols-outlined text-[16px]">close</span>
+                        </span>
+                      )}
+                    </td>
+
                     {/* Completion Status */}
                     <td className="py-3.5 px-5 text-center">
                       {item.completed ? (
@@ -374,6 +399,11 @@ export function EducationProgressFeature({ articleId }: EducationProgressFeature
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FFFBEB] text-[#B45309] border border-[#FDE68A]">
                           <span className="material-symbols-outlined text-[12px]">play_circle</span>
                           Video
+                        </span>
+                      ) : item.completion_source === "AUDIO" ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#EEF2FF] text-[#3B67FC] border border-[#C7D2FE]">
+                          <span className="material-symbols-outlined text-[12px]">headphones</span>
+                          Audio
                         </span>
                       ) : (
                         <span className="text-[#9CA3AF]">-</span>

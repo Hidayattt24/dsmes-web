@@ -102,7 +102,9 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
       header: "Durasi",
       render: (row) => (
         <span className="text-xs font-semibold text-[#718096] font-[family-name:var(--font-poppins)]">
-          {row.duration} mnt
+          {row.duration >= 60
+            ? `${Math.floor(row.duration / 60)} mnt${row.duration % 60 ? ` ${row.duration % 60}d` : ""}`
+            : `${row.duration} dtk`}
         </span>
       ),
       className: "w-24",
@@ -243,7 +245,9 @@ export function EducationTable({ articles, loading, onDelete }: EducationTablePr
               <div className="flex items-center justify-between border-t border-[#E2E8F0]/60 pt-2.5 text-xs text-[#718096]">
                 <span className="flex items-center gap-1 font-medium">
                   <span className="material-symbols-outlined text-[15px]">schedule</span>
-                  {row.duration} mnt
+                  {row.duration >= 60
+                    ? `${Math.floor(row.duration / 60)} mnt${row.duration % 60 ? ` ${row.duration % 60}d` : ""}`
+                    : `${row.duration} dtk`}
                 </span>
                 <span className="flex items-center gap-1 font-medium">
                   <span className="material-symbols-outlined text-[15px]">visibility</span>

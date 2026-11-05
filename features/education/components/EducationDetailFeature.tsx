@@ -228,7 +228,12 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-[#3B67FC] text-[18px]">schedule</span>
-                  <span>{article.duration} Menit Baca</span>
+                  <span>
+                    {article.duration >= 60
+                      ? `${Math.floor(article.duration / 60)} Menit ${article.duration % 60 ? `${article.duration % 60} Detik` : ""}`
+                      : `${article.duration} Detik`}{" "}
+                    Baca
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-[#3B67FC] text-[18px]">visibility</span>
@@ -241,6 +246,45 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
             {article.shortDescription && (
               <div className="bg-[#F8FAFC] border-l-4 border-[#3B67FC] p-4 sm:p-5 rounded-r-xl text-sm sm:text-base text-[#334155] italic leading-relaxed font-[family-name:var(--font-poppins)]">
                 {article.shortDescription}
+              </div>
+            )}
+
+            {/* Audio Player Card (Fallback if not embedded inside content) */}
+            {article.audioUrl && !article.content.includes("data-audio-url") && !article.content.includes("data-audio-youtube-id") && !article.content.includes("<audio") && (
+              <div className="bg-[#EEF2FF]/60 border border-[#CBD5E1] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#3B67FC] text-white flex items-center justify-center shrink-0 shadow-sm">
+                  <span className="material-symbols-outlined text-[24px]">headphones</span>
+                </div>
+                <div className="flex-1 w-full min-w-0">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-xs font-bold text-[#1E293B] uppercase tracking-wider font-[family-name:var(--font-poppins)]">
+                      Audio Edukasi (YouTube)
+                    </p>
+                    <span className="text-[11px] text-[#3B67FC] font-semibold">Tersedia untuk pasien</span>
+                  </div>
+                  {article.audioUrl.includes("youtube.com") || article.audioUrl.includes("youtu.be") ? (
+                    <a
+                      href={article.audioUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-[#3B67FC] font-semibold hover:underline flex items-center gap-1.5"
+                    >
+                      <span>Buka Audio di YouTube:</span>
+                      <span className="truncate">{article.audioUrl}</span>
+                      <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+                    </a>
+                  ) : (
+                    <audio
+                      controls
+                      className="w-full h-10 rounded-lg outline-none"
+                      src={
+                        article.audioUrl.startsWith("http")
+                          ? article.audioUrl
+                          : `${(process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080/api/v1").replace(/\/api\/v1\/?$/, "")}${article.audioUrl.startsWith("/") ? "" : "/"}${article.audioUrl}`
+                      }
+                    />
+                  )}
+                </div>
               </div>
             )}
 
@@ -344,7 +388,7 @@ export function EducationDetailFeature({ articleId }: EducationDetailFeatureProp
                       {rel.title}
                     </h5>
                     <p className="text-[11px] text-[#64748B] mt-1 font-medium">
-                      {rel.duration} Min • {rel.category}
+                      {rel.duration >= 60 ? `${Math.floor(rel.duration / 60)} Min` : `${rel.duration}s`} • {rel.category}
                     </p>
                   </div>
                 </Link>

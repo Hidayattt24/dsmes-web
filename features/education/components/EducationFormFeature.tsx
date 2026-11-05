@@ -2,6 +2,7 @@
 
 import { useEducationForm } from "../hooks/useEducationForm";
 import type { FormFields } from "../hooks/useEducationForm";
+import { educationService } from "../services/educationService";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { FormLoader } from "@/components/ui/loading";
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
@@ -126,6 +127,37 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
   const [pendingDeleteImageBlock, setPendingDeleteImageBlock] = useState<HTMLElement | null>(null);
   const [isDeleteImageConfirmOpen, setIsDeleteImageConfirmOpen] = useState(false);
 
+  // Audio YouTube modal states
+  const [isAudioModalOpen, setIsAudioModalOpen] = useState(false);
+  const [audioYoutubeUrlInput, setAudioYoutubeUrlInput] = useState("");
+  const [activeAudioBlock, setActiveAudioBlock] = useState<HTMLElement | null>(null);
+  const [modalAudioMeta, setModalAudioMeta] = useState<YoutubeMetadata | null>(null);
+  const [isModalAudioLoading, setIsModalAudioLoading] = useState(false);
+  const [modalAudioError, setModalAudioError] = useState<string | null>(null);
+  const [pendingDeleteAudioBlock, setPendingDeleteAudioBlock] = useState<HTMLElement | null>(null);
+  const [isDeleteAudioConfirmOpen, setIsDeleteAudioConfirmOpen] = useState(false);
+
+  const openAudioModal = () => {
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      if (editorRef.current && editorRef.current.contains(range.commonAncestorContainer)) {
+        savedRangeRef.current = range.cloneRange();
+      }
+    }
+    setAudioYoutubeUrlInput("");
+    setActiveAudioBlock(null);
+    setIsAudioModalOpen(true);
+  };
+
+  const handleCloseAudioModal = () => {
+    setIsAudioModalOpen(false);
+    setAudioYoutubeUrlInput("");
+    setActiveAudioBlock(null);
+    setModalAudioMeta(null);
+    setModalAudioError(null);
+  };
+
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).editYoutubeBlock = (blockElement: HTMLElement) => {
@@ -150,6 +182,18 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
       setPendingDeleteImageBlock(blockElement);
       setIsDeleteImageConfirmOpen(true);
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).editAudioBlock = (blockElement: HTMLElement) => {
+      setActiveAudioBlock(blockElement);
+      const url = blockElement.getAttribute('data-audio-url') || '';
+      setAudioYoutubeUrlInput(url);
+      setIsAudioModalOpen(true);
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).confirmDeleteAudioBlock = (blockElement: HTMLElement) => {
+      setPendingDeleteAudioBlock(blockElement);
+      setIsDeleteAudioConfirmOpen(true);
+    };
     return () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (window as any).editYoutubeBlock;
@@ -159,6 +203,10 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
       delete (window as any).editImageBlock;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (window as any).confirmDeleteImageBlock;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any).editAudioBlock;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (window as any).confirmDeleteAudioBlock;
     };
   }, []);
 
@@ -181,7 +229,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
   const [mainYoutubeError, setMainYoutubeError] = useState<string | null>(null);
 
   const extractYoutubeId = (url: string): string | null => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : null;
   };
@@ -230,6 +278,51 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
     const timer = setTimeout(fetchMeta, 400);
     return () => clearTimeout(timer);
   }, [youtubeUrlInput]);
+
+  // Modal Audio YouTube oEmbed fetch
+  useEffect(() => {
+    const videoId = extractYoutubeId(audioYoutubeUrlInput);
+    if (!audioYoutubeUrlInput.trim()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setModalAudioMeta(null);
+      setModalAudioError(null);
+      return;
+    }
+    if (!videoId) {
+      setModalAudioMeta(null);
+      setModalAudioError("Format URL YouTube tidak valid.");
+      return;
+    }
+
+    setModalAudioError(null);
+    setIsModalAudioLoading(true);
+
+    const fetchMeta = async () => {
+      try {
+        const res = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        setModalAudioMeta({
+          title: data.title || "",
+          authorName: data.author_name || "",
+          thumbnailUrl: data.thumbnail_url || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+          videoId,
+        });
+      } catch {
+        setModalAudioMeta({
+          title: `Audio Edukasi (ID: ${videoId})`,
+          authorName: "YouTube",
+          thumbnailUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+          videoId,
+        });
+      } finally {
+        setIsModalAudioLoading(false);
+      }
+    };
+
+    const timer = setTimeout(fetchMeta, 400);
+    return () => clearTimeout(timer);
+  }, [audioYoutubeUrlInput]);
 
   // Main Form YouTube oEmbed fetch
   useEffect(() => {
@@ -379,6 +472,33 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
     }
   };
 
+  const handleInsertAudio = () => {
+    const videoId = extractYoutubeId(audioYoutubeUrlInput);
+    if (!videoId) return;
+
+    const title = modalAudioMeta?.title || `Audio Edukasi (ID: ${videoId})`;
+    const authorName = modalAudioMeta?.authorName || "YouTube";
+    const thumbnailUrl = modalAudioMeta?.thumbnailUrl || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    const fullUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+    const embedHtml = `<div class="my-6 w-full max-w-lg bg-[#F8FAFC] border border-[#CBD5E1] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all relative audio-youtube-block" contenteditable="false" draggable="true" data-audio-youtube-id="${videoId}" data-audio-url="${fullUrl}"><div class="block aspect-video w-full relative bg-[#0F172A]"><img src="${thumbnailUrl}" alt="${title}" class="w-full h-full object-cover opacity-90" /><div class="absolute inset-0 flex items-center justify-center bg-black/20"><div class="w-14 h-14 rounded-full bg-[#3B67FC] text-white flex items-center justify-center shadow-lg"><span class="material-symbols-outlined text-[32px] text-white">headphones</span></div></div><div class="absolute top-3 left-3"><span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#3B67FC] text-white shadow-md"><span class="material-symbols-outlined text-[14px]">headphones</span>AUDIO EDUKASI</span></div><div class="absolute top-3 right-3 flex gap-2 z-20 editor-actions"><button type="button" onclick="window.editAudioBlock(this.closest('[contenteditable=false]'))" class="bg-white text-gray-700 hover:bg-gray-50 rounded-lg p-2 shadow-md flex items-center justify-center cursor-pointer" style="border: none; outline: none;"><span class="material-symbols-outlined text-sm">edit</span></button><button type="button" onclick="window.confirmDeleteAudioBlock(this.closest('[contenteditable=false]'))" class="bg-red-600 text-white hover:bg-red-700 rounded-lg p-2 shadow-md flex items-center justify-center cursor-pointer" style="border: none; outline: none;"><span class="material-symbols-outlined text-sm">delete</span></button></div></div><div class="p-4 flex gap-3 items-start bg-white"><div class="w-8 h-8 rounded-full bg-[#EEF2FF] text-[#3B67FC] flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-lg">headphones</span></div><div class="min-w-0 flex-1"><h4 class="text-sm font-bold text-[#1E293B] line-clamp-2 leading-snug">${title}</h4><p class="text-xs text-[#64748B] mt-1 font-semibold">${authorName}</p><a href="${fullUrl}" target="_blank" class="text-[11px] text-[#3B67FC] hover:underline mt-1 block font-semibold truncate">${fullUrl}</a></div></div></div>`;
+
+    if (activeAudioBlock) {
+      // eslint-disable-next-line react-hooks/immutability
+      activeAudioBlock.outerHTML = embedHtml;
+      if (editorRef.current) {
+        handleChange("content", editorRef.current.innerHTML);
+      }
+    } else {
+      insertHTML(embedHtml + "<p><br></p>");
+    }
+
+    handleChange("audioUrl", fullUrl);
+    setIsAudioModalOpen(false);
+    setAudioYoutubeUrlInput("");
+    setActiveAudioBlock(null);
+  };
+
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -446,7 +566,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
   const applyClinicalTemplate = () => {
     const template = `<h3 class="text-lg font-bold text-[#1E293B] mt-4 mb-2">Cara Mengukur Gula Darah</h3><p class="text-sm text-[#4A5568] leading-relaxed mb-4">Cuci tangan sebelum menggunakan glukometer. Pastikan tangan benar-benar kering sebelum menyentuh strip tes untuk menghindari kontaminasi atau hasil yang tidak akurat.</p><h4 class="text-sm font-bold text-[#1E293B] mb-2">Langkah-langkah:</h4><ol class="list-decimal pl-5 text-sm text-[#4A5568] space-y-1 mb-4"><li>Siapkan alat (glukometer, strip, lancet)</li><li>Bersihkan jari dengan alkohol swab</li><li>Gunakan strip pada glukometer</li></ol><div class="bg-[#EEF2FF] border-l-4 border-[#3B67FC] p-4 my-4 rounded-r-lg text-sm text-[#3B67FC] font-semibold"><strong>Info Penting:</strong> Pemeriksaan sebaiknya dilakukan sebelum sarapan untuk hasil baseline yang paling akurat.</div>`;
     handleChange("content", template);
-    handleChange("duration", 5);
+    handleChange("duration", 300);
     if (editorRef.current) {
       // eslint-disable-next-line react-hooks/immutability
       editorRef.current.innerHTML = template;
@@ -584,13 +704,24 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
       latestCategory = handleAddNewCategory();
     }
 
+    // Automatically synchronize audioUrl with audio-block inside editor content
+    let latestAudioUrl = fields.audioUrl;
+    const audioMatch = latestContent.match(/data-audio-url="([^"]+)"/) || latestContent.match(/<audio[^>]*src="([^"]+)"/);
+    if (audioMatch && audioMatch[1]) {
+      latestAudioUrl = audioMatch[1];
+    } else if (!latestContent.includes("data-audio-url") && !latestContent.includes("<audio")) {
+      latestAudioUrl = "";
+    }
+
     const override = {
       content: latestContent,
       category: latestCategory,
+      audioUrl: latestAudioUrl,
     };
 
     handleChange("content", latestContent);
     handleChange("category", latestCategory);
+    handleChange("audioUrl", latestAudioUrl);
 
     const success = await save(forcedStatus, override);
     if (success) {
@@ -642,7 +773,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                 placeholder="https://www.youtube.com/watch?v=..."
               />
               <p className="text-[10px] text-[#64748B] font-semibold mt-1">
-                Mendukung format: youtube.com/watch?v=..., youtu.be/..., youtube.com/embed/...
+                Mendukung format: youtube.com/watch?v=..., youtu.be/..., youtube.com/shorts/..., youtube.com/embed/...
               </p>
               
               {/* Validation errors */}
@@ -701,6 +832,122 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                 className="px-6 py-2.5 bg-[#3B67FC] text-white rounded-xl text-xs font-bold shadow-md shadow-[#3B67FC]/10 cursor-pointer hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Sisipkan
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Audio YouTube Modal */}
+      {isAudioModalOpen && typeof window !== "undefined" && createPortal(
+        <div 
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] p-4 backdrop-blur-sm"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              handleCloseAudioModal();
+            }
+          }}
+        >
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl border border-[#E2E8F0] space-y-4 font-[family-name:var(--font-poppins)] animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex justify-between items-center pb-2 border-b border-[#E2E8F0]/80">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-[#EEF2FF] text-[#3B67FC] flex items-center justify-center">
+                  <span className="material-symbols-outlined text-xl">headphones</span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-base text-[#1E293B]">
+                    {activeAudioBlock ? "Edit Audio Edukasi (YouTube)" : "Sisipkan Audio Edukasi (YouTube)"}
+                  </h4>
+                  <p className="text-[11px] text-[#64748B]">
+                    Materi audio yang di-host di YouTube (podcast/suara narasi).
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={handleCloseAudioModal}
+                className="text-[#64748B] hover:text-[#1E293B] cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-lg">close</span>
+              </button>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider">
+                Tautan Video YouTube (Audio)
+              </label>
+              <div className="relative">
+                <input
+                  type="url"
+                  value={audioYoutubeUrlInput}
+                  onChange={(e) => setAudioYoutubeUrlInput(e.target.value)}
+                  className={[
+                    "w-full px-4 py-3 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none text-xs font-medium text-[#1E293B]",
+                    modalAudioError ? "border-red-500" : ""
+                  ].join(" ")}
+                  placeholder="https://www.youtube.com/watch?v=... atau https://youtu.be/..."
+                  autoFocus
+                />
+                {isModalAudioLoading && (
+                  <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#3B67FC] text-sm animate-spin">
+                    progress_activity
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] text-[#64748B] font-semibold mt-1">
+                Mendukung format: youtube.com/watch?v=..., youtu.be/..., youtube.com/shorts/...
+              </p>
+              {modalAudioError && (
+                <p className="text-red-500 text-xs font-semibold mt-1">
+                  {modalAudioError}
+                </p>
+              )}
+            </div>
+
+            {/* Preview Box */}
+            {modalAudioMeta && (
+              <div className="border border-[#C7D2FE] bg-[#EEF2FF] rounded-xl p-3 flex gap-3 items-center">
+                <div className="w-20 h-14 bg-slate-900 rounded-lg overflow-hidden flex-shrink-0 relative">
+                  <img
+                    src={modalAudioMeta.thumbnailUrl}
+                    alt={modalAudioMeta.title}
+                    className="w-full h-full object-cover opacity-80"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-white text-lg">headphones</span>
+                  </div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold bg-[#3B67FC] text-white mb-1">
+                    AUDIO EDUKASI
+                  </div>
+                  <h5 className="text-xs font-bold text-[#1E293B] line-clamp-1">
+                    {modalAudioMeta.title}
+                  </h5>
+                  <p className="text-[11px] text-[#64748B] line-clamp-1 mt-0.5">
+                    {modalAudioMeta.authorName}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={handleCloseAudioModal}
+                className="px-5 py-2.5 rounded-xl border border-[#E2E8F0] text-xs font-semibold text-[#64748B] hover:bg-[#F1F5F9] cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                onClick={handleInsertAudio}
+                disabled={!modalAudioMeta || isModalAudioLoading}
+                className="px-6 py-2.5 bg-[#3B67FC] text-white rounded-xl text-xs font-bold shadow-md shadow-[#3B67FC]/10 cursor-pointer hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
+              >
+                <span className="material-symbols-outlined text-sm">headphones</span>
+                <span>Sisipkan Audio</span>
               </button>
             </div>
           </div>
@@ -900,7 +1147,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
             {/* Read time duration */}
             <div className="space-y-2">
               <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider font-[family-name:var(--font-poppins)]">
-                Estimasi Membaca (Menit)
+                Estimasi Membaca (Detik)
               </label>
               <div className="relative">
                 <input
@@ -911,12 +1158,17 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                     "w-full px-5 py-3.5 rounded-xl border border-[#E2E8F0] focus:border-[#3B67FC] focus:ring-1 focus:ring-[#3B67FC] outline-none text-sm font-semibold font-[family-name:var(--font-poppins)] text-[#1E293B]",
                     errors.duration ? "border-red-500" : "",
                   ].join(" ")}
-                  placeholder="Contoh: 5"
+                  placeholder="Contoh: 60"
                 />
                 <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-[#64748B] opacity-40 select-none">
                   timer
                 </span>
               </div>
+              <p className="text-[10px] text-[#64748B]">
+                {fields.duration >= 60
+                  ? `Setara ${Math.floor(fields.duration / 60)} menit ${fields.duration % 60 ? `${fields.duration % 60} detik` : ""}`
+                  : `${fields.duration || 0} detik`}
+              </p>
               {errors.duration && (
                 <p className="text-red-500 text-xs font-semibold font-[family-name:var(--font-poppins)]">
                   {errors.duration}
@@ -1097,6 +1349,15 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                 <span className="material-symbols-outlined text-sm select-none">smart_display</span>
                 <span>YouTube</span>
               </button>
+              {/* Rich text Toolbar extension: audio */}
+              <button
+                type="button"
+                onClick={openAudioModal}
+                className="flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg border border-[#E2E8F0] text-[11px] font-bold text-[#64748B] hover:text-[#3B67FC] hover:border-[#3B67FC] transition-all shadow-sm cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-sm select-none">headphones</span>
+                <span>Audio</span>
+              </button>
             </div>
 
             {/* Editor Canvas Area */}
@@ -1125,7 +1386,11 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
                   Karakter: <b className="text-[#1E293B]">{characterCount}</b>
                 </span>
                 <span>
-                  Estimasi baca: <b className="text-[#1E293B]">{fields.duration || 0} Menit</b>
+                  Estimasi baca: <b className="text-[#1E293B]">
+                    {fields.duration >= 60
+                      ? `${Math.floor(fields.duration / 60)} mnt ${fields.duration % 60 ? `${fields.duration % 60} dtk` : ""}`
+                      : `${fields.duration || 0} Detik`}
+                  </b>
                 </span>
               </div>
               <span className="uppercase tracking-widest text-[#3B67FC] font-bold">
@@ -1264,6 +1529,38 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
         onCancel={() => {
           setIsDeleteImageConfirmOpen(false);
           setPendingDeleteImageBlock(null);
+        }}
+      />
+
+      <ConfirmationModal
+        open={isDeleteAudioConfirmOpen}
+        title="Hapus Audio?"
+        description="Apakah Anda yakin ingin menghapus blok audio ini dari materi edukasi?"
+        variant="danger"
+        confirmText="Ya, Hapus"
+        cancelText="Batal"
+        onConfirm={() => {
+          if (pendingDeleteAudioBlock) {
+            pendingDeleteAudioBlock.remove();
+            if (editorRef.current) {
+              const html = editorRef.current.innerHTML;
+              handleChange("content", html);
+              if (!html.includes("data-audio-url") && !html.includes("<audio")) {
+                handleChange("audioUrl", "");
+              }
+            }
+          }
+          setIsDeleteAudioConfirmOpen(false);
+          setPendingDeleteAudioBlock(null);
+          showToast({
+            type: "success",
+            title: "Berhasil",
+            description: "Audio berhasil dihapus dari konten.",
+          });
+        }}
+        onCancel={() => {
+          setIsDeleteAudioConfirmOpen(false);
+          setPendingDeleteAudioBlock(null);
         }}
       />
     </div>

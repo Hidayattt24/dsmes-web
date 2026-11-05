@@ -13,6 +13,7 @@ export interface FormFields {
   readonly shortDescription: string;
   readonly content: string;
   readonly youtubeLink: string;
+  readonly audioUrl: string;
   readonly duration: number;
   readonly status: "Diterbitkan" | "Draf";
   readonly thumbnail: string;
@@ -28,7 +29,8 @@ export function useEducationForm(articleId?: string) {
     shortDescription: "",
     content: "",
     youtubeLink: "",
-    duration: 5,
+    audioUrl: "",
+    duration: 60,
     status: "Draf",
     thumbnail: "",
   });
@@ -62,6 +64,7 @@ export function useEducationForm(articleId?: string) {
           shortDescription: art.shortDescription,
           content: art.content,
           youtubeLink: art.youtubeLink ?? "",
+          audioUrl: art.audioUrl ?? "",
           duration: art.duration,
           status: art.status,
           thumbnail: art.thumbnail,
@@ -100,7 +103,7 @@ export function useEducationForm(articleId?: string) {
     if (!targetFields.shortDescription.trim())
       newErrors.shortDescription = "Ringkasan singkat wajib diisi.";
     if (!targetFields.content.trim()) newErrors.content = "Konten edukasi wajib diisi.";
-    if (targetFields.duration <= 0) newErrors.duration = "Durasi membaca harus lebih dari 0 menit.";
+    if (targetFields.duration <= 0) newErrors.duration = "Durasi membaca harus lebih dari 0 detik.";
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) {
