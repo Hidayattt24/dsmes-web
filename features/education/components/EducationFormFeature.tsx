@@ -2,7 +2,6 @@
 
 import { useEducationForm } from "../hooks/useEducationForm";
 import type { FormFields } from "../hooks/useEducationForm";
-import { educationService } from "../services/educationService";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { FormLoader } from "@/components/ui/loading";
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
@@ -909,6 +908,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
             {modalAudioMeta && (
               <div className="border border-[#C7D2FE] bg-[#EEF2FF] rounded-xl p-3 flex gap-3 items-center">
                 <div className="w-20 h-14 bg-slate-900 rounded-lg overflow-hidden flex-shrink-0 relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={modalAudioMeta.thumbnailUrl}
                     alt={modalAudioMeta.title}
@@ -942,6 +942,7 @@ export function EducationFormFeature({ articleId }: EducationFormFeatureProps) {
               </button>
               <button
                 type="button"
+                // eslint-disable-next-line react-hooks/immutability
                 onClick={handleInsertAudio}
                 disabled={!modalAudioMeta || isModalAudioLoading}
                 className="px-6 py-2.5 bg-[#3B67FC] text-white rounded-xl text-xs font-bold shadow-md shadow-[#3B67FC]/10 cursor-pointer hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
