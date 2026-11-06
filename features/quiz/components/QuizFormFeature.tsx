@@ -249,6 +249,7 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
   const isPreTest = fields.type === "PRE_TEST";
   const isEducation = fields.scope === "EDUCATION";
   const isApplication = !isEducation;
+  const educationQuestionTypeLabel = isPreTest ? "Pre-Test" : "Post-Test";
   const selectedPreTest = eligiblePreTests.find((item) => item.id === fields.sourcePreTestId);
 
   return (
@@ -594,7 +595,7 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
             </div>
           </section>
         ) : isEducation ? (
-          /* POST-TEST: Direct Questions Builder (No Categories) */
+          /* EDUCATION: Direct Questions Builder (No Categories) */
           <section className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E2E8F0] shadow-sm space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2E8F0] pb-4">
               <div>
@@ -602,11 +603,12 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
                   <span className="material-symbols-outlined text-[#3B67FC] text-xl select-none">
                     quiz
                   </span>
-                  <span>Daftar Soal Post-Test</span>
+                  <span>Daftar Soal {educationQuestionTypeLabel}</span>
                 </h3>
                 <p className="text-xs text-[#718096] mt-1">
-                  Soal-soal evaluasi langsung untuk menguji pemahaman materi
-                  edukasi terkait (Tanpa Kategori).
+                  {isPreTest
+                    ? "Soal awal untuk mengukur pemahaman sebelum membaca materi edukasi terkait (Tanpa Kategori)."
+                    : "Soal-soal evaluasi langsung untuk menguji pemahaman materi edukasi terkait (Tanpa Kategori)."}
                 </p>
               </div>
               <span className="text-xs font-extrabold text-[#3B67FC] bg-[#EEF2FF] px-3 py-1.5 rounded-full border border-[#3B67FC]/20 self-start sm:self-auto">
@@ -770,7 +772,7 @@ export function QuizFormFeature({ quizId }: QuizFormFeatureProps) {
                 <span className="material-symbols-outlined text-lg">
                   add_circle
                 </span>
-                <span>Tambah Soal Post-Test Baru</span>
+                <span>Tambah Soal {educationQuestionTypeLabel} Baru</span>
               </button>
             </div>
           </section>
