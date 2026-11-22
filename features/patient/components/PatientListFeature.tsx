@@ -97,7 +97,7 @@ export function PatientListFeature() {
       <div data-page-section><PatientStatistics stats={stats} /></div>
 
       {/* Filter and Search Action bar */}
-      <div data-page-section className="premium-card p-5 flex flex-col md:flex-row gap-4 items-center w-full">
+      <div data-page-section className="premium-card relative z-20 p-5 flex flex-col md:flex-row gap-4 items-center w-full">
         {/* Search */}
         <div className="flex-1 w-full relative">
           <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#718096] select-none text-xl">

@@ -104,7 +104,7 @@ export function RecordMonitoringFeature() {
 
       <div data-page-section><RecordMonitoringStats stats={stats} /></div>
 
-      <div data-page-section>
+      <div data-page-section className="relative z-20">
         <RecordMonitoringFilters
           searchQuery={searchQuery}
           complianceFilter={complianceFilter}
