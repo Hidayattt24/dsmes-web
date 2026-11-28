@@ -267,6 +267,17 @@ function formatQuestionnairePayload(fields: QuestionnaireFormFields) {
 }
 
 export const quizService = {
+  async exportXLSX(id: string): Promise<void> {
+    const res = await axiosInstance.get(`/admin/quiz/${id}/export.xlsx`, { responseType: "blob" });
+    const url = URL.createObjectURL(new Blob([res.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `kuisioner_${id}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  },
   /** Get paginated questionnaires */
   async getQuizzes(
     params: QuizListParams = {},

@@ -40,6 +40,14 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
   );
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleExport = async () => {
+    setIsExporting(true);
+    try { await quizService.exportXLSX(quizId); }
+    catch { showToast({ type: "error", title: "Ekspor gagal", description: "File Excel kuesioner tidak dapat dibuat." }); }
+    finally { setIsExporting(false); }
+  };
   const [selectedStage, setSelectedStage] = useState<"PRE_TEST" | "POST_TEST" | null>(null);
 
   const handleConfirmDelete = async () => {
@@ -138,6 +146,9 @@ export function QuizDetailFeature({ quizId }: QuizDetailFeatureProps) {
         </div>
         {!isStaff && (
           <div className="flex gap-3 w-full sm:w-auto">
+            <button type="button" onClick={handleExport} disabled={isExporting} className="h-11 px-5 rounded-xl bg-emerald-600 text-white text-xs font-bold disabled:opacity-50">
+              {isExporting ? "Menyiapkan Excel..." : "Ekspor Excel"}
+            </button>
             <Link
               href={`${ROUTES.MANAJEMEN_KUISIONER}/${quiz.id}/edit`}
               className="flex-1 sm:flex-initial h-11 px-5 rounded-xl border border-[#E2E8F0] bg-white text-xs font-bold text-[#1A202C] hover:bg-slate-50 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs"

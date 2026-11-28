@@ -92,6 +92,17 @@ export const surveyService = {
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
   },
+  async exportXLSX(id: string): Promise<void> {
+    const res = await axiosInstance.get(`/admin/surveys/${id}/export.xlsx`, { responseType: "blob" });
+    const url = URL.createObjectURL(new Blob([res.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `survey_${id}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  },
 };
 
 function paramsIsStaff(id: string, isStaff?: boolean): string {

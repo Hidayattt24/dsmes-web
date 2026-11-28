@@ -17,6 +17,13 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
   const { showToast } = useToast();
   const [survey, setSurvey] = useState<SurveyDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isExporting, setIsExporting] = useState(false);
+  const handleExport = async () => {
+    setIsExporting(true);
+    try { await surveyService.exportXLSX(surveyId); }
+    catch { showToast({ type: "error", title: "Ekspor gagal", description: "File Excel survei tidak dapat dibuat." }); }
+    finally { setIsExporting(false); }
+  };
 
   useEffect(() => {
     surveyService
@@ -89,6 +96,7 @@ export function SurveyDetailFeature({ surveyId, isStaff = false }: SurveyDetailF
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          {!isStaff && <button type="button" onClick={handleExport} disabled={isExporting} className="px-4 py-2.5 bg-emerald-600 text-white text-xs font-bold rounded-xl disabled:opacity-50">{isExporting ? "Menyiapkan Excel..." : "Ekspor Excel"}</button>}
           <Link
             href={`${basePath}/${survey.id}/analytics?from=detail`}
             className="px-4 py-2.5 bg-[#3B67FC] hover:bg-[#1A63ED] text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 shadow-sm"
